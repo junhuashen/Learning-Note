@@ -106,3 +106,469 @@ Item {
 ```
 ## 10.4 捕捉图像
 qml中通过设置Camera的对象属性来捕捉图像，详见qml中[Camera文档](https://doc.qt.io/qt-5/qml-qtmultimedia-camera.html);
+
+> 2019-3-29 20:10:20
+## 10.5 实现一个播放列表，在QML中使用listModel和Connection 实现循环播放列表
+```qml
+/*PlayList组件 start */
+        Playlist {
+        id: playlist
+
+        mediaPlayer: player
+
+        items: ListModel {
+            ListElement { source: "trailer_400p.ogg" }
+            ListElement { source: "trailer_400p.ogg" }
+            ListElement { source: "trailer_400p.ogg" }
+        }
+    }
+    MediaPlayer {
+        id: player
+    }
+
+/*PLayLIst组件 end*/
+
+    Item {
+    id: root
+
+    property int index: 0
+    property MediaPlayer mediaPlayer
+    property ListModel items: ListModel {}
+
+    function setIndex(i)
+    {
+        console.log("setting index to: " + i);
+
+        index = i;
+
+        if (index < 0 || index >= items.count)
+        {
+            index = -1;
+            mediaPlayer.source = "";
+        }
+        else
+            mediaPlayer.source = items.get(index).source;
+    }
+
+    function next()
+    {
+        setIndex(index + 1);
+    }
+
+    function previous()
+    {
+        setIndex(index + 1);
+    }
+     Connections {
+        target: root.mediaPlayer
+
+        onStopped: {
+            if (root.mediaPlayer.status == MediaPlayer.EndOfMedia)
+            {
+                root.next();
+                if (root.index == -1)
+                    root.mediaPlayer.stop();
+                else
+                    root.mediaPlayer.play();
+            }
+        }
+    }
+```
+
+# 11 QML网络(NetWork)
+本章主要讲述，如何使用QQuick来实现QML中的网络通信；QML和HTML很像2，可以通过远程来加载和解释QML文档；利用Loader来加载QML文件
+```qml
+import QtQuick 2.0
+Loader{
+    id:root
+    source:"http://localhost:8080/main2.qml"
+    onLoad{
+        root.width=item.width
+        root.height=item.height
+    }
+}
+```
+### 11.3 HTTP 请求（HTTP Requests）
+QML 中XMLHttpRequest对象允许用户注册一个响应操作函数和一个链接。一个请求能够使用http动作来发送（如get，post，put，delete，等等）。当响应到达时，会调用注册的操作函数。操作函数会被调用多次。每次调用请求的状态都已经改变（例如信息头部已接收，或者响应完成）。JS例子如下
+```javascript
+function request() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.HEADERS_RECEIVED) {
+            print('HEADERS_RECEIVED');
+        } else if(xhr.readyState === XMLHttpRequest.DONE) {
+            print('DONE');
+        }
+    }
+    xhr.open("GET", "http://example.com");
+    xhr.send();
+}
+```
+QML 中完整组件代码如下：
+```qml
+import QtQuick 2.0
+
+Rectangle {
+    width: 320
+    height: 480
+    ListView {
+        id: view
+        anchors.fill: parent
+        delegate: Thumbnail {
+            width: view.width
+            text: modelData.title
+            iconSource: modelData.media.m
+        }
+    }
+
+    function request() {
+        var xhr = new XMLHttpRequest();//定义XMLHTTP请求
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.HEADERS_RECEIVED) {
+                print('HEADERS_RECEIVED')
+            } else if(xhr.readyState === XMLHttpRequest.DONE) {
+                print('DONE')//输出DONE
+                var json = JSON.parse(xhr.responseText.toString())
+                view.model = json.items//重新设置json模式
+            }
+        }
+        xhr.open("GET", "http://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1&tags=munich");//指定链接
+        xhr.send();//发送请求
+    }
+
+    Component.onCompleted: {
+        request()
+    }
+}
+```
+使用XMLHTTPS可以加载请求本地文件，可以像上面一样将地址链接改成本地路径即可；例如：
+```qml
+xhr.open("GET", "colors.json");//加载本地的一个color.json文件
+```
+也可以使用XmlListModel来替代XMLHttpRequest访问本地文件。
+```qml
+mport QtQuick.XmlListModel 2.0
+
+XmlListModel {
+    source: "http://localhost:8080/colors.xml"
+    query: "/colors"
+    XmlRole { name: 'color'; query: 'name/string()' }
+    XmlRole { name: 'value'; query: 'value/string()' }
+}
+//注意XmlListModel只能用来读取XML文件，不能读取JSON文件。
+```
+## 11.8 Web Sockets
+```qml
+import Qt.WebSockets 1.0
+
+WebSocket {
+    id: socket
+}
+```
+
+# 12 存储（Storage）
+在Qt5.2中，配置（Settings）被加入到QML中。编程接口仍然在实验模块中，这意味着接口可能在未来会改变。这里需要注意
+```qml
+//本例用来对一个矩形框配置颜色。每次用户点击窗口生成一个新的随机颜色。应用程序关闭后重启你将会看到你最后看到的颜色。 默认的颜色是用来初始化根矩形框的颜色。
+import QtQuick 2.0
+import Qt.labs.settings 1.0
+
+Rectangle {
+    id: root
+    width: 320; height: 240
+    color: '#000000'
+    Settings {
+        id: settings
+        property alias color: root.color
+    }
+    MousArea {
+        anchors.fill: parent
+        onClicked: root.color = Qt.hsla(Math.random(), 0.5, 0.5, 1.0);
+    }
+}
+//eg2:每次颜色值的变化都被存储在配置中。这可能不是我们需要的。只有在要求使用标准属性的时候才存储配置。
+Rectangle {
+    id: root
+    color: settings.color
+    Settings {
+        id: settings
+        property color color: '#000000'
+    }
+    function storeSettings() { // executed maybe on destruction
+        settings.color = root.color
+    }
+}
+//可以使用category属性存储不同种类的配置。
+Settings {
+    category: 'window'
+    property alias x: window.x
+    property alias y: window.x
+    property alias width: window.width
+    property alias height: window.height
+}
+```
+
+## 12.2 本地存储 - SQL（Local Storage - SQL）
+Qt Quick支持一个与浏览器由区别的本地存储编程接口。需要使用"import QtQuick.LocalStorage 2.0"语句来导入后才能使用这个编程接口。通常使用基于给定的数据库名称和版本号使用系统特定位置的唯一文件ID号来存储数据到一个SQLITE数据库中。无法列出或者删除已有的数据库。你可以使用QQmlEngine::offlineStoragePate()来寻找本地存储。使用这个编程接口你首选需要创建一个数据库对象，然后在这个数据库上创建数据库事务。每个事务可以包含一个或多个SQL查询。当一个SQL查询在事务中失败后，事务会回滚。
+```qml
+//使用本地存储从一个简单的注释表中读取一个文本列：
+import QtQuick 2.2
+import QtQuick.LocalStorage 2.0
+
+Item {
+    Component.onCompleted: {
+        var db = LocalStorage.openDatabaseSync("MyExample", "1.0", "Example database", 10000);
+        db.transaction( function(tx) {
+            var result = tx.executeSql('select * from notes');
+            for(var i = 0; i < result.rows.length; i++) {
+                    print(result.rows[i].text);
+                }
+            }
+        });
+    }
+}
+```
+
+# 13 动态QML（Dynamic QML）
+## 13.1 动态加载组件（Loading Components Dynamically）
+动态加载QML不同组成部分最简单的方法是使用加载元素项（Loader element）。它作为一个占位符项用来加载项。项的加载通过资源属性（source property）或者资源组件（sourceCompontent）属性控制。加载元素项通过给定的URL链接加载项，然后实例化一个组件。
+加载元素项（loader）作为一个占位符用于被加载项的加载。它的大小基于被加载项的大小而定，反之亦然。如果加载元素定义了大小，或者通过锚定（anchoring）定义了宽度和高度，被加载项将会被设置为加载元素项的大小。如果加载元素项没有设置大小，它将会根据被加载项的大小而定。
+下面例子演示了使用加载元素项（Loader Element）将两个分离的用户界面部分加载到一个相同的空间。这个主意是我们有一个快速拨号界面，可以是数字界面或模拟界面。
+首先设置Loader element元素加载项，使用State加载不同状态下的QML文件
+```qml
+Loader {
+    id: dialLoader
+    anchors.fill: parent
+}
+states: [
+        State {
+            name: "analog"
+            PropertyChanges { target: analogButton; color: "green"; }
+            PropertyChanges { target: dialLoader; source: "Analog.qml"; }
+        },
+        State {
+            name: "digital"
+            PropertyChanges { target: digitalButton; color: "green"; }
+            PropertyChanges { target: dialLoader; source: "Digital.qml"; }
+        }
+    ]
+```
+为了使被加载项更加生动，它的速度属性必须根项的速度属性绑定。不能够使用直接绑定来绑定属性，因为项不是总在加载，并且这会随着时间而改变。需要使用一个东西来替换绑定元素（Binding Element）。绑定目标属性（target property），每次加载元素项改变时会触发已加载完成（onLoaded）信号。
+```qml
+oader {
+        id: dialLoader
+
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: analogButton.top
+
+        onLoaded: {
+            binder.target = dialLoader.item;
+        }
+    }
+    Binding {
+        id: binder
+
+        property: "speed"
+        value: speed
+    }
+```
+当被加载项加载完成后，加载完成信号（onLoaded）会触发加载QML的动作。类似的，QML完成加载以来与组建构建完成（Component.onCompleted）信号。所有组建都可以使用这个信号，无论它们何时加载。例如，当整个用户界面完成加载后，整个应用程序的根组建可以使用它来启动自己。
+
+### 13.1.1 间接连接（Connecting Indirectly)
+动态创建QML元素时，无法使用onSignalName静态配置来连接信号。必须使用连接元素（Connection element）来完成连接信号。它可以连接一个目标元素任意数量的信号。
+通过设置连接元素（Connection element）的目标属性，信号可以像正常的方法连接。也就是使用onSignalName方法。不管怎样，通过改变目标属性可以在不同的时间监控不同的元素。
+下面这个例子中，用户界面由两个可点击区域组成。当其中一个区域点击后，会使用一个闪烁的动画。左边区域的代码段如下所示。在鼠标区域（MouseArea）中，左点击动画（leftClickedAnimation）被触发，导致区域闪烁。
+```qml
+Rectangle {
+            id: leftRectangle
+            width: 290
+            height: 200
+            color: "green"
+            MouseArea {
+                id: leftMouseArea
+                anchors.fill: parent
+                onClicked: leftClickedAnimation.start();
+            }
+            Text {
+                anchors.centerIn: parent
+                font.pixelSize: 30
+                color: "white"
+                text: "Click me!"
+            }
+            //连接元素（Connection element）。当状态为激活时会触发第三个动画，即元素的目标。
+           Connections {
+                id: connections
+                onClicked: activeClickedAnimation.start();
+            }
+}
+```
+使用Connetion 可以进行间接链接
+
+### 13.1.2 （间接绑定）Binding Indirectly
+与无法直接连接动态创建元素的信号类似，也无法脱离桥接元素（bridge element）与动态创建元素绑定属性。为了绑定任意元素的属性，包括动态创建元素，需要使用绑定元素（Binding element）。绑定元素（Bindging element）允许你指定一个目标元素（target element），一个属性用来绑定，一个值用来绑定这个属性。通过使用绑定元素（Binding elelemt），例如，绑定一个动态加载元素（dynamically loaded element）的属性。
+eg:
+```qml
+    Loader {
+        id: dialLoader
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: analogButton.top
+        onLoaded: {
+            binder.target = dialLoader.item;//将binder属性绑定到Loader上
+        }
+    }
+    Binding {
+        id: binder
+        property: "speed"
+        value: speed
+    }
+```
+
+## 13.2 创建与销毁对象（Creating and Destroying Objects）
+创建一个组件的状态可以用来跟踪它的状态属性。可以使用的状态值包括组件为空（Component.NULL）、组件加载中（Component.Loading）、组件可用（Component.Ready）和组件错误（Component.Error）。从空（NULL）状态到加载中（Loading）再到可用（Ready）通常是一个工作流。在任何一个阶段状态都可以变为错误（Error）。在这种情况下，组件无法被用来创建新的对象实例。Component.errorString()函数用来检索用户可读的错误描述。
+当加载连接缓慢的组件时，可以使用进度（progress）属性。它的范围从0.0意味着为加载任何东西，到1.0表明加载已完成。当组件的状态改变为可用（Ready）时，组件可以用实例化对象。下面的代码演示了如何实现这样的方法，考虑组件变为可用或者创建失败，同时组件加载时间可能会比较慢。
+```qml
+var component;
+function createImageObject() {
+    component = Qt.createComponent("dynamic-image.qml");//通过qml动态创建组件
+    if (component.status === Component.Ready || component.status === Component.Error)//查看组件是否被成功创建
+        finishCreation();
+    else
+        component.statusChanged.connect(finishCreation);//组件已经被成功创建
+}
+
+function finishCreation() {
+    if (component.status === Component.Ready)
+    {
+        var image = component.createObject(root, {"x": 100, "y": 100});
+        if (image == null)
+            console.log("Error creating image");
+    }
+    else if (component.status === Component.Error)
+        console.log("Error loading component:", component.errorString());
+}
+```
+在main.qml 中使用这种方法如下
+```qml
+import QtQuick 2.0
+import "create-component.js" as ImageCreator
+Item {
+    id: root
+
+    width: 1024
+    height: 600
+
+    Component.onCompleted: ImageCreator.createImageObject();
+}
+```
+创建对象（createObject）函数接受两个参数。第一个参数是父对象。第二个参数是按照格式{"name": value, "name": value}组成的一串属性和值。下面的例子演示了这种用法。注意，属性参数是可选的。例：
+```qml
+    var image = component.createObject(root, {"x": 100, "y": 100});
+```
+
+### 13.2.2 从文本中动态实例化项（Dynamically Instantiating Items from Text）
+可以使用Qt.createQmlObject函数来从，文本中创建一个对象；这个函数接受三个参数：qml，parent和filepath。qml参数包含了用来实例化的QML代码字符串。parent参数为新创建的对象提供了一个父对象。filepath参数用于存储创建对象时的错误报告。这个函数的结果返回一个新的对象或者一个NULL；（注意：createQmlObject函数通常会立即返回结果。为了成功调用这个函数，所有的依赖调用需要保证已经被加载。这意味着如果函数调用了未加载的组件，这个调用就会失败并且返回null。为了更好的处理这个问题，必须使用createComponent/createObject方法。）
+eg:
+```qml
+import QtQuick 2.0
+Item {
+    id: root
+
+    width: 1024
+    height: 600
+
+    function createItem() {
+        Qt.createQmlObject("import QtQuick 2.0; Rectangle { x: 100; y: 100; width: 100;
+    height:100; color: \"blue\" }", root, "dynamicItem");
+    }
+
+    Component.onCompleted: root.createItem();
+}
+```
+### 13.2.3 管理动态创建的元素（Managing Dynamically Created Elements）
+动态创建的对象也可以动态销毁。当这样做时，有一个法则：永远不要尝试销毁一个你没有创建的对象。这也包括你已经创建的元素，但不要使用动态机制比如Component.createObject或者createQmlObject。eg:
+```qml
+item = Qt.createQmlObject(...);
+...
+item.destroy();
+```
+
+## 13.3 跟踪动态对象（Tracking Dynamic Objects）
+Qt.createQmlObject方法可以用于实例化QML字符串。然后这种方法有局限性。最全面的解决方案是动态创建使用Qt.createComponent函数创建组件。然后通过调用组件的createObject函数来创建对象。由于绑定与信号连接依赖于对象id，或者访问实例化对象。对于动态创建的对象需要另外一种方法，为了创建绑定，需要使用绑定元素（Binding element），连接元素（Connections element）使得与动态创建对象连接信号成为可能。
+模型是一个链表模型（ListModel），用已创建的项进行填充。实例化时跟踪对象引用的资源URL。后者不是需要严格跟踪的对象，但是以后会派上用场。
+```qml
+import QtQuick 2.0
+import "create-object.js" as CreateObject
+Item {
+    id: root
+
+    ListModel {
+        id: objectsModel
+    }
+
+    function addPlanet() {
+        CreateObject.create("planet.qml", root, itemAdded);//使用回调函数
+    }
+
+    function addRocket() {
+        CreateObject.create("rocket.qml", root, itemAdded);
+    }
+
+    function itemAdded(obj, source) {
+        objectsModel.append({"obj": obj, "source": source})//将创建对象添加到ListModel中
+    }
+    function clearItems() {//clear 函数实现对对象的清除
+        while(objectsModel.count > 0) {
+            objectsModel.get(0).obj.destroy();
+            objectsModel.remove(0);
+        }
+    }
+```
+
+# 14 JavaScript
+下面有一个简短的例子是关于如何在QML中混合适用JS：
+```qml
+Button {
+  width: 200
+  height: 300
+  property bool toggle: false
+  text: "Click twice to exit"
+
+  // JS function
+  function doToggle() {
+    toggle = !toggle
+  }
+  onTriggered: {
+    // this is JavaScript
+    doToggle();
+    if(toggle) {
+      Qt.quit()
+    }
+  }
+}
+```
+因此在QML中JavaScript作为一个单独的JS函数，作为一个JS模块可以在很多地方使用，它可以与每一个右边的属性绑定。
+```qml
+mport "util.js" as Util // import a pure JS module
+
+Button {
+  width: 200
+  height: width*2 // JS on the right side of property binding
+
+  // standalone function (not really useful)
+  function log(msg) {
+    console.log("Button> " + msg);
+  }
+
+  onTriggered: {
+    // this is JavaScript
+    log();
+    Qt.quit();
+  }
+}
+```
+
+15 Qt and C++
