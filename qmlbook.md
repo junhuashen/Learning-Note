@@ -1,6 +1,8 @@
 #qml book 学习笔记
 _参考链接_:[qmlbook](https://cwc1987.gitbooks.io/qmlbook-in-chinese)
+
 >2019-3-25 21:45:00
+
 ## 10.多媒体(Multimedia)
   多媒体模仿需要准备措施：
 ```qml
@@ -572,3 +574,106 @@ Button {
 ```
 
 15 Qt and C++
+15.5 C++ 数据模型
+qt对于C++类在qml中的使用，需要实现动态数据绑定，使用Q_INVOKABLE函数定义使得可以在QML中调用它们。另一种方法是将它们定义为公共槽函数。例：
+```qml
+// inserts a color at the index (0 at begining, count-1 at end)
+Q_INVOKABLE void insert(int index, const QString& colorValue);
+// uses insert to insert a color at the end
+Q_INVOKABLE void append(const QString& colorValue);
+// removes a color from the index
+Q_INVOKABLE void remove(int index);
+// clear the whole model (e.g. reset)
+Q_INVOKABLE void clear();
+```
+接下在再使用Q_INVOKABLE()方法来实现，对象属性与操作方法发的绑定，通过使用READ等关键字指明关键函数。例：
+```qml
+// gives the size of the model
+Q_PROPERTY(int count READ count NOTIFY countChanged)
+// gets a color at the index
+Q_INVOKABLE QColor get(int index);
+```
+最后在main.cpp等主函数或者其他初始化函数中，必须使用qmlRegisterType<>函数将C++类注册到qml中，再使用qml加载函数才能在qml中调用 *参考链接*：(qmlRegisterType 的功能以及用法)[https://blog.csdn.net/wangyachao0803/article/details/80838534];例：
+```qml
+#include <QtGui>
+#include <QtQml>
+
+#include "valuemodel.h"
+#include "adaptivemodel.h"
+
+int main(int argc, char *argv[])
+{
+    QGuiApplication app(argc, argv);
+    //注册AdaptiveModel类
+    qmlRegisterType<AdaptiveModel>("org.example", 1, 0, "AdaptiveModel");
+    //注册ValueModel类
+    qmlRegisterType<ValueModel>("org.example", 1, 0, "ValueModel");
+    //加载qml
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+
+    return app.exec();
+}
+
+```
+
+# 16 C++扩展QML（Extending QML with C++）
+QML执行在受限的空间中，QML作为一种语言提供的功能有时是被限制的。通过C++写的本地函数可以扩展QML运行时的功能。应用程序可以充分利用基础平台的性能和自由度。
+## 16.1 理解QML运行环境（Understanding the QML Run-time）
+一种更偷懒的方式是通过上下文属性直接设置。进行C++类对qml的注册
+```qml
+QScopedPointer<CurrentTime> current(new CurrentTime());//设置上下文
+
+QQmlApplicationEngine engine;
+
+engine.rootContext().setContextProperty("current", current.value())
+
+engine.load(source);
+```
+注意：不要混淆setContextProperty()和setProperty()。setContextProperty()是设置一个qml上下文的属性，setProperty()是设置一个QObject的动态属性值，这对你没什么帮助。
+通常有以下几种不同的方式扩展QML：
+
+ - 上下文属性 - setContextProperty()；
+ - 引擎注册类型 - 在main.cpp中调用qmlRegisterType；
+ - QML扩展插件；
+ 
+ 上下文属性使用对于小型的应用程序使用非常方便。它们不需要你做太多的事情就可以将系统编程接口暴露为友好的全局对象。它有助于确保不会出现命名冲突（例如使用（$）这种特殊符号，例如$.currentTime）。在JS变量中$是一个有效的字符。
+注册QML类型允许用户从QML中控制一个c++对象的生命周期。上下文属性无法完成这间事情。它也不会破坏全局命名空间。所有的类型都需要先注册，并且在程序启动时会链接所有库，这在大多数情况下都不是一个问题。
+QML扩展插件提供了最灵活的扩展系统。它允许你在插件中注册类型，在第一个QML文件调用导入鉴定时会加载这个插件。由于使用了一个QML单例这也不会再破坏全局命名空间。插件允许你跨项目重用模块，这在你使用Qt包含多个项目时非常方便。
+
+## 16.2 插件内容（Plugin Content）
+插件是一个已定义接口的库，它只在需要时才被加载。这与一个库在程序启动时被链接和加载不同。在QML场景下，这个接口叫做QQmlExtensionPlugin。我们关心其中的两个方法initializeEngine()和registerTypes()。当插件被加载时，首先会调用initializeEngine()，它允许我们访问引擎将插件对象暴露给根上下文。大多数时候你只会使用到registerTypes()方法。它允许你注册你自定义的QML类型到引擎提供的地址上。
+## 16.3 创建插件（Creating the plugin）
+Qt Creator包含了一个创建QtQuick 2 QML Extension Plugin向导，我们使用它来创建一个叫做fileio 的插件，这个插件包含了一个从org.example.io中启动的FileIO对象。插件类源于QQmlExtensionPlugin，并且实现了registerTypes() 函数。Q_PLUGIN_METADATA是强制标识这个插件作为一个qml扩展插件。除此之外没有其它特殊的地方了。如下，定义插件类：
+```qml
+#ifndef FILEIO_PLUGIN_H
+#define FILEIO_PLUGIN_H
+
+#include <QQmlExtensionPlugin>
+class FileioPlugin : public QQmlExtensionPlugin
+{
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface")
+
+public:
+    void registerTypes(const char *uri);
+};
+
+#endif // FILEIO_PLUGIN_H
+```
+在实现registerTypes中我们使用qmlRegisterType函数注册了我们的FileIO类。
+```qml
+#include "fileio_plugin.h"
+#include "fileio.h"
+#include <qqml.h>
+void FileioPlugin::registerTypes(const char *uri)
+{
+    // @uri org.example.io
+    qmlRegisterType<FileIO>(uri, 1, 0, "FileIO");
+}
+```
+模块统一资源标识符（例如org.example.io）。这似乎是从外面设置的。看你查找你的项目文件夹是，你会发现一个qmldir文件。这个文件指定了你的qml插件内容或者最好是你插件中关于QML的部分。它看起来应该像这样。
+```qml
+module org.example.io
+plugin fileio
+```
