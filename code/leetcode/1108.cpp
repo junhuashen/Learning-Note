@@ -11,10 +11,6 @@ public:
         }
         return result;
     }
-    string defangIPaddr2(string& address){
-    	char* resutl,temp;
-    	temp=
-    }
 };
 int main(int argc, char const *argv[]) {
     Solution my_solution;
