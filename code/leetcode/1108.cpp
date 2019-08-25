@@ -1,3 +1,10 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <stdio.h>
+
+using namespace std;
+
 class Solution {
 public:
     string defangIPaddr(string& address) {
@@ -11,6 +18,23 @@ public:
         }
         return result;
     }
+    string defangIPaddr2(string& address){
+    	int len=address.size();
+    	char result[len+8];
+    	for(int i=0,j=0;i<len;++i)
+    	{
+    		if(address[i]=='.'){
+    			result[j]='[';
+    			result[j+1]='.';
+    			result[j+2]=']';
+    			j+=3;
+    		}else{
+    			result[j]=address[i];
+    			++j;
+    		}
+    	}
+    	return string(result);
+    }
 };
 int main(int argc, char const *argv[]) {
     Solution my_solution;
@@ -20,8 +44,8 @@ int main(int argc, char const *argv[]) {
     //output string
     std::string output1="";
     //my result number
-    auto  my_result1=my_solution.defangIPaddr(input_string1);
-    auto my_result2=my_solution.defangIPaddr(input_string2);
+    string my_result1=my_solution.defangIPaddr(input_string1);
+    string my_result2=my_solution.defangIPaddr2(input_string2);
     //print_vector(my_result);
     std::cout<<"result1: "<<my_result1<<"\n"<<"resutl2:"<<my_result2<<std::endl;
 
