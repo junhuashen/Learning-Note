@@ -17,7 +17,7 @@
                 "cwd": "/usr/bin"
             },
             "problemMatcher": [
-                "$gcc"
+                "$g++"
             ]
         },
         {
