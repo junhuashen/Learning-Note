@@ -162,12 +162,8 @@ public:
 		ListNode* work_ptr=NULL;
     	while(l1_last!=NULL&&l2_last!=NULL){
     		int temp=l1_last->val+l2_last->val+excess_results;
-			if(temp>=10){
-				excess_results=1;
-				temp-=10;
-			}else{
-				excess_results=0;
-			}
+			excess_results=temp/10;
+			temp%=10;
 			if(result_node==NULL){
 				result_node=new ListNode(temp);
 				work_ptr=result_node;
@@ -181,12 +177,8 @@ public:
     	};
         while(l1_last!=NULL) {
 			int temp=l1_last->val+excess_results;
-			if(temp>=10){
-				excess_results=1;
-				temp-=10;
-			}else{
-				excess_results=0;
-			}
+			excess_results=temp/10;
+			temp%=10;
         	if(result_node==NULL){
 				result_node=new ListNode(temp);
 				work_ptr=result_node;
@@ -199,12 +191,9 @@ public:
         }
         while(l2_last!=NULL) {
         	int temp=l2_last->val+excess_results;
-			if(temp>=10){
-				excess_results=1;
-				temp-=10;
-			}else{
-				excess_results=0;
-			}
+			excess_results=temp/10;
+			temp%=10;
+			
         	if(result_node==NULL){
 				result_node=new ListNode(temp);
 				work_ptr=result_node;
@@ -219,6 +208,54 @@ public:
 				ListNode* temp_node=new ListNode(1);
 				work_ptr->next=temp_node;
 				work_ptr=work_ptr->next;
+		}
+		
+		return result_node;
+		
+    }
+	ListNode* addTwoNumbers4(ListNode* l1, ListNode* l2) {
+    	ListNode* result_node=NULL;
+    	ListNode* l1_last=l1;
+    	ListNode* l2_last=l2;
+    	//先进行便利，获得链表的最佳值
+		int excess_results=0;
+		ListNode* work_ptr=NULL;
+    	while(l1_last!=NULL&&l2_last!=NULL){
+    		int temp=l1_last->val+l2_last->val+excess_results;
+			excess_results=temp/10;
+			temp%=10;
+			if(result_node==NULL){
+				result_node=new ListNode(temp);
+				work_ptr=result_node;
+			}else{
+				ListNode* temp_node=new ListNode(temp);
+				work_ptr->next=temp_node;
+				work_ptr=work_ptr->next;
+			}
+			l1_last=l1_last->next;
+    		l2_last=l2_last->next;
+    	};
+        while(l1_last!=NULL) {
+			int temp=l1_last->val+excess_results;
+			excess_results=temp/10;
+			temp%=10;
+			ListNode* temp_node=new ListNode(temp);
+			work_ptr->next=temp_node;
+			work_ptr=work_ptr->next;
+			l1_last=l1_last->next;
+        }
+        while(l2_last!=NULL) {
+        	int temp=l2_last->val+excess_results;
+			excess_results=temp/10;
+			temp%=10;
+
+			ListNode* temp_node=new ListNode(temp);
+			work_ptr->next=temp_node;
+			work_ptr=work_ptr->next;
+        	l2_last=l2_last->next;
+        }
+		if(excess_results!=0){
+			work_ptr->next=new ListNode(1);
 		}
 		
 		return result_node;
@@ -379,4 +416,35 @@ public:
         return result;
     }
 };
+方法二：
+本题可以不用再创建一个新的链表，可以直接在链表表l1和l2上进行操作。
+首先创建一个newList指针指向l1链表，把每一位相加的结果保存在l1的val中。
+若11比l2短，接着让l1的尾指针指向l2比l1长的那部分。然后让l2中的每一位分别与flag进位标志相加即可。
+
+注意点：要考虑一种特殊的情况，当l1长度和l2的长度一致且进位标志为1时，说明它们相加的结果要多一位。
+(如 555+620=1175)此时要申请一个新的空间，用来保存结果的最高位，其值为1。
+
+ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        
+		ListNode *newList = l1, *pre ;  //newList指向返回的链表，pre记录保存链表的当前指针的的前一个位置。
+		int flag = 0;  //进位标志
+		while (l1||l2)
+		{
+			int value;  //两个链表的每一位相加的和
+			(l1) ? (pre = l1,l1 = l1->next, value = pre->val + flag) : (pre->next=l2, pre = l2, value= flag);
+			(l2) ? (value += l2->val, l2 = l2->next) : (pre->next=l1);
+			pre->val = value % 10;
+			(value > 9) ? (flag = 1) : (flag = 0);
+		}
+		if (l1 == NULL && l2 == NULL && flag == 1)
+			pre->next = new ListNode(1);
+		return newList;
+        
+    }
+
+作者：p12bbb
+链接：https://leetcode-cn.com/problems/add-two-numbers/solution/czhong-sheng-kong-jian-de-jie-fa-by-uycuqaawr5/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 */
