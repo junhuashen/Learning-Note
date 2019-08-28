@@ -11,7 +11,7 @@
             "program": "${fileDirname}/target/${fileBasenameNoExtension}",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${fileDirname}/target/${fileBasenameNoExtension}",
+            "cwd": "${fileDirname}/target/",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",

@@ -3,7 +3,9 @@
 
 https://leetcode-cn.com/problems/remove-outermost-parentheses/
 
-给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
+
+给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按
+照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
 
 如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。
 
@@ -22,20 +24,16 @@ https://leetcode-cn.com/problems/remove-outermost-parentheses/
 */
 /*
 主要思路：
-	a .按照链表的长短进行遍历，按照位数相乘再相加，最后反向求余数进行链表插入存储。
-	b. 直接计算两组数的值，进行相加之后再使用头插法求余数。
-		解决思路;
-		1.遍历看到“(”;need+1,记录start;
-		2.看到“)”,need-1;
-		3.need=0,记录end;
-		4.添加start与end之间的字符
+	a. 直接计算两组数的值，进行相加之后再使用头插法求余数。复杂度为O(n+m)
+	b. 按照链表的长短进行遍历，按照位数相乘再相加，最后反向求余数进行链表插入存储。复杂度为O(max(n,m))
+	c. 直接按照位进行加减运算，每进行一次运算，将结果存在链表中，当大于10时，进一位。下一次运算时加上。
 		
 */
 
 #include <iostream>
 #include <vector>
 #include <math.h>
-
+#include <time.h>
 using namespace std;
 
 void print_vector(std::vector<int> v){
@@ -62,51 +60,169 @@ struct ListNode
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-    	long result_1=0,result_2=0;
-    	ListNode* result_node=new ListNode(0);
+    	long result_1=0,result_2=0,result=0;
+    	ListNode* result_node=NULL;
     	ListNode* l1_last=l1;
     	ListNode* l2_last=l2;
     	int i=0,j=0;//用来对i,j位数进行统计
     	//先进行便利，获得链表的最佳值
     	// while(l1_last!=NULL&&l2_last!=NULL){
-    	// 	++i;
-    	// 	++j;
     	// 	int temp=l1->val+l2->val;
     	// 	result+=temp*pow(10,i);
     	// 	l1_last=l1_last->next;
     	// 	l2_last=l2_last->next;
+		// 	++i;
+    	// 	++j;
     	// };
         while(l1_last!=NULL) {
-        	++i;
-        	int temp=l1->val;
+        	int temp=l1_last->val;
         	result_1+=temp*pow(10,i);
         	l1_last=l1_last->next;
+			++i;
         }
         while(l2_last!=NULL) {
-        	++j;
-        	int temp=l2->val;
+        	int temp=l2_last->val;
         	result_2+=temp*pow(10,j);
         	l2_last=l2_last->next;
+			++j;
         }
-        result_node->val=result_1+result_2;
-        return result_node;
+        result=result_1+result_2;
+        //求余数遍历颠倒
+		ListNode* work_ptr=NULL;
+		while (result!=0)
+		{
+			if(result_node==NULL){
+				result_node=new ListNode(result%10);
+				work_ptr=result_node;
+			}else{
+				ListNode* temp_node=new ListNode(result%10);
+				work_ptr->next=temp_node;
+				work_ptr=work_ptr->next;
+			}
+			result/=10;
+			
+		}
+		return result_node;
+		
     }
-    string defangIPaddr2(string& address){
-    	int len=address.size();
-    	char result[len+8];
-    	for(int i=0,j=0;i<len;++i)
-    	{
-    		if(address[i]=='.'){
-    			result[j]='[';
-    			result[j+1]='.';
-    			result[j+2]=']';
-    			j+=3;
-    		}else{
-    			result[j]=address[i];
-    			++j;
-    		}
-    	}
-    	return string(result);
+    ListNode* addTwoNumbers2(ListNode* l1, ListNode* l2) {
+    	long result_1=0,result_2=0,result=0;
+    	ListNode* result_node=NULL;
+    	ListNode* l1_last=l1;
+    	ListNode* l2_last=l2;
+    	int i=0,j=0;//用来对i,j位数进行统计
+    	//先进行便利，获得链表的最佳值
+    	while(l1_last!=NULL&&l2_last!=NULL){
+    		int temp1=l1_last->val;
+			int temp2=l2_last->val;
+			result_1+=temp1*pow(10,j);
+    		result_2+=temp2*pow(10,j);
+    		l1_last=l1_last->next;
+    		l2_last=l2_last->next;
+			++i;
+    		++j;
+    	};
+        while(l1_last!=NULL) {
+        	int temp=l1_last->val;
+        	result_1+=temp*pow(10,i);
+        	l1_last=l1_last->next;
+			++i;
+        }
+        while(l2_last!=NULL) {
+        	int temp=l2_last->val;
+        	result_2+=temp*pow(10,j);
+        	l2_last=l2_last->next;
+			++j;
+        }
+        result=result_1+result_2;
+        //求余数遍历颠倒
+		ListNode* work_ptr=NULL;
+		while (result!=0)
+		{
+			if(result_node==NULL){
+				result_node=new ListNode(result%10);
+				work_ptr=result_node;
+			}else{
+				ListNode* temp_node=new ListNode(result%10);
+				work_ptr->next=temp_node;
+				work_ptr=work_ptr->next;
+			}
+			result/=10;
+			
+		}
+		return result_node;
+		
+    }
+	  ListNode* addTwoNumbers3(ListNode* l1, ListNode* l2) {
+    	ListNode* result_node=NULL;
+    	ListNode* l1_last=l1;
+    	ListNode* l2_last=l2;
+    	//先进行便利，获得链表的最佳值
+		int excess_results=0;
+		ListNode* work_ptr=NULL;
+    	while(l1_last!=NULL&&l2_last!=NULL){
+    		int temp=l1_last->val+l2_last->val+excess_results;
+			if(temp>=10){
+				excess_results=1;
+				temp-=10;
+			}else{
+				excess_results=0;
+			}
+			if(result_node==NULL){
+				result_node=new ListNode(temp);
+				work_ptr=result_node;
+			}else{
+				ListNode* temp_node=new ListNode(temp);
+				work_ptr->next=temp_node;
+				work_ptr=work_ptr->next;
+			}
+			l1_last=l1_last->next;
+    		l2_last=l2_last->next;
+    	};
+        while(l1_last!=NULL) {
+			int temp=l1_last->val+excess_results;
+			if(temp>=10){
+				excess_results=1;
+				temp-=10;
+			}else{
+				excess_results=0;
+			}
+        	if(result_node==NULL){
+				result_node=new ListNode(temp);
+				work_ptr=result_node;
+			}else{
+				ListNode* temp_node=new ListNode(temp);
+				work_ptr->next=temp_node;
+				work_ptr=work_ptr->next;
+			}
+			l1_last=l1_last->next;
+        }
+        while(l2_last!=NULL) {
+        	int temp=l2_last->val+excess_results;
+			if(temp>=10){
+				excess_results=1;
+				temp-=10;
+			}else{
+				excess_results=0;
+			}
+        	if(result_node==NULL){
+				result_node=new ListNode(temp);
+				work_ptr=result_node;
+			}else{
+				ListNode* temp_node=new ListNode(temp);
+				work_ptr->next=temp_node;
+				work_ptr=work_ptr->next;
+			}
+        	l2_last=l2_last->next;
+        }
+		if(excess_results!=0){
+				ListNode* temp_node=new ListNode(1);
+				work_ptr->next=temp_node;
+				work_ptr=work_ptr->next;
+		}
+		
+		return result_node;
+		
     }
 };
 
@@ -141,8 +257,8 @@ int main(int argc, char const *argv[]) {
     Solution my_solution;
     //input string
    	//创建第一组数据
-    int a[3]={2,4,3};
-    int b[3]={5,6,4};
+    int a[]={5};
+    int b[]={5};
     ListNode* a_node_list=NULL;
     ListNode* b_node_list=NULL;
     ListNode* last_node_ptr=NULL;
@@ -167,11 +283,21 @@ int main(int argc, char const *argv[]) {
     		last_node_ptr=last_node_ptr->next;
     	}
      } 
-     printf_node_list(a_node_list);
-     //printf_node_list(a_node_list);
-
-     auto result=my_solution.addTwoNumbers(a_node_list,b_node_list);
-     std::cout<<"\n result:"<<result<<std::endl;
+	int time_point_1=clock();
+    auto result1=my_solution.addTwoNumbers(a_node_list,b_node_list);
+    int time_point_2=clock();
+	printf("\n \t Time :%d ms \n",time_point_2-time_point_1);
+	printf_node_list(result1);
+	int time_point_3=clock();
+    auto result2=my_solution.addTwoNumbers2(a_node_list,b_node_list);
+    int time_point_4=clock();
+	printf("\n \t Time :%d ms \n",time_point_4-time_point_3);
+	printf_node_list(result2);
+	int time_point_5=clock();
+    auto result3=my_solution.addTwoNumbers3(a_node_list,b_node_list);
+    int time_point_6=clock();
+	printf("\n \t Time :%d ms \n",time_point_6-time_point_5);
+	printf_node_list(result3);
     //output string
     // std::string output1="";
     // //my result number
@@ -181,34 +307,76 @@ int main(int argc, char const *argv[]) {
     // std::cout<<"result1: "<<my_result1<<"\n"<<"resutl2:"<<my_result2<<std::endl;
 
     //print_vector(my_result);
+	free_list_node(a_node_list);
+	free_list_node(b_node_list);
+	free_list_node(result1);
+	free_list_node(result2);
+	free_list_node(result3);
     return 0;
 }
 /*
 //优质解答：
-//思路一样，分开统计
+//思路一样，代码更加简洁，主要是只用了2个工作指针，所以速度变了，内存增大了
 
-  string res;
-		int leftCount = 0, rightCount = 0;
-		int startIndex = 0;
-		for (size_t i = 0; i < S.length(); i++)
-		{
-			if (S[i] == '(')
-			{
-				if (rightCount == 0)
-					startIndex = i;
-				rightCount++;
-			}
-			else if (S[i] == ')')
-			{
-				leftCount++;
-				if (leftCount == rightCount)
-				{
-					res += S.substr(startIndex + 1, i - startIndex - 1);
-					leftCount = 0;
-					rightCount = 0;
-				}
-			}
-		}
-		return res;
+ class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* head1 = l1;
+        ListNode* head2 = l2;
+        ListNode* result = NULL;
+        ListNode* toadd = NULL;
+        
+        bool start = true;
+        result = toadd;
+        int tonext = 0;
+        int cur = 0;
+        while(head1 != NULL || head2 != NULL)
+        {
+            if(head1 != NULL && head2 != NULL)
+            {
+                cout<<head1->val<<" "<<head2->val<<"\n";
+                cur = (head1->val + head2->val + tonext)%10;
+                tonext = (head1->val + head2->val + tonext)/10 ;
+                cout<<"cur: "<<cur<<" tonext: "<<tonext<<"\n";
+                if(toadd == NULL)
+                {
+                    toadd = new ListNode(cur);
+                    result = toadd;
+                }
+                else
+                {
+                    ListNode* ones = new ListNode(cur);
+                    toadd->next = ones;
+                    toadd = ones;
+                }
+                head1 = head1->next;
+                head2 = head2->next;
+            }
+            if(head1 == NULL && head2 != NULL)
+            {
+                cur = (head2->val  + tonext)%10;
+                tonext = (head2->val  + tonext)/10;
+                ListNode* ones = new ListNode(cur);
+                toadd->next = ones;
+                toadd = ones;
+                head2 = head2->next;
+            }
+           if(head1 != NULL && head2 == NULL)
+            {
+                cur = (head1->val  + tonext)%10;
+                tonext = (head1->val  + tonext)/10;
+                ListNode* ones = new ListNode(cur);
+                toadd->next = ones;
+                toadd = ones;
+                head1 = head1->next;
+            }
+        }
+        if(tonext > 0)
+        {
+            if(toadd != NULL)
+                toadd->next  = new ListNode(tonext);
+        }
+        return result;
     }
+};
 */
