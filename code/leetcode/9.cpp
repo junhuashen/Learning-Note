@@ -80,6 +80,7 @@ public:
             x2+=temp%10;
             temp/=10;
         };
+        //注意奇数位的时候
         if(i%2==1){temp/=10;}
         if(temp==x2){
             return true;
@@ -129,7 +130,7 @@ class Solution {
 public:
     bool isPalindrome(int x) {
         if(x<0){return false;}
-        if(x<10){return true;}
+        //if(x<10){return true;}
         int i,temp=x;
         for(i=0;temp!=0;i++){
             temp/=10;
