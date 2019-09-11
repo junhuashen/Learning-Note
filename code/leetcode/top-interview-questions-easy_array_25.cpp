@@ -23,7 +23,7 @@ data-time 2019-09-04 20:42:56
 链接:https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/1/array/25/
 /*
 
-主要思路：1.主要思路：先对两个数组进行排序，然后借助额外的子空间分别进行查找，查找到相同的就输出。否则持续查找下一个
+主要思路：1.这个题目可以使用位运算来进行，偶数次亦或结果为0。这样可以快速查找对应的唯一不同数。
 参考链接：https://blog.csdn.net/huanting74/article/details/79742059
 
 		
@@ -36,10 +36,9 @@ data-time 2019-09-04 20:42:56
 #include <string>
 #include <sstream>
 #include <map>
-#include <algorithm>
 using namespace std;
 
-
+//main function
 //关闭流输出
 static auto static_lambda = []()
 {
@@ -47,93 +46,48 @@ static auto static_lambda = []()
     std::cin.tie(0);
     return 0;
 }();
-//main function
 class Solution {
 public:
-    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
-        sort(nums1.begin(),nums1.end());
-        //nums1.erase(unique(nums1.begin(),nums1.end()),nums1.end());
-        sort(nums2.begin(),nums2.end());
-        //nums2.erase(unique(nums2.begin(),nums2.end()),nums2.end());
-        vector<int> result;
-        //接下来进行顺序查找
-        for(int i=0,j=0;i<nums1.size()&&j<nums2.size();)
-        {
-            if(nums1.at(i)==nums2.at(j)){
-                result.push_back(nums1.at(i));
-                ++i;
-                ++j;
-            }else if(nums1.at(i)>nums2.at(j))
-            {
-                ++j;
-            }else{
-                ++i;
-            }
-            
+    int singleNumber(vector<int>& nums) {
+        int result=0;
+        for(int i=0;i<nums.size();++i){
+            result^=nums[i];
         }
         return result;
-
     }
 };
 int main(int argc, char const *argv[]) {
     Solution my_solution;
     //input string
    	//创建第一组数据
-    vector<int> a={4,9,5};
-    vector<int> b={9,4,9,8,4};
+    vector<int> a={2,2,1};
+    vector<int> b={4,1,2,1,2};
 	int time_point_1=clock();
-    auto  result=my_solution.intersect(a,b);
+    auto  result=my_solution.singleNumber(b);
     int time_point_2=clock();
 	printf("\n \t Time :%d ms \n",time_point_2-time_point_1);
     return 0;
 }
 /*
-//优质解答：一样的思路不过将变量都预定义好了，估计会快一点
+//优质解答：先排序再查找去重。注意这里关闭了stdio的同步
 //基本优质解答都在上面了，思路是一样的,但是代码有所区别，这个是leetcode的锅
 class Solution {
 public:
-    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
-        sort(nums1.begin(), nums1.end());
-        sort(nums2.begin(), nums2.end());
-        vector<int> res;
-        int n = nums1.size();
-        int m = nums2.size();
-        int i,j,k;
-        i = 0; j = 0; k = 0;
-        while(i<n && j<m){
-            if(nums1[i] == nums2[j]){
-                res.push_back(nums1[i]);
-                i++;j++;
-            }else if(nums1[i] < nums2[j]){
-                i++;
-            }else{
-                j++;
+    bool containsDuplicate(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        for (size_t i=1; i<nums.size(); ++i) {
+            if (nums[i] == nums[i-1]) {
+                return true;
             }
         }
-        return res;
+        return false;
     }
 };
-思路二借助辅助空间，来记录元素是否被遍历过
 
-class Solution {
-public:
-    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
-        vector<int> result;
-        int size = nums2.size();
-        vector<bool> flags;
-        for(int i=0;i<size;i++){
-            flags.push_back(false);
-        }
-        for(int i=0;i<nums1.size();i++){
-            for(int j=0;j<nums2.size();j++){
-                if(nums1[i]==nums2[j]&&flags[j]==false){//相等并且没有被遍历过
-                    result.push_back(nums1[i]);
-                    flags[j]=true;
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-};
+static const auto kSpeedUp = []() {
+std::ios::sync_with_stdio(false);
+std::cin.tie(nullptr);
+return nullptr;
+}();
+
 */
