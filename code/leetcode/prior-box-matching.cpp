@@ -97,9 +97,9 @@ int main() {
     unsigned long possible_rand[k][4];
     for(unsigned long i=0;i<k;++i){
         unsigned long x_min=target_x-w;
-        unsigned long x_max=target_x+target_w+w-1;
+        unsigned long x_max=target_x+target_w-1;
         unsigned long y_min=target_y-h;
-        unsigned long y_max=target_y+target_h+h-1;
+        unsigned long y_max=target_y+target_h-1;
         possible_rand[i][0]=((x_min>=0)?x_min:0);
         possible_rand[i][1]=((x_max>=p)?p:x_max);
         possible_rand[i][2]=((y_min>=0)?y_min:0);
