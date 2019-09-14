@@ -1,6 +1,8 @@
 {
     "files.associations": {
+        "*.md": "markdown",
         "functional": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "sstream": "cpp"
     }
 }
