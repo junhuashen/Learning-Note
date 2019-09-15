@@ -44,7 +44,7 @@ T     S     G
         1. 根据s大小和 函数确定矩阵大小，temp_size=s.length()/(2*numRows-2)+1;
         2. 分配char矩阵。char char_mat[temp_size]={'0'};
         3. 计算其对应的x和y值
-        时间复杂度为o(n+m2),空间复杂度为O(m^2)
+        时间复杂度为o(n+n*m2),空间复杂度为O(m^2)
 
 
 参考链接： https://blog.csdn.net/xiaomucgwlmx/article/details/87879306
