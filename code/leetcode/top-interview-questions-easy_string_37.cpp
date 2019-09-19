@@ -151,31 +151,64 @@ int main(int argc, char const *argv[]) {
  时间复杂度为O(n)
 class Solution {
 public:
-    int strStr(string haystack, string needle) {
-        if(needle.empty())
-            return 0;
-        
-        int i=0,j=0;
-        while(haystack[i]!='\0'&&needle[j]!='\0')
-        {
-            if(haystack[i]==needle[j])
-            {
-                i++;
-                j++;
-            }
-            else
-            {
-                i=i-j+1;
-                j=0;
-            }//不相同时退回重来
+    int myAtoi(string str) {
+        if(str.size()==0) return 0;
+        int n=0;
+        while(str[n]==' '){//用n来统计前面的空字符串数量
+            ++n;
+            if(n==str.size()) return 0;
         }
-        if(needle[j]=='\0')//如果找到返回位置。
-            return i-j;
-        
-        return -1;
+        int zf=1;//1代表正
+        int sum=0;
+        if(str[n]=='-') zf = -1;//1代表负。检查第一个是否为负号
+        else if(isdigit(str[n])) sum = str[n]-'0';//第一个为数字
+        else if(str[n]!='+') return 0;//如果也不是正号，直接返回，
+        int t;//t用来记录当前的数字
+        while(++n<str.size()&&isdigit(str[n])){//查找其中的数字字符并计算
+            t = (str[n]-'0')*zf;
+            if(sum>INT_MAX/10||(sum==INT_MAX/10&&t>7)) return INT_MAX;  //注意这里的t值当t>7的时候就越界了。
+            if(sum<INT_MIN/10||(sum==INT_MIN/10&&t<-8)) return INT_MIN;
+            sum = sum*10+t;
+        }
+        return sum;
     }
 };
-//优质解答2：KMP算法
 
 
+class Solution {
+public:
+    int myAtoi(string str) {
+        long long sum = 0;
+        int sign = 1;
+        int len = str.length();
+        int i=0;
+        for(; i<len; i++) {
+            if(str[i]!=' ')
+                break;
+        }
+        if(str[i]=='+') {
+            i++;
+        }
+        else if(str[i]=='-') {
+            sign = -1;
+            i++;
+        }
+        else if(str[i]<'0'||str[i]>'9')
+            return 0;
+        while(str[i]=='0' && i<len)
+            i++;
+        for(; i<len; i++) {
+            if(str[i]<'0'||str[i]>'9')
+                break;
+            sum *= 10;
+            sum += (str[i]-'0');
+            if(sign==1 && sum > INT_MAX)
+                return INT_MAX;
+            if(sign==-1 && -sum < INT_MIN)
+                return INT_MIN;
+        }
+        sum *= sign;
+        return sum;
+    }
+};
 */
