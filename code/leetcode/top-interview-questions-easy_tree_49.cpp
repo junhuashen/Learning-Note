@@ -210,7 +210,7 @@ public:
         return true;
     }
     bool isSymmetric(TreeNode* root) {
-        queue<TreeNode*> work_queue;
+         queue<TreeNode*> work_queue;
         work_queue.push(root);
         work_queue.push(root);
         while(!work_queue.empty()){
@@ -220,18 +220,15 @@ public:
             work_queue.pop();
             //注意这两句，很巧妙的运用了逻辑的跳跃
 
-            if(t1==nullptr&&t2==nullptr) {
-                continue;
-            }else{
+            if(t1==nullptr&&t2==nullptr)  continue;
             //这一句是四种情况
             if(t1==nullptr||t2==nullptr) return false;
             if(t1->val!=t2->val) return false;
             //注意这里顺序的交错性
-            if(t1->left!=nullptr) work_queue.push(t1->left);
-            if(t2->right!=nullptr) work_queue.push(t2->right);
-            if(t1->right!=nullptr) work_queue.push(t1->right);
-            if(t2->left!=nullptr) work_queue.push(t2->left);
-            }
+            work_queue.push(t1->left);
+            work_queue.push(t2->right);
+            work_queue.push(t1->right);
+            work_queue.push(t2->left);
         }
         return true;
     }
