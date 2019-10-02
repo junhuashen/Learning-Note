@@ -3,6 +3,8 @@
         "*.md": "markdown",
         "functional": "cpp",
         "*.tcc": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "string_view": "cpp",
+        "tuple": "cpp"
     }
 }
