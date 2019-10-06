@@ -1,32 +1,77 @@
 /* 
-data-time 2019-10-06 10:19:56
+data-time 2019-10-07 19:03:56
 
 
 题目描述:
 
-最大子序和
+10. 正则表达式匹配
 
-给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 '.' 和 '*' 的正则表达式匹配。
 
-示例:
+'.' 匹配任意单个字符
+'*' 匹配零个或多个前面的那一个元素
+所谓匹配，是要涵盖 整个 字符串 s的，而不是部分字符串。
 
-输入: [-2,1,-3,4,-1,2,1,-5,4],
-输出: 6
-解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
-进阶:
+说明:
 
-如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。
+s 可能为空，且只包含从 a-z 的小写字母。
+p 可能为空，且只包含从 a-z 的小写字母，以及字符 . 和 *。
+示例 1:
 
-链接:https://leetcode-cn.com/explore/featured/card/top-interview-questions-easy/23/dynamic-programming/56/
+输入:
+s = "aa"
+p = "a"
+输出: false
+解释: "a" 无法匹配 "aa" 整个字符串。
+示例 2:
+
+输入:
+s = "aa"
+p = "a*"
+输出: true
+解释: 因为 '*' 代表可以匹配零个或多个前面的那一个元素, 在这里前面的元素就是 'a'。因此，字符串 "aa" 可被视为 'a' 重复了一次。
+示例 3:
+
+输入:
+s = "ab"
+p = ".*"
+输出: true
+解释: ".*" 表示可匹配零个或多个（'*'）任意字符（'.'）。
+示例 4:
+
+输入:
+s = "aab"
+p = "c*a*b"
+输出: true
+解释: 因为 '*' 表示零个或多个，这里 'c' 为 0 个, 'a' 被重复一次。因此可以匹配字符串 "aab"。
+示例 5:
+
+输入:
+s = "mississippi"
+p = "mis*is*p*."
+输出: false
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/regular-expression-matching
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 /*
 
-主要思路：1.先暴力一波，直接查找不同长度下序列和的最大值
-        时间复杂度为O(n^2),空间复杂度为O(0);//然并卵，超出时间限制了。
-        2. 直接遍历，设置current_max,当其小于0时，更新当前并重新设置为0；
-        时间复杂度为O(n),空间复杂度为O(1);
-        https://blog.csdn.net/derrantcm/article/details/46736967
-        
+主要思路：
+        假设我们有：
+        s = "abadddffghi"
+        p = "a.ad*.*gh."
+
+        我们去分析s,p是否match时，会从左往右依次比较，对于当前比较的两个char来说，p中的字符是我们需要重点关注的，因为特殊字符只会出现在p中； 
+        [1]p中如果是普通字符（或 .），直接比较是否与s对应的相等，不相等直接返回false，判断结束；
+        [2]p如果遇到*，处理起来就比较麻烦了。比较好的一种方法是利用递归。
+            1,将当0处理，则直接从将p的当前位置向后移动一位与s当前位置进行比较；
+            2,将当任意非零数字处理，则需要判断该符号前的元素重复需要的次数后是否能与s对应匹配，这里如果用逻辑判断或比较麻烦，应该用递归的方法去做。举例如下：
+
+        作者：edward_wang
+        链接：https://leetcode-cn.com/problems/regular-expression-matching/solution/di-gui-fa-jie-zheng-ze-biao-da-shi-pi-pei-by-edwar/
+        来源：力扣（LeetCode）
+        著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 */
 
 #include <iostream>
@@ -54,71 +99,171 @@ static auto static_lambda = []()
 //main function
 class Solution {
 public:
-    int maxSubArray1(vector<int>& nums) {
-        if(nums.size()<2){
-            return nums[0];
+    bool IsSameChar(char & char1,char &char2){
+        if(char2=='.'){
+            return true;
+        }else{
+            return (char1==char2);
         }
-        int result=INT_MIN;
-        for(int i=1;i<nums.size();++i){//定义子数组长度
-            int temp_result=INT_MIN;
-            for(int j=0;j<=nums.size()-i;++j){//设置滑动窗口
-                long temp=0;
-                for(int k=0;k<i;++k){//
-                    temp+=nums.at(k+j);
-                }
-                temp_result=(temp_result>temp)?temp_result:temp;
-            }
-            result=(result>temp_result)?result:temp_result;
-        }
-        return result;
     }
-    int maxSubArray(vector<int> & nums){
-        if(nums.size()<2){
-            return nums[0];
+    //存在测试用例未通过
+    bool isMatch1(string s, string p) {
+        int i,j;
+        char work_ptr1,work_ptr2;
+        int p_len=p.size();
+        i=j=0;
+        while(i<s.size()){
+            //已经越界
+            if(j>=p_len){
+                return false;
+            }
+            work_ptr1=s.at(i);
+            work_ptr2=p.at(j);
+            //先判断是否是*
+            if(work_ptr2=='*'){
+                //如果是*并且和其前一个相同，直接指向下一次
+                if(j<p_len&&j>0){
+                    while(IsSameChar(s.at(i),p.at(j-1))){
+                        //这里提前预测一下，只会被执行一次
+                        if(i+1<s.size()&&!IsSameChar(s.at(i+1),p.at(j-1))){
+                            ++j;//执行跳过
+                        }
+                        ++i;
+                        if(i>=s.size()){break;}
+                    }
+                }
+                
+            }
+            if(i>=s.size()){break;}
+            //先判断是否相等
+            if(i<s.size()&&j<p_len&&IsSameChar(s.at(i),p.at(j))){
+                ++j;
+                //查看下一位是否是'*'
+            }else if(i<s.size()&&j+1<p_len&&p.at(j+1)=='*'){
+                //如果是跳过这两个数，并假装这两个数不存在
+                j+=2;
+                continue;
+            }else{//不同，也没有保命符，就死定了
+                return false;;
+            }
+            ++i;
         }
-        int result=INT_MIN;
-        int current_max=0;
-        for(int i=0;i<nums.size();++i){
-            current_max+=nums.at(i);
-            result=(current_max>result)?current_max: result;
-            if(current_max<0) current_max=0;
+         if(j<=p_len-1&&s.size()<p.size()){
+            return false;
         }
-        return result;
+        return true;
+    }
+    //真正题解
+    bool isMatch(string s, string p) {
+        if (p.empty()) return s.empty();    //判断是否为空
+
+        bool first_match = !s.empty() && (s[0] == p[0] || p[0] == '.'); //比较s,p当前指向s[0],p[0];
+        //如果第二个是"*"的特殊情况
+        if (p.length() >= 2 && p[1] == '*') {   //特殊情况下的处理，这个是关键
+            //对应特殊情况下的两个选择
+            //return isMatch(s,p.substr(2))表示跳过*去匹配
+            //return first_match && isMatch(s.substr(1),p)表示p借助*去匹配s中的重复元素
+            //采用将s首元素不断右移的方法，递归处理
+            //用||连接，起到很巧妙的作用
+            return isMatch(s, p.substr(2)) || (first_match && isMatch(s.substr(1), p)); //调用次数问题
+            //如果first_match已经为false，那么  &&后面的isMatch还会被继续调用么？
+        } else {
+            return first_match && isMatch(s.substr(1), p.substr(1));
+        }
     }
 };
 int main(int argc, char const *argv[]) {
     Solution my_solution;
     //input string
    	//创建第一组数据
-    vector<int> vector_temp={-2,1,-3,4,-1,2,1,-5,4};
+    vector<int> vector_temp={2,7,9,3,1};
     vector<int> vector_temp2={2,5,6};
-  
+    string str1="aaa";
+    string str2="ab*a*c*a";
     int test_int=1; 
 	int time_point_1=clock();
-    auto result=my_solution.maxSubArray(vector_temp);
+    auto result=my_solution.isMatch(str1,str2);
     int time_point_2=clock();
 	printf("\n \t Time :%d ms \n",time_point_2-time_point_1);
     return 0;
 }
 /*
-//优质解答：利用辅助空间来存储当前位置的累加和的最大值，如果前一个为正则当前最大值是前一个值加上当前值，否则就是当前值
+//优质解答：利用max_money_pre指向之前的最大的指针，max_money_current指向当前的最大值进行更新，这里主要是使用了一个快慢指针进行指向迭代
 时间复杂度O(n),空间复杂度O(1);
 
 class Solution {
 public:
-    int maxSubArray(vector<int>& nums) {
-        int n = nums.size(), ans = INT_MIN;
-        vector<int> dp(n, 0);
-        dp[0] = nums[0];
-        for (int i=1; i<n; i++) {
-            if (dp[i-1]>0) dp[i]= nums[i]+dp[i-1];
-            else dp[i] = nums[i];
+    bool isMatch(string s, string p) {
+        int slen = s.size();
+        int plen = p.size();
+        //if(slen == 0 && plen == 0) return true;
+        //if(plen == 0) return false;
+        vector<vector<bool>> b(slen + 1, vector<bool>(plen + 1, false));
+        for(int i = 0; i <= slen; i++) {
+            for(int j = 0; j <= plen; j++) {
+                if(i == 0 && j == 0) {
+                    b[i][j] = true;
+                    continue;
+                }
+                if(j == 0) {
+                    b[i][j] = false;
+                    continue;
+                }
+                if(p[j - 1] != '*') {
+                    if(i > 0 && (p[j - 1] == '.' || p[j - 1] == s[i - 1]))
+                        b[i][j] = b[i - 1][j - 1];
+                }
+                else {
+                    if(j >= 2) {
+                        b[i][j] = b[i][j] || b[i][j - 2];
+                        if(i >= 1 && (p[j - 2] == '.' || p[j - 2] == s[i - 1])) {
+                            b[i][j] = b[i][j] || b[i - 1][j];
+                        }
+                    }
+                    
+                }
+            }
         }
-        for (auto d:dp) ans = max(d, ans);
-        return ans;
-        
+        return b[slen][plen];
     }
 };
 
-}
+//优质解答:借助辅助空间进行计算，只不过借助了两个数组空间，避免了对前面最大值的查找。
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int sLen = s.size(), pLen = p.size();
+        //创建辅助的存储数组
+		bool memory[sLen+1][pLen+1] = {0};
+		//将原始值设置为true
+        memory[0][0] = true;
+		//遍历两个子串
+        for(int i = 0; i <= sLen; i++) {
+			for(int j = 1; j <= pLen; j++) {
+				//如果前一个值是'*'
+                if(p[j-1] == '*') {//注意这里主要是为了检测
+                    //对应存贮的值：之前是否成立|| ((当前值等于s的前一个值|| p[j-2]=='.') &&  memory[i-1][j]);
+					memory[i][j] = memory[i][j-2] || (i > 0 && (s[i-1] == p[j-2] || p[j-2] == '.') && memory[i-1][j]);
+				}else {
+                    //否则直接进行正常比较
+
+					memory[i][j] = i > 0 && (s[i-1] == p[j-1] || p[j-1] == '.')
+									&& memory[i-1][j-1];
+				}
+			}
+		}
+		return memory[sLen][pLen];
+    }
+};
+因为题目拥有最优子结构 ，一个自然的想法是将中间结果保存起来。
+我们通过用 dp(i,j)表示 text[i:]和 pattern[j:]是否能匹配。我们可以用更短的字符串匹配问题来表示原本的问题。
+
+算法
+
+我们用 [方法 1] 中同样的回溯方法，除此之外，因为函数 match(text[i:], pattern[j:]) 只会被调用一次，我们用dp(i, j)来应对剩余相同参数的函数调用，这帮助我们节省了字符串建立操作所需要的时间，也让我们可以将中间结果进行保存。
+
+作者：LeetCode
+链接：https://leetcode-cn.com/problems/regular-expression-matching/solution/zheng-ze-biao-da-shi-pi-pei-by-leetcode/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 */
