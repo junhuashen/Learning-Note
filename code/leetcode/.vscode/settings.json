@@ -5,6 +5,7 @@
         "*.tcc": "cpp",
         "sstream": "cpp",
         "string_view": "cpp",
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "algorithm": "cpp"
     }
 }
