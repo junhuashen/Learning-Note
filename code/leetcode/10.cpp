@@ -72,6 +72,8 @@ p = "mis*is*p*."
         链接：https://leetcode-cn.com/problems/regular-expression-matching/solution/di-gui-fa-jie-zheng-ze-biao-da-shi-pi-pei-by-edwar/
         来源：力扣（LeetCode）
         著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+        官方题解链接：
+            https://leetcode-cn.com/problems/regular-expression-matching/solution/zheng-ze-biao-da-shi-pi-pei-by-leetcode/
 */
 
 #include <iostream>
@@ -188,6 +190,30 @@ int main(int argc, char const *argv[]) {
     return 0;
 }
 /*
+//优质解答：如果没有‘*’号直接进行比较，如果模式串中有‘*’，它会出现在第二个位置即pattern[1];
+class Solution {
+     bool isMatch(string text, string pattern) {
+         //二者同时为empty时，直接返回true
+
+        if (pattern.empty()) return text.empty();
+        //判断前面第一个字符是否相同
+        boolean first_match = (!text.empty() &&
+                               (pattern.charAt(0) == text.charAt(0) || pattern.charAt(0) == '.'));
+
+        if (pattern.length() >= 2 && pattern.charAt(1) == '*'){
+            return (isMatch(text, pattern.substring(2)) ||
+                    (first_match && isMatch(text.substring(1), pattern)));
+        } else {
+            return first_match && isMatch(text.substring(1), pattern.substring(1));
+        }
+    }
+}
+
+作者：LeetCode
+链接：https://leetcode-cn.com/problems/regular-expression-matching/solution/zheng-ze-biao-da-shi-pi-pei-by-leetcode/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 //优质解答：利用max_money_pre指向之前的最大的指针，max_money_current指向当前的最大值进行更新，这里主要是使用了一个快慢指针进行指向迭代
 时间复杂度O(n),空间复杂度O(1);
 
@@ -201,6 +227,7 @@ public:
         vector<vector<bool>> b(slen + 1, vector<bool>(plen + 1, false));
         for(int i = 0; i <= slen; i++) {
             for(int j = 0; j <= plen; j++) {
+                //第一个肯定是true
                 if(i == 0 && j == 0) {
                     b[i][j] = true;
                     continue;

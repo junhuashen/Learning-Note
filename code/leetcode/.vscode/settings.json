@@ -6,6 +6,9 @@
         "sstream": "cpp",
         "string_view": "cpp",
         "tuple": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "cmath": "cpp",
+        "complex": "cpp",
+        "set": "cpp"
     }
 }
