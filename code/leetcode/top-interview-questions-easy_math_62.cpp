@@ -140,13 +140,11 @@ public:
             return false;
     }
 };
-/*
-算法思路：
-判断是否是3的幂，直接求对数：log3(n).
-若结果为整数，true，若不是整数.false.
-%1,查看余数是否为0，用来判断是否为整数
-采用换底公式
-*/
+// 算法思路：
+// 判断是否是3的幂，直接求对数：log3(n).
+// 若结果为整数，true，若不是整数.false.
+// %1,查看余数是否为0，用来判断是否为整数
+// 采用换底公式
 class Solution {
 public:
     bool isPowerOfThree(int n) {
