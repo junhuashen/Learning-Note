@@ -18,7 +18,7 @@ data-time 2019-10-11 09:50:56
   [-1, -1, 2]
 ]
 
- 
+问题链接： https://leetcode-cn.com/explore/interview/card/top-interview-questions-medium/29/array-and-strings/75/
 
 主要思路 1.暴力破解法：先将数组进行排序，然后选取两个不同index的数，计算第三个数的值，查找第三个数，找到了就添加。否则不管
             时间复杂度O(n^3);空间复杂度O(0);然而超时了，所以需要复杂度更低的算法
