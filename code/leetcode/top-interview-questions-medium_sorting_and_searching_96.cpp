@@ -58,7 +58,7 @@ bool isBadVersion(int version);
 //main function
 class Solution {
 public:
-    void sortColors(vector<int>& nums) {
+    void sortColors1(vector<int>& nums) {
         if(nums.empty()) return ;
         vector<int> nums_count={0,0,0};
         for(auto temp : nums){
@@ -75,13 +75,30 @@ public:
             }
         }
     }
+    void sortColors(vector<int> &nums){
+        
+        int left=0;
+        int right= nums.size()-1;
+        for(int i = 0; i <=right;){
+            if(nums[i]==0){
+                swap(nums[i], nums[left]);
+                ++left;
+                ++i;
+            }else if(nums[i]==2){
+                swap(nums[i], nums[right]);
+                --right;
+            }
+            ++i;
+        }
+    }
+    
 };
 int main(int argc, char const *argv[]) {
     Solution my_solution;
     //input string
    	//创建第一组数据
     vector<int> vector_temp={1,2,3,0,0,0};
-    vector<int> vector_temp2={1,0};
+    vector<int> vector_temp2={1,2,0};
   
     int test_int=1; 
 	int time_point_1=clock();
@@ -91,6 +108,8 @@ int main(int argc, char const *argv[]) {
     return 0;
 }
 /*
+https://leetcode-cn.com/problems/sort-colors/solution/yan-se-fen-lei-by-leetcode/
+
 //优质解答：使用左右指针分别记录最大和最小值的index;l是0的最右端，r是2的最左端
     遍历如果值是0将其与l交换，更新l值；如果值是2；将其与r的前一个交换，更新最r
 时间复杂度O(n),空间复杂度O(2);
@@ -133,7 +152,7 @@ public:
             ++i;
         }
     }
-}
+};
 
 //优质解答3： 直接使用冒泡排序
 时间复杂度O(n(n-1)/2) 空间复杂度O(2)
@@ -152,4 +171,32 @@ public:
         
     }
 };
+//优质解答4：
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int l = 0;
+        int r = nums.size() - 1;
+        int one = 0;
+        int i = l;
+        while (i <= r) {
+            if (nums[i] == 1) {
+                ++one;
+                ++i;
+            } else if (nums[i] < 1) {
+                swap(nums[l++], nums[i]);
+                if (nums[i] == 1) ++i;
+                i = max(i, l);
+            } else {
+                swap(nums[r--], nums[i]);
+            }
+        }
+        for (int i = 0; i < one; ++i) nums[i + l] = 1;
+    }
+};
+
+作者：da-li-wang
+链接：https://leetcode-cn.com/problems/sort-colors/solution/c-yi-ci-bian-li-0ms-by-da-li-wang/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 */
