@@ -25,6 +25,8 @@ data-time 2019-10-27 14:10:56
 输入: nums = [4,5,6,7,0,1,2], target = 3
 输出: -1
 
+链接： https://leetcode-cn.com/explore/interview/card/top-interview-questions-medium/50/sorting-and-searching/102/
+
 主要思路：1. 首先使用二分查找，查找对应的拐点的值。正常设置left和right的初始值，然后比较大小，mid=(left+right)/2;如果left<= right;顺序正常，直接跳出。
             nums[mid+1]<mus[mid]就找到了对应值，>则left=mid+1;right=mid-1;
             找到mid之后，分别二分查找左右两边的值。
@@ -72,6 +74,8 @@ public:
         return result;
     }
     int search(vector<int>& nums, int target) {
+        if(nums.empty())
+            return -1;
         int result=-1;
         //先使用二分法查找分界点
         int left=0;
@@ -155,7 +159,7 @@ public:
             //左值小于中间值，表示有序注意这里的等于
             if(nums[l]<=nums[mid])
             {
-                //target是否在这个范围而内
+                //target是否在这个范围而内；注意这里的等于和下面的r=mid是为了保证更新值时不越界
                 if(nums[l]<=target&&target<nums[mid])
                     //是则更新右边界
                     r=mid;
