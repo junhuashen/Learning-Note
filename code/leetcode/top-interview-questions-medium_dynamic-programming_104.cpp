@@ -104,7 +104,6 @@ int main(int argc, char const *argv[]) {
     return 0;
 }
 /*
-https://leetcode-cn.com/problems/find-peak-element/solution/xun-zhao-feng-zhi-by-leetcode/
 
 //优质解答1：1.记录从0开始  最多能走几步mx再在能走的路径上更新mx最后看mx与 len -1 比.设置了max中间值，避免了重复返回遍历
 时间复杂度O(n) 空间复杂度O(0)
@@ -122,7 +121,8 @@ public:
     }
 };
 
-//优质解答2：
+//优质解答2：和我的思路基本相同
+时间复杂度O(n*(n-1)/2) 空间复杂度O(0);
 class Solution {
 public:
     bool canJump(vector<int>& nums) {
@@ -139,6 +139,7 @@ public:
             if (breakLoop > 5){
                 return false;
             }
+            //查找这个范围内的最大值
             int tmpNum = maxNumInArray(nums, i, i+nums[i]);
             maxBound = tmpNum + nums[tmpNum];
             i = tmpNum;
@@ -159,7 +160,22 @@ public:
         return index;
     }
 };
+//优质解答3：遍历更新last_pos
+时间复杂度O(n);空间复杂度O(0)
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int last_pos = nums.size()-1;
+        for(int i = last_pos-1;i>=0;i--)
+        {
+            if(i+nums[i]>=last_pos)
+                last_pos = i;
+        }
+        return last_pos == 0;
+    }
+};
+
 官方题解:
 
-https://leetcode-cn.com/problems/merge-intervals/solution/he-bing-qu-jian-by-leetcode/
+https://leetcode-cn.com/problems/jump-game/solution/tiao-yue-you-xi-by-leetcode/
 */
