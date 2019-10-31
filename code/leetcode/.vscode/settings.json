@@ -60,6 +60,11 @@
         "memory_resource": "cpp",
         "random": "cpp",
         "string": "cpp",
-        "forward_list": "cpp"
+        "forward_list": "cpp",
+        "csignal": "cpp",
+        "codecvt": "cpp",
+        "condition_variable": "cpp",
+        "future": "cpp",
+        "mutex": "cpp"
     }
 }
