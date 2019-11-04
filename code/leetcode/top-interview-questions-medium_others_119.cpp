@@ -94,6 +94,7 @@ public:
         {
             //int carry = (a&b)<<1; //错误，负数处理失败
             int carry = ((unsigned int ) (a & b))<<1 ; //对有符号左移的溢出保护处理，强制转换无符号位
+            //进行亦或操作，相当于进行了一次加法
             a=a^b;
             b=carry;
         }
