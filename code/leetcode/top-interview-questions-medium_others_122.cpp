@@ -27,10 +27,13 @@ n 的取值范围为 [0, 100]。
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 
-主要思路：1.没什么好说的，直接使用map进行数字和出现次数的统计；
-        时间复杂度O(n);空间复杂度O(n);
-        2. 先排序，然后直接返回n/2 index的数
-        时间复杂度O(n*log(n));空间复杂度O(0)
+主要思路：先遍历统计，每个字母出现的频率，然后按照降序排列，找到频率最多的那个数组，中间插空，需要插入插入(n-1)个字母。
+        至少需要count[0]-1个空，因此最少需要（count[0]-1）*(n-1)。剩下的最高的字母A,然后将最后一个加上，
+        整理到最后公式就为：count[25]-1*(n+1) + 25-temp （25-temp为频率最高的字母的个数）。
+        如果刚好插满的情况下，也就是不用待命的时候，所需时间为数组的长度。
+        而此时如果用上述公式计算的话，可能会出现时间小于数组的时候，所以，应该返回他和剩余所有数之中两个之中比较大的那个。
+        时间复杂度O(n),空间复杂度O(26)
+        https://blog.csdn.net/qq_38595487/article/details/79977315
 
 */
 #include <iostream>
@@ -57,22 +60,33 @@ static auto static_lambda = []()
     std::cin.tie(0);
     return 0;
 }();
+
+bool cmp(std::pair<bool,int>& left, std::pair<bool,int>& right){
+    return left.second>right.second;
+}
+struct CmpByKeyLength {
+	bool operator()(std::pair<int,int>& left, std::pair<int,int>& right) {
+		return left.second< right.second;
+	}
+};
+
 //main function
 class Solution {
 public:
-    int majorityElement(vector<int>& nums) {
-        if(nums.size()==1) return nums[0]; 
-        int length=nums.size();
-        std::map<int,int> temp_map;
-        for(int key:nums){
-            if(temp_map.find(key)== temp_map.end()){
-                temp_map[key]=1;
-            }else{
-                ++temp_map[key];
-            }
-            if(temp_map[key]>length/2) return key;
+    int leastInterval(vector<char>& tasks, int n) {
+        int tasks_size=tasks.size();
+        vector<int> nums(26,0);
+        for(auto temp_char:tasks){
+            ++nums[temp_char-'A'];
         }
-        return nums[0];
+        sort(nums.begin(), nums.end());
+        //最多有25个字母和频率最高的相同频率
+        int temp=25;
+        //查找剩下的25个字母中和它相同的数，后面会有延伸
+        while(temp>=0&&nums[25]==nums[temp]){
+            temp--;
+        }
+        return max((nums[25]-1)*(n+1)+25-temp,tasks_size);
     }
 };
 
@@ -82,115 +96,97 @@ int main(int argc, char const *argv[]) {
     vector<int> vector_temp={2,2,1,1,1,2,2};
     vector<int> vector_temp2={2,5,6};
     vector<string> vector_string={"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"};
+    vector<char> vector_char={'A','A','A','B','B','B'};
     Solution my_solution;
     int test_int=1; 
 	int time_point_1=clock();
-    auto result=my_solution.majorityElement(vector_temp);
+    auto result=my_solution.leastInterval(vector_char,2);
     int time_point_2=clock();
 	printf("\n \t Time :%d ms \n",time_point_2-time_point_1);
     return 0;
 }
 /*
-//优质解答1：先排序，然后直接返回，index为其一般的数。
+//优质解答1：思路相同，不过使用的max_num来统计最大值
 时间复杂度O(log(n));空间复杂度O(0)
 
 class Solution {
 public:
-    int majorityElement(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
-        return(nums[nums.size()/2]);
-    }
-};
-
-//优质解答2：使用conut进行计数，找出，出现次数超过一般的数
-
-class Solution {
-public:
-    int majorityElement(vector<int>& nums) {
-        int size = nums.size();
+    int leastInterval(vector<char>& tasks, int n) {
+        vector<int> num(26, 0);
+        int max_num = 0;
+        for (auto c: tasks) {
+            max_num = max(++num[c-'A'], max_num);
+        }
         int count = 0;
-        int value;
-        for (int i = 0; i < nums.size(); ++i) {
-            if (count == 0) {
-                value = nums[i];
-                count = 1;
-            } else if (nums[i] == value){
+        //统计最大量的数目
+        for (auto n: num) {
+            if (n == max_num)
                 ++count;
-            } else {
-                --count;
-            }
         }
-        return value;
-    }
-};
-//优质解答3：
-class Solution {
-public:
-    // unordered_map
-    int majorityElement(vector<int>& nums) {
-        int len = nums.size() / 2;
-        
-        unordered_map<int, int> numsmap;
-        for (int num : nums) {
-            numsmap[num]++;            
-            if (numsmap[num] > len)
-                return num;
-        }
-        return -1;
-    }
-    
-    // 先排序，再直接找
-    int majorityElement(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
-        return nums[nums.size()/2];
-    }
-    // 摩尔投票法
-    int majorityElement(vector<int>& nums) {
-        int ret = -1;
-        int count = 0;
-        
-        for(int num : nums) {
-            if(count == 0) {
-                ret = num;
-            }
-            (ret == num) ? ++count : --count;
-        }
-        return ret;      
-    }
-    
-};
-//优质解答4：使用位运算，因为众数数组中出现次数大于n/2；则众数对应的二进制每个为1的位数出现的次数一定大于n/2;
-//时间复杂度O(n*32) 空间复杂度O(0)
-class Solution {
-public:
-    int majorityElement(vector<int>& nums) {
-       int result = 0, k = nums.length >> 1;//k除以2
-        //循环遍历所有位数
-        for (int j = 0; j < 32; j++) {
-            //输入统计，各个位上的统计
-            int count = 0;
-            //遍历数组
-            for (int num : nums) {
-                //统计j位中1出现的次数
-                count += num >> j & 1;
-                //次数大于k直接跳出循环
-                if (count > k) {
-                    result += 1 << j;
-                    break;
-                }
-            }
-        }
-        return result;
+        return max_num*count
+            + max((int)tasks.size() - max_num*count,
+                  (n - count + 1)*(max_num - 1));
     }
 };
 
-作者：mxNHujryVX
-链接：https://leetcode-cn.com/problems/majority-element/solution/java-wei-yun-suan-by-mxnhujryvx/
-来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+//优质解答2：思路相同
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        int t=tasks.size();
+        vector<int> cnt(26,0);
+        for(int i=0;i<t;++i){
+            cnt[tasks[i]-'A']++;
+        }
+        sort(cnt.begin(),cnt.end(),greater<int>());
+        int i=0;
+        int mx=cnt[0];
+        while(i<26 && cnt[i]==mx){
+            i++;
+        }
+        
+        int res=max(t, (mx-1)*(n+1)+i);
+        return res;
+    }
+};
+//优质解答3：思路相同，关闭了IO同步
+int __x__ = []() ->int{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    return 1010;
+}();
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        // 基本思路就是先执行最多的任务（A），然后执行第二多（B），以此类推
+        // 在最多的任务（A）被执行后的时间，一到n就再次执行A，以便降低最后的冷却时间，从而使时间最短
+        // 最短时间是与最多次数的任务直接相关的
+        
+        // 解法
+        int task[26] = {0}; // 初始化一个全为0的任务数组，用来统计任务数量
+        int length = tasks.size();
+        // 1.先遍历一遍列表，求出任务种类数和每种任务的数量
+        for(auto it = tasks.begin(); it != tasks.end(); it++)
+        {
+            task[(*it-'A')]++;
+        }
+        sort(task, task+26); // 对任务数组进行升序排列
+        int maxTask = task[25]; // 最多的任务次数
+        int cntTask = (maxTask - 1) * (n + 1) + 1; // 最少要执行的任务次数
+        for(int i = 24; i >= 0 && task[i] == maxTask; i--)
+        {
+            cntTask++;
+        }
+        // 当间隔可以容纳下所有的任务时，返回cntTask，当间隔不能满足时，返回数组长度
+        return cntTask > length ? cntTask : length;
+    }
+};
+
+
 
 官方题解：
-https://leetcode-cn.com/problems/majority-element/solution/qiu-zhong-shu-by-leetcode-2/
+https://leetcode-cn.com/problems/task-scheduler/solution/ren-wu-diao-du-qi-by-leetcode/
 优质解析：
 https://leetcode-cn.com/problems/majority-element/solution/du-le-le-bu-ru-zhong-le-le-ru-he-zhuang-bi-de-qiu-/
 */
