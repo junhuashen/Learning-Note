@@ -189,5 +189,9 @@ public:
         return res;
     }
 };
+<<<<<<< HEAD
+=======
+//优质解答4:
+>>>>>>> 49fdcf0f840dfe67cfd9b5165b287c11e73829b4
 
 */
