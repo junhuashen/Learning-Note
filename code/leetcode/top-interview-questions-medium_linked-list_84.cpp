@@ -171,7 +171,7 @@ int main(int argc, char const *argv[]) {
     PrintfList(node_ptr);
     int test_int=1; 
 	int time_point_1=clock();
-    auto result=my_solution.oddEvenList(node_ptr);
+    auto result=my_solution.getIntersectionNode(node_ptr,node_ptr2);
     int time_point_2=clock();
 	printf("\n \t Time :%d ms \n",time_point_2-time_point_1);
     DeleteList(node_ptr);
@@ -189,6 +189,7 @@ int main(int argc, char const *argv[]) {
     然后将两个链表临时头指针每滑动一次比较一次，如果相等，该节点即为相交的节点，滑动到链表最后都不存在相同的节点，则说明链表不想交
 //https://leetcode-cn.com/problems/intersection-of-two-linked-lists/solution/xiang-jiao-lian-biao-by-leetcode/
 //https://leetcode-cn.com/problems/intersection-of-two-linked-lists/solution/tu-jie-xiang-jiao-lian-biao-by-user7208t/
+
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
