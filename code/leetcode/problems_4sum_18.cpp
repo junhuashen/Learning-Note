@@ -128,6 +128,7 @@ int main(int argc, char const *argv[]) {
    	//创建第一组数据
     vector<int> vector_temp={1,0,-1,0,-2,2};
     vector<int> vector_temp2={-3,-2,-1,0,0,1,2,3};
+    vector_temp2.erase
     vector<string >temp={"eat","tea","tan","ate","nat","bat"
                         };
 	int time_point_1=clock();
