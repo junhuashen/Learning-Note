@@ -5,6 +5,7 @@ data-time 2019-11-05 19:08:56
 题目描述:
 
 Product of Array Except Self
+
 给定长度为 n 的整数数组 nums，其中 n > 1，返回输出数组 output ，其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。
 
 示例:
@@ -189,9 +190,5 @@ public:
         return res;
     }
 };
-<<<<<<< HEAD
-=======
-//优质解答4:
->>>>>>> 49fdcf0f840dfe67cfd9b5165b287c11e73829b4
 
 */
