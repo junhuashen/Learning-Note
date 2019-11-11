@@ -29,9 +29,9 @@ data-time 2019-10-01 20:06:56
 
 /*
 
-主要思路：这里主要还是考察的树的遍历，将左右子树的左右子节点访问顺序交换，将两次遍历的结果保存在vector数组中，最后比较两个vector是否相同即可
+主要思路：1. 这里主要还是考察的树的遍历，将左右子树的左右子节点访问顺序交换，将两次遍历的结果保存在vector数组中，最后比较两个vector是否相同即可
         时间复杂度O(n),空间复杂度O(n)
-        先使用层序遍历，将每一层的值都存储在一个queue向量中，每次取队头和队尾进行比较，要值和左右节点状况完全相同则继续，否则直接return false;
+        2. 先使用层序遍历，将每一层的值都存储在一个queue向量中，每次取队头和队尾进行比较，要值和左右节点状况完全相同则继续，否则直接return false;
         时间复杂度为O(n^2);空间复杂度为O(n);
 */
 
@@ -162,18 +162,12 @@ public:
         int cnt=0;
         if(root){work_queue.push(root);}else{return true;}
         if(root->left==nullptr&&root->right==nullptr){return true;}
-        if(root->left==nullptr&&root->right!=nullptr){
-            return false;
-        }
-        if(root->right==nullptr&&root->left!=nullptr){
-            return false;
-        }
-        if(root->right->val!=root->left->val){
-            return false;
-        }
+        if(root->left==nullptr||root->right==nullptr) return false;
+        if(root->right->val!=root->left->val) return false;
         while(!work_queue.empty()){
             vector<TreeNode* > layer;
             cnt=work_queue.size();
+            //将下一层全部压入队列
             while(cnt--){
                 work_pointer=work_queue.front();
                 work_queue.pop();
@@ -186,7 +180,7 @@ public:
                 }
             }
             int length=layer.size();
-            //这里开始校验数据是否対称
+            //这里开始校验本层数据是否対称，
             for(int i=0;i<length/2;++i){
                 TreeNode* left_node=layer.at(i);
                 TreeNode* right_node=layer.at(length-1-i);
