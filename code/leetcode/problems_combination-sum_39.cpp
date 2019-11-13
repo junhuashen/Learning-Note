@@ -44,8 +44,8 @@ candidates 中的数字可以无限制重复被选取。
         2.暴力破解，因为可以确定结果中的vector的最长数k，因此可以使用2^k进行模拟其中每一个数，然后进行计算是否为目标，
         为目标就添加上，否则就就继续。之后进行排序，并删除相同的元素。
         时间复杂度（length^k）;其中length表示输入的数据的长度。
-
 */
+
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -86,7 +86,7 @@ public:
         //有它
         temp_result.push_back(candidates[start_index]);
         checkSum(candidates,result,start_index,temp_result,target-candidates[start_index]);
-        //没有它，注意前后变换，这个一定要在后面
+        //没有它，注意前后变换，这个一定要在后面,否则会有重复值，因为会有重叠
         temp_result.pop_back();
         checkSum(candidates,result,start_index+1,temp_result,target);
 
@@ -95,7 +95,6 @@ public:
         //注意这里先排序
         sort(candidates.begin(),candidates.end());
         vector<vector<int>> result;
-        
         vector<int> temp_result;
         checkSum(candidates,result,0,temp_result,target);
         return result;
@@ -178,4 +177,6 @@ public:
         return result;
     }
 };
+//优质解析：
+https://leetcode-cn.com/problems/combination-sum/solution/hui-su-suan-fa-jian-zhi-python-dai-ma-java-dai-m-2/
 */
