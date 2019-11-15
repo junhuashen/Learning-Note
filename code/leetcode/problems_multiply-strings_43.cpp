@@ -36,9 +36,11 @@ num1 和 num2 均不以零开头，除非是数字 0 本身。
         2. 使用正向遍历法，先使用定长空间来存储各个位上的结果。然后使用双重遍历两个数组，计算不同位上的结果，并保存在vector中
         时间复杂度O(m*n);空间复杂度O(n)
         3. 直接将其拆成加法来做，先实现字符串加法，再依次进行乘法。
+
 */
 
 #include <iostream>
+#include <opencv.hpp>
 #include <vector>
 #include <cmath>
 #include <time.h>
