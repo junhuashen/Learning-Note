@@ -40,7 +40,6 @@ num1 和 num2 均不以零开头，除非是数字 0 本身。
 */
 
 #include <iostream>
-#include <opencv.hpp>
 #include <vector>
 #include <cmath>
 #include <time.h>
