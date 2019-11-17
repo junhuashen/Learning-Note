@@ -193,7 +193,7 @@ public:
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 //官方题解：
-https://leetcode-cn.com/problems/spiral-matrix/solution/luo-xuan-ju-zhen-by-leetcode/
+
 
 //优质解析：
 https://leetcode-cn.com/problems/spiral-matrix-ii/solution/yang-cong-bian-li-tian-chong-fa-by-mei-de-gan-qing/
