@@ -1,5 +1,5 @@
 /* 
-data-time 2019-10-29 14:17:56
+data-time 2019-11-17 14:17:56
 
 63 不同路径II
 
@@ -198,5 +198,8 @@ public:
 
 官方题解:
 
-https://leetcode-cn.com/problems/jump-game/solution/tiao-yue-you-xi-by-leetcode/
+https://leetcode-cn.com/problems/unique-paths-ii/solution/bu-tong-lu-jing-ii-by-leetcode/
+
+优质解析：
+https://leetcode-cn.com/problems/unique-paths-ii/solution/c-dp-by-sologala/
 */
