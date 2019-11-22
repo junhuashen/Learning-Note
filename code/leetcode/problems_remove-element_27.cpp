@@ -78,7 +78,7 @@ static auto static_lambda = []()
 class Solution {
 public:
     //然而这个leetcode 并不能通过，估计编译器有问题
-    int removeElement(vector<int>& nums, int val) {
+    int removeElement3(vector<int>& nums, int val) {
         int re_length=nums.size();
         
         for(int i=0;i<nums.size();++i){
