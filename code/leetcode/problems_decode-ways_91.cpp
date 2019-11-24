@@ -1,30 +1,42 @@
 /* 
-data-time 2019-11-23 14:20:56
+data-time 2019-11-24 21:23:56
 
 
 题目描述:
 
-93. 复原IP地址
+91. 解码方法
 
-给定一个只包含数字的字符串，复原它并返回所有可能的 IP 地址格式。
 
-示例:
+一条包含字母 A-Z 的消息通过以下方式进行了编码：
 
-输入: "25525511135"
-输出: ["255.255.11.135", "255.255.111.35"]
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+给定一个只包含数字的非空字符串，请计算解码方法的总数。
+
+示例 1:
+
+输入: "12"
+输出: 2
+解释: 它可以解码为 "AB"（1 2）或者 "L"（12）。
+示例 2:
+
+输入: "226"
+输出: 3
+解释: 它可以解码为 "BZ" (2 26), "VF" (22 6), 或者 "BBF" (2 2 6) 。
 
 来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/restore-ip-addresses
+链接：https://leetcode-cn.com/problems/decode-ways
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 
 /*
 
-主要思路：1. 问题的关键在于查找四个子字符串，并且每个字符串大小都不超过255。
-            使用回溯的方法，将当查找当符合当前要求的字符串。
-            先计算对于每个数字，先计算最小字符串长度，根据最小字符串长度来计算
-        2. 暴力破解，设置四个子串的每个长度。遍历每种可能的长度，判断是否符合要求，符合则直接添加。
-            注意考虑连续的0字符串.即检查前后变化
+主要思路：1. 使用动态规划的方法，对于因为最多可以显示26位，因此，可以一次最多取2未有效数字，和26进行大小比较。
+            符合条件就将当前值添加上，否则进行下一次。
+        时间复杂度O(n^2);空间复杂度O(0)
+        2. 将递归更换为循环
 */
 
 #include <iostream>
@@ -52,52 +64,44 @@ static auto static_lambda = []()
 //main function
 class Solution {
 public:
-    vector<string> restoreIpAddresses2(string s) {
-        vector<string> result;
-        for(int a=1;a<4;++a){
-            for(int b=1;b<4;++b){
-                for(int c=1;c<4;++c){
-                    for(int d=1;d<4;++d){
-                        if(a+b+c+d!=s.length()) continue;
-                        int n1=atoi(s.substr(0,a).c_str());
-                        int n2=atoi(s.substr(a,b).c_str());
-                        int n3=atoi(s.substr(a+b,c).c_str());
-                        int n4=atoi(s.substr(a+b+c,d).c_str());
-                        if(to_string(n1)!=s.substr(0,a)||to_string(n2)!=s.substr(a,b)||to_string(n3)!=s.substr(a+b,c)||to_string(n4)!=s.substr(a+b+c,d)) break;
-                        if(n1<=255&&n2<=255&&n3<=255&&n4<=255){
-                            string temp=to_string(n1)+"."+to_string(n2)+"."+to_string(n3)+"."+to_string(n4);
-                            result.push_back(temp);
-                        }
-                    }
+    //这个方法超出时间限制了
+    void checkNums(string &s,int start_index){
+        if(start_index>s.size()) return ;
+        if(start_index==s.size()){
+            ++result;
+        }else{
+            for(int i=1;i<=2;++i){
+                int temp=atoi(s.substr(start_index,i).c_str());
+
+                if(temp>=1&&temp<=26&&to_string(temp)==s.substr(start_index,i)){
+                    checkNums(s,start_index+i);
+                }else{
+                    continue;
                 }
             }
         }
+    }
+    int numDecodings1(string s) {
+         if (s.size() == 0 || s[0] == '0') // 起始位0无解
+            return 0;
+        checkNums(s,0);
         return result;
     }
-    void getAddr(vector<string>& result,string &s,string temp_string ,int res_count,int start){
-        int length=s.size();
-        if(start>=length) return ;
-        for(int i=start;i<start+3&&i<length;++i){
-            if(res_count==0&&i!=length-1) continue;
-            if(((length-i-1)>res_count*3)||((length-i-1)<res_count*1)) continue;
-            string temp_str=s.substr(start,i-start+1);
-            int ip=stoi(temp_str.c_str());
-            if(ip<0||ip>255||to_string(ip)!=temp_str) continue;
-            string temp_result=(temp_string.empty())?temp_str:temp_string+"."+temp_str;
-            if(res_count==0){
-                result.push_back(temp_result);
-            }else
-            {
-                getAddr(result,s,temp_result,res_count-1,i+1);
-            }
+    int numDecodings(string s) {
+        if (s[0] == '0') return 0;
+        int pre = 1, curr = 1;//dp[-1] = dp[0] = 1
+        for (int i = 1; i < s.size(); i++) {
+            int tmp = curr;
+            if (s[i] == '0')
+                if (s[i - 1] == '1' || s[i - 1] == '2') curr = pre;
+                else return 0;
+            else if (s[i - 1] == '1' || (s[i - 1] == '2' && s[i] >= '1' && s[i] <= '6'))
+                curr = curr + pre;
+            pre = tmp;
         }
+        return curr;
     }
-    vector<string> restoreIpAddresses(string s) {
-        vector<string> result;
-
-        getAddr(result,s,"",3,0);
-        return result;
-    }
+    int result=0;
 };
 int main(int argc, char const *argv[]) {
      Solution my_solution;
@@ -108,7 +112,7 @@ int main(int argc, char const *argv[]) {
     vector<string >temp={"eat","tea","tan","ate","nat","bat"
                         };
 	int time_point_1=clock();
-    auto result=my_solution.restoreIpAddresses("25525511135");
+    auto result=my_solution.numDecodings("101");
     int time_point_2=clock();
 	printf("\n \t Time :%d ms \n",time_point_2-time_point_1);
     return 0;
