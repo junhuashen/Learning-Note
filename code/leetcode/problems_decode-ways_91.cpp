@@ -122,50 +122,40 @@ int main(int argc, char const *argv[]) {
 //优质解析1：使用for循环来确定，避免了递归
 class Solution {
 public:
-    vector<string> restoreIpAddresses(string s) {
-        if (s.length() < 4 || s.length() > 12) {
-            return {};
+    int numDecodings(string s) {
+        int len = s.length();
+        if(len == 0 || s[0] == '0'){
+            return 0;
         }
-        vector<string> myVector;
+        int res = 1, last_r = 1;
 
-        for (int pos1 = 0; pos1 < 3; pos1++) {
-            for (int pos2 = pos1 + 1; pos2 < pos1 + 4; pos2++) {
-                for (int pos3 = pos2 + 1; pos3 < s.length() - 1; pos3++) {
-                    string str1 = s.substr(0, pos1 + 1);
-                    int num1 = stoi(str1);
-                    string str2 = s.substr(pos1 + 1, pos2 - pos1);
-                    int num2 = stoi(str2);
-                    string str3 = s.substr(pos2 + 1, pos3 - pos2);
-                    int num3 = stoi(str3);
-                    string str4 = s.substr(pos3 + 1, s.length() - pos3);
-                    int num4 = stoi(str4);
-                    if (num1 > 255 || num2 > 255 || num3 > 255 || num4 > 255) {
-                        continue;
-                    }
-                    if (str1.length() > 1 && str1[0] == '0') {
-                        continue;
-                    }
-                    if (str2.length() > 1 && str2[0] == '0') {
-                        continue;
-                    }
-                    if (str3.length() > 1 && str3[0] == '0') {
-                        continue;
-                    }
-                    if (str4.length() > 1 && str4[0] == '0') {
-                        continue;
-                    }
-                    string ans = str1 + "." + str2 + "." + str3 + "." + str4;
-                    myVector.push_back(ans);
-                }
+        for(int i = 1; i < len; i++){
+            //计算当前两位的临时值
+            int temp = 10 * (s[i - 1] - '0') + s[i] - '0';
+            //判断是否符合条件
+            if(temp == 0 || (temp > 26 && s[i] == '0')){
+                return 0;
+            }
+            //不符合将last_r设置为res
+            if(temp > 26 || s[i] == '0' || temp < 10 || (i < len - 1 && s[i + 1] == '0' )){
+                last_r = res;
+            }else{
+                //当符合条件时
+                //将last_r转变为res,res+=last
+                int t = last_r;
+                last_r = res;
+                res+=t;
             }
         }
-        return myVector;
+        return res;
     }
 };
 //官方题解
-https://leetcode-cn.com/problems/restore-ip-addresses/solution/fu-yuan-ipdi-zhi-by-leetcode/
+
 //优质解析：
-https://leetcode-cn.com/problems/restore-ip-addresses/solution/hui-su-shi-jian-100-ti-gong-yi-ge-cde-ban-ben-gei-/
-https://leetcode-cn.com/problems/restore-ip-addresses/solution/cdi-gui-0msji-bai-100-by-dongzengjie/
+https://leetcode-cn.com/problems/decode-ways/solution/c-dong-tai-gui-hua-by-infinite-15-5/
+https://leetcode-cn.com/problems/decode-ways/solution/c-wo-ren-wei-hen-jian-dan-zhi-guan-de-jie-fa-by-pr/
+
+https://leetcode-cn.com/problems/decode-ways/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by-2-3/
 
 */
