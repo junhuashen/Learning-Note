@@ -78,9 +78,11 @@ public:
             res.push_back(tmp);
             return;
         }
-        //注意这里遍历每一列，对每一列进行，相关操作
+        //注意这里遍历每一列，对每一列进行，枚举查看是否能放入皇后
         for(auto col = 0; col < n; col++){
+            //副对角线
             int ll = row + col;
+            //主对角线
             int rr = row - col + n - 1;
             if (cols_[col] && diag1s_[ll] && diag2s_[rr]){
                 tmp[row][col] = 'Q';
@@ -125,35 +127,53 @@ int main(int argc, char const *argv[]) {
 }
 
 /*
-//优质解析1：使用for循环来确定，避免了递归
+//优质解析1：使用col来进行
 class Solution {
 public:
-    int numDecodings(string s) {
-        int len = s.length();
-        if(len == 0 || s[0] == '0'){
-            return 0;
+   vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> vv;
+        if(!n) return vector<vector<string>>(1);
+        if(n == 1){
+            vector<vector<string>> vv(n,vector<string>(n));
+            vv[0][0] = "Q";
+            return vv;
         }
-        int res = 1, last_r = 1;
-
-        for(int i = 1; i < len; i++){
-            //计算当前两位的临时值
-            int temp = 10 * (s[i - 1] - '0') + s[i] - '0';
-            //判断是否符合条件
-            if(temp == 0 || (temp > 26 && s[i] == '0')){
-                return 0;
+        //创建列向量
+        vector<int> col(n,0);
+        //开始深度遍历
+        dfs(col,0,vv);
+        return vv;
+    }
+    
+    void dfs(vector<int>& col,int cur,vector<vector<string>>& vv){
+        //如果当前数量为n，
+        if(cur == col.size()){
+            //创建对应的string向量
+            vector<string> v(col.size(),string(col.size(),'.'));
+            //对应col[i]的i列中的值设置为Q
+            for(int i=0;i<col.size();++i){
+                v[col[i]][i]='Q';
             }
-            //不符合将last_r设置为res
-            if(temp > 26 || s[i] == '0' || temp < 10 || (i < len - 1 && s[i + 1] == '0' )){
-                last_r = res;
-            }else{
-                //当符合条件时
-                //将last_r转变为res,res+=last
-                int t = last_r;
-                last_r = res;
-                res+=t;
+            vv.push_back(v);
+            return ;
+        }
+        //否则遍历所有列
+        for(int i=0;i<col.size();++i){
+            bool ok=true;
+            //遍历前面已经存储的数据
+            for(int j=0;j<cur;++j){
+                //如果发现同行或者对角线相同，直接错误跳过
+                if(col[j] == i || col[j]-j == i-cur || col[j]+j == i+cur){
+                    ok=false;
+                    break;
+                }
+            }
+            //检查是否符号要求
+            if(ok){
+                col[cur] = i;
+                dfs(col,cur+1,vv);
             }
         }
-        return res;
     }
 };
 //官方题解
