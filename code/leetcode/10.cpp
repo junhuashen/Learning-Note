@@ -215,7 +215,7 @@ class Solution {
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 //优质解答：利用max_money_pre指向之前的最大的指针，max_money_current指向当前的最大值进行更新，这里主要是使用了一个快慢指针进行指向迭代
-时间复杂度O(n),空间复杂度O(1);
+
 
 class Solution {
 public:
