@@ -268,4 +268,9 @@ private:
         inorder(root->right);
     }
 };
+//优质解析
+
+https://leetcode-cn.com/problems/recover-binary-search-tree/solution/ju-jue-pai-xu-ju-jue-liang-ci-bian-li-ju-jue-an-yi/
+https://leetcode-cn.com/problems/recover-binary-search-tree/solution/zhong-xu-bian-li-tong-su-yi-dong-by-ding-tao/
+https://leetcode-cn.com/problems/recover-binary-search-tree/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by-21/
 */
