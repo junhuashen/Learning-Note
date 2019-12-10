@@ -74,47 +74,58 @@ static auto static_lambda = []()
 class Solution {
 public:
     bool isNumber(string s) {
-        /* 先消除首尾的空字符 */
-        int s_start=0,s_end=s.length()-1;
-        while (s[s_start]==' ')
-        {
-            ++s_start;
+        bool has_dot = false;
+        bool has_e = false;
+        bool has_front_num = false;
+        int i = 0;
+        // skip front space
+        while (s[i] == ' ') ++i;
+        // check first char
+        if (s[i] == '.') {
+            has_dot = true;
+        } else if (s[i] >= '0' && s[i] <= '9') {
+            has_front_num = true;
+        } else if (s[i] != '+' && s[i] != '-') {
+            return false;
         }
-        while (s[s_end]==' ')
-        {
-            --s_end;
-        }
-        //检查开头和结尾，开头只能是正负号和数字，
-        int e_count=0;
-        int point_count=0;
-        int em_count=0;
-        if(s[s_start]=='+'||s[s_start]=='-') ++s_start;
-        /* 开始遍历整个操作 */
-        for(int i=s_start;i<=s_end;++i){
-            /* 检查正负号 */
-            if(isdigit(s[i])){
-                continue;
+        ++i;
+        // check char before 'e'
+        while (i < s.size() && ((s[i] >= '0' && s[i] <= '9') || 
+                (has_front_num && !has_e && s[i] == 'e') ||
+                (!has_e && !has_dot && s[i] == '.'))) {
+            if (s[i] == 'e') {
+                has_e = true;
+                ++i;
+                break;
+            } else if (s[i] == '.') {
+                has_dot = true;
+            } else {
+                has_front_num = true; 
             }
-            if(s[i]=='+'||s[i]=='-'){
+            ++i;
+        }
+        // check after 'e'
+        if (has_e) {
+            if (i >= s.size())
                 return false;
-            }else if(s[i]=='e'&&!e_count){
-                if(i>1&&i<s_end&&isdigit(s[i-1])&&isdigit(s[i-1])){
-                    ++e_count;
-                }else{
-                    return false;
-                }
-            }else if(s[i]=='.'&&!point_count){
-                if(i>0&&isdigit(s[i-1])){
-                    ++point_count;
-                }else{
-                    return false;
-                }
-            }else
-            {
+            bool has_tail_num = false;
+            if (s[i] >= '0' && s[i] <= '9') {
+                has_tail_num = true;
+            } else if (s[i] != '-' && s[i] != '+') {
                 return false;
             }
+            ++i;
+            while (i < s.size() && s[i] >= '0' && s[i] <= '9') {
+                has_tail_num = true;
+                ++i;
+            }
+            if (!has_tail_num)
+                return false;
         }
-        return true;
+        // skip tail space
+        while (i < s.size() && s[i] == ' ') ++i;
+        // final result
+        return has_front_num && i >= s.size();
     }
 };
 int main(int argc, char const *argv[]) {
@@ -136,29 +147,34 @@ int main(int argc, char const *argv[]) {
 //优质解析1：思路相同，提前分辨长短，避免了重复计算
 class Solution {
 public:
-    string addBinary(string a, string b) {
-        string res = a.size() > b.size() ? a : b;
-        string adder = a.size() > b.size() ? b : a;
-        
-        int index=res.size() - 1; 
-        //相加 暂不考虑进位
-        for(int i = adder.size() - 1;i >= 0;i--) {
-            res[index] += adder[i] - '0';
-            index--;
+    bool isNumber(string s) {
+        bool pointseen = false,numseen = false,eseen = false,numafterE = true;
+        s.erase(0,s.find_first_not_of(" "));
+        s.erase(s.find_last_not_of(" ")+1);           // 前后空格去掉
+        for(int i=0;i<s.size();i++){
+            if(isdigit(s[i]))
+            {
+                numseen = true;                      // 记录是否出现数字 e后面是否出现了数字
+                numafterE = true;
+            }
+            else if(s[i] == '.')
+            {
+                if(eseen||pointseen) return false;       // .之前可以没有数字，但是不能有e和. 记录出现了.
+                pointseen = true;
+            }
+            else if(s[i] == '+' || s[i] == '-')          // + - 只能是第一个或者e的后面一个
+            {
+                if(i!=0 && s[i-1]!='e') return false;
+            }
+            else if(s[i] == 'e')                       // e 不能出现在e之后，前面不能没有数字 要检查e的后面有没有数字
+            {
+                if(eseen || numseen == false) return false;
+                eseen = true;
+                numafterE = false;
+            }
+            else return false;
         }
-        //进位操作
-        for(int i = res.size() - 1;i > 0;i--) {
-            if(res[i] > '1') {
-                res[i-1] += 1;
-                res[i] = '0' + (res[i] - '0') % 2;
-            }      
-        }
-        //判断最高位是否要进位
-        if(res[0] > '1') {
-            res[0] = '0' + (res[0] - '0') % 2;
-            res = '1' + res;
-        } 
-        return res;
+        return numseen && numafterE;                 // 出现过数字 e后有数字           防止“ ”和“5e”这种干扰
     }
 };
 //优质解答2：思路相同，使用0补足短位
