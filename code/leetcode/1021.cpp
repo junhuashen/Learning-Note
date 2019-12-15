@@ -40,7 +40,7 @@ https://leetcode-cn.com/problems/remove-outermost-parentheses/
 /*
 主要思路：对字符串遍历设置需要匹配“)”个数，为0则检查是否为原语，是删除最外层括号不是则继续遍历子串
 
-		解决思路;
+		解决思路;使用need记录需要的‘)’数量
 		1.遍历看到“(”;need+1,记录start;
 		2.看到“)”,need-1;
 		3.need=0,记录end;
@@ -76,7 +76,7 @@ string removeOuterParentheses(string S) {
         		--need;
         	};
         	//获取尾部位置
-        	if(need==0){
+        	if(need==0){//这里的原语成立了
         		end=i;
         		// printf("i: %d\t", i);
         		// printf("start: %d\t", start);

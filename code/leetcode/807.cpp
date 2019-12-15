@@ -1,4 +1,9 @@
-/* 题目描述:
+/* 
+题目编号：
+
+807：保持城市天际线
+
+题目描述:
 
 https://leetcode-cn.com/problems/max-increase-to-keep-city-skyline/
 
@@ -72,7 +77,7 @@ int maxIncreaseKeepingSkyline(vector<vector<int>>& grid) {
 		unsigned int col,row;
 		col=row=grid.size();
 		unsigned int col_max[col],row_max[row];
-		//遍历行
+		//遍历行，查找行最大值
 		for(unsigned int col_i=0;col_i<col;++col_i)
 		{
 			int c_max=0;
@@ -85,6 +90,7 @@ int maxIncreaseKeepingSkyline(vector<vector<int>>& grid) {
 			col_max[col_i]=c_max;
 
 		}
+        //遍历行查找行最大值
 		for(unsigned int row_i=0;row_i<col;++row_i)
 		{
 			int r_max=0;
@@ -97,6 +103,7 @@ int maxIncreaseKeepingSkyline(vector<vector<int>>& grid) {
 			row_max[row_i]=r_max;
 
 		}
+        //遍历进行查找
 		for(unsigned int x=0;x<col;++x)
 		{
 			for(unsigned int y=0;y<row;++y)

@@ -157,7 +157,7 @@ public:
     	ListNode* result_node=NULL;
     	ListNode* l1_last=l1;
     	ListNode* l2_last=l2;
-    	//先进行便利，获得链表的最佳值
+    	//先进行遍历，获得链表的最佳值
 		int excess_results=0;
 		ListNode* work_ptr=NULL;
     	while(l1_last!=NULL&&l2_last!=NULL){

@@ -126,6 +126,7 @@ public:
             }
             return dp[0][n - 1];
         }
+        //注意这里添加了两个新的判断
         for(int i = 1; i < grid.size(); i++) {
             dp[i][0] = dp[i - 1][0] + grid[i][0];
         }

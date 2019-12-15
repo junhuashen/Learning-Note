@@ -1,4 +1,9 @@
-/* 题目描述:
+/* 
+题目名称：
+
+950. 按递增顺序显示卡牌
+
+题目描述:
 牌组中的每张卡牌都对应有一个唯一的整数。你可以按你想要的顺序对这套卡片进行排序。
 最初，这些卡牌在牌组里是正面朝下的（即，未显示状态）。
 现在，重复执行以下步骤，直到显示所有卡牌为止：
@@ -117,4 +122,39 @@ vector<int> deckRevealedIncreasing(vector<int>& deck) {
         return deck;
     }
 
+//优质解答2：因为较大的间隔抽取，因此只需要在剩余的空位中找到第二个空位放下一个较大的数即可
+class Solution {
+public:
+    vector<int> deckRevealedIncreasing(vector<int>& deck) {
+        //从小到大排序
+        sort(deck.begin(), deck.end());
+        int N = deck.size();
+        vector<int> res(N, 0);
+        res[0] = deck[0];
+        int i = 0;
+        int j = 1;
+        while (j < N) {
+            int empty = 0;
+            while (empty < 2) {
+                i = (i + 1) % N;
+                if (res[i] == 0) ++empty;
+            }
+            // 在剩余的空位中找到第二个空位放下一个较大的数即可
+            res[i] = deck[j++];
+        }
+        return res;
+    }
+};
+
+
+作者：da-li-wang
+链接：https://leetcode-cn.com/problems/reveal-cards-in-increasing-order/solution/c-die-dai-zhao-gui-lu-by-da-li-wang/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+//官方题解：
+https://leetcode-cn.com/problems/reveal-cards-in-increasing-order/solution/an-di-zeng-shun-xu-xian-shi-qia-pai-by-leetcode/
+//优质解析
+
+https://leetcode-cn.com/problems/reveal-cards-in-increasing-order/solution/ni-yue-se-fu-wen-ti-by-tiempo/
 */

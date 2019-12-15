@@ -56,7 +56,7 @@ public:
         int right = (m + n + 2) / 2;
         return (findKth(nums1, 0, nums2, 0, left) + findKth(nums1, 0, nums2, 0, right)) / 2.0;
     }
-    //在两个有序数组中查找地k个大小的元素，查找起始位置为i和j
+    //在两个有序数组中查找第k个大小的元素，查找起始位置为i和j
     int findKth(vector<int>& nums1, int i, vector<int>& nums2, int j, int k) {
         //unsigned int INT_MAX = 0-1; 
         //当前索引超过范围k必定在下一个数组中，直接查找下一个数组的数
