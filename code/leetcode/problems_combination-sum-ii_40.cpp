@@ -81,8 +81,10 @@ public:
         }
         for(int i=start_index;i<candidates.size()&&candidates[i]<=target;++i){
             temp_result.push_back(candidates[i]);
+            //注意这里的检查
             checkSum(candidates,result,i+1,temp_result,target-candidates[i]);
-             while (i<candidates.size()-1&&candidates[i+1]==candidates[i])
+            //注意这里跳过重复值
+            while(i<candidates.size()-1&&candidates[i+1]==candidates[i])
             {
                ++i;
             }
@@ -99,6 +101,7 @@ public:
             //保证该位一定被取到
             temp_result.push_back(candidates[i]);
             checkSum(candidates,result,i+1,temp_result,target-candidates[i]);
+            //这里跳过重复值
             while (i<candidates.size()-1&&candidates[i+1]==candidates[i])
             {
                ++i;

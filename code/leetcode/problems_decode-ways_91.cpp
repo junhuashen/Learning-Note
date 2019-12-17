@@ -35,6 +35,7 @@ data-time 2019-11-24 21:23:56
 
 主要思路：1. 使用动态规划的方法，对于因为最多可以显示26位，因此，可以一次最多取2未有效数字，和26进行大小比较。
             符合条件就将当前值添加上，否则进行下一次。
+            注意；两位有效数字中第一位为0的情况
         时间复杂度O(n^2);空间复杂度O(0)
         2. 将递归更换为循环
 */
@@ -72,7 +73,6 @@ public:
         }else{
             for(int i=1;i<=2;++i){
                 int temp=atoi(s.substr(start_index,i).c_str());
-
                 if(temp>=1&&temp<=26&&to_string(temp)==s.substr(start_index,i)){
                     checkNums(s,start_index+i);
                 }else{
