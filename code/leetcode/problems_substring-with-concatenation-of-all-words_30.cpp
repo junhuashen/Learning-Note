@@ -188,11 +188,14 @@ public:
         for(int i=0, j; i<=s.size()-lens;){
             // 快速去重，如果检测到了ASCII不同相同表示没有达到标准
             if(cur != target) continue;
-            // 确认一下，是否为真的匹配
+            // 确认一下，是否为真的匹配,进行一次拷贝复制
             unordered_map<string,int> tem(allWord);
-            //遍历字符串检查是否相同
-            for(j=i; j<i+lens; j+=wordLen)
+            //遍历字符串检查是否相同；连续遍历直到为０
+            for(j=i; j<i+lens; j+=wordLen){
+                //遍历数组，检查是否为０
                 if(tem[s.substr(j, wordLen)]-- == 0) break;
+            };
+            //如果是就将结果添加上
             if(j == i+lens) res.push_back(i);
 
             //先将总值除去当前char的ASCII
@@ -261,6 +264,7 @@ public:
         for(int i=0; (i + word_size * word_num) <= s.size() ; i++){//截取的s符合题意
             int j = 0;
             for(j=i;j < (i + word_size * word_num) ; j=j+word_size){//分段判断
+                //获取第一段子串
                 string temp_str = s.substr(j,word_size);
                 if(m1[temp_str] == 0){//m1中没有截取的串，直接跳出
                     break;
