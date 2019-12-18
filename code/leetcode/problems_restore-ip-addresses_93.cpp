@@ -77,9 +77,11 @@ public:
     void getAddr(vector<string>& result,string &s,string temp_string ,int res_count,int start){
         int length=s.size();
         if(start>=length) return ;
+        //从每一个index开始遍历
         for(int i=start;i<start+3&&i<length;++i){
             if(res_count==0&&i!=length-1) continue;
             if(((length-i-1)>res_count*3)||((length-i-1)<res_count*1)) continue;
+            //获取值
             string temp_str=s.substr(start,i-start+1);
             int ip=stoi(temp_str.c_str());
             if(ip<0||ip>255||to_string(ip)!=temp_str) continue;
@@ -88,6 +90,7 @@ public:
                 result.push_back(temp_result);
             }else
             {
+                //重新递归调用
                 getAddr(result,s,temp_result,res_count-1,i+1);
             }
         }

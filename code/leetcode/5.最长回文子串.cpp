@@ -25,7 +25,8 @@ data-time 2019-09-15 18:42:56
 
 主要思路:1. 暴力破解，假设子串长度从n-1到2;设置每个滑动窗口进行计算。
         空间复杂度为O(0)，时间复杂度为O(n^3)
-        2.
+        2. 使用动态规划的方法，使用数组arr，记录i的最长回文子串的起始index为j;
+        如果s[i]==s[arr[i]-1]则s[i]=arr[i]-1. 否则为0；
 		
 */
 
@@ -186,11 +187,13 @@ public:
         int start=0;//记录回文子串起始位置
         int end=0;//记录回文子串终止位置
         int mlen=0;//记录最大回文子串的长度
+        //遍历长度计算回文子串
         for(int i=0;i<len;i++)
         {
             int len1=expendaroundcenter(s,i,i);//一个元素为中心
             int len2=expendaroundcenter(s,i,i+1);//两个元素为中心
             mlen=max(max(len1,len2),mlen);
+            //更显start和end;
             if(mlen>end-start+1)
             {
                 start=i-(mlen-1)/2;

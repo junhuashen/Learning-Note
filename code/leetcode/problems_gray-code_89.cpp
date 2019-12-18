@@ -27,6 +27,7 @@ data-time 2019-11-21 15:07:56
 10 - 2
 11 - 3
 01 - 1
+
 示例 2:
 
 输入: 0
@@ -79,6 +80,7 @@ class Solution {
 public:
     vector<int> grayCode(int n) {
         vector<int> result;
+        //注意这里先从0开始
         result.push_back(0);
         for(int i=0;i<n;++i){
             unsigned long key=1<<i;

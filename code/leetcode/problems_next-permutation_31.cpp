@@ -48,53 +48,29 @@ static auto static_lambda = []()
 //main function
 class Solution {
 public:
-    //然而这个leetcode 并不能通过，估计编译器有问题
-    int removeElement(vector<int>& nums, int val) {
-        int re_length=nums.size();
-        
-        for(int i=0;i<nums.size();++i){
-            if(nums[i]==val){
-                nums.erase(nums.begin()+i);
-                --i;
+    void nextPermutation(vector<int>& nums) {
+        int pre = -1;
+        //查找右边第一个逆序数index
+        for(int i= nums.size()-1;i>0;i--){
+            if(nums[i]>nums[i-1]){
+                pre = i-1;
+                break;
             }
         }
-        return re_length-nums.size();
-    }
-    int removeElement2(vector<int>& nums, int val) {
-        int count=0;
-        int re_length=nums.size();
-        int left=0,right=nums.size()-1;
-        while (left<=right)
-        {
-            while (nums[right]==val)
-            {
-                nums.pop_back();
-                --right;
-                ++count;
-            }
-            if(nums[left]==val){
-                swap(nums[left],nums[right]);
-                nums.pop_back();
-                ++count;
-                --right;
-            }
-            ++left;
+        //如果是完全逆序(降序)直接排列
+        if(pre == -1){
+            sort(nums.begin(),nums.end());
+            return;
         }
-        
-        return count;
-    }
-    //直接遍历将不同的加上
-    int removeElement(vector<int>& nums, int val) {
-        int k = 0;
-        for(int i = 0; i < nums.size(); ++ i)
-        {
-            if(nums[i] != val)
-            {
-                nums[k] = nums[i];
-                ++ k;
+        //查找大于pre的最小数，将其与pre进行交换
+        for(int i=nums.size()-1;i>pre;i--){
+            if(nums[i]>nums[pre]){
+                swap(nums[i],nums[pre]);
+                break;
             }
         }
-        return k;
+        //将pre后面的再排序
+        sort(nums.begin()+pre+1,nums.end());
     }
 };
 int main(int argc, char const *argv[]) {

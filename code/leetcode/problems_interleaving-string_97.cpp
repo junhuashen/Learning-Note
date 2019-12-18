@@ -122,7 +122,7 @@ public:
         if(s3[0]==s2[0]){
             check_arr[0][1]=true;
         }
-        
+        //遍历数组进行确认操作
         for(int i=0;i<=m;++i){
             for(int j=0;j<=n;++j){
                 if(i>0){

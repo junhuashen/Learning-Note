@@ -78,6 +78,7 @@ public:
                     for(int k=i;k>=0;--k){
                         //获取当前宽度
                         width=min(width,arr[k][j]);
+                        //计算最大面积
                         max_area=max(max_area,width*(i-k+1));
                     }
                 }

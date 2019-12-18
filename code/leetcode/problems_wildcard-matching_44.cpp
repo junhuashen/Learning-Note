@@ -137,18 +137,22 @@ public:
                     b[i][j] = true;
                     continue;
                 }
+                //j为0肯定为false
                 if(j == 0) {
                     b[i][j] = false;
                     continue;
                 }
+                //不为‘*’正常进行比较
                 if(p[j - 1] != '*') {
                     if(i > 0 && (p[j - 1] == '?' || p[j - 1] == s[i - 1])){
                         b[i][j] = b[i - 1][j - 1];
                     }
-                }else{ //p[j-1]=='*'
+                }else{ //p[j-1]=='*';否则查看
                     if(j >= 1) {
+                        //上个是否可以
                         b[i][j] = b[i][j] || b[i][j - 1];
                         if(i >= 1) {
+                            //左边是否可以
                             b[i][j] = b[i][j] || b[i - 1][j];
                         }
                     }

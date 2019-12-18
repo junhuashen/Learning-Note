@@ -41,9 +41,10 @@ n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，�
 /*
 
 主要思路：1. 使用回溯的方法，假设在(i,j)位置上放一个，同时将i,j对应的可访问坐标设置为false
-        继续下一步迭代，皇后个数为0；
+        继续下一步迭代，直到皇后个数为0；
         注意还要考虑对角线的问题,因为主对角线差为定值，符对角线和为定值，通过这种问题来进行排除操作。
-        按行进行遍历操作，查找每一行可能存在的值
+        按行进行遍历操作，查找每一行可能存在的值；
+        注回溯；使用完之后记得恢复
         时间复杂度O(n^2);空间复杂度O(0)
         2. 将递归更换为循环
 */
@@ -80,9 +81,9 @@ public:
         }
         //注意这里遍历每一列，对每一列进行，枚举查看是否能放入皇后
         for(auto col = 0; col < n; col++){
-            //副对角线
+            //计算副对角线
             int ll = row + col;
-            //主对角线
+            //计算主对角线
             int rr = row - col + n - 1;
             if (cols_[col] && diag1s_[ll] && diag2s_[rr]){
                 tmp[row][col] = 'Q';
@@ -103,7 +104,9 @@ public:
     vector<vector<string>> solveNQueens(int n) {
         vector<vector<string>> res;
         vector<string> tmp(n, string(n, '.'));
+        //行是否可以访问
         vector<bool> cols_(n, true);
+        //主对角线和副对角线是否可以访问
         vector<bool> diag1s_(2*n-1, true);
         vector<bool> diag2s_(2*n-1, true);
         solve(res, tmp, cols_, diag1s_, diag2s_, n, 0);

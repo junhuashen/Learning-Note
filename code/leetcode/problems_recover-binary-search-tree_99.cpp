@@ -208,6 +208,7 @@ public:
         if(root->right) dfs(root->right);
     };
     void recoverTree(TreeNode* root) {
+        //深度遍历查找降序对
         dfs(root);
         if(!second_node){
             second_node=temp_node;

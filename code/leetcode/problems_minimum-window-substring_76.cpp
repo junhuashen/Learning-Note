@@ -26,7 +26,7 @@ data-time 2019-12-10 20:34:56
 主要思路：1. 使用左右指针分别进行比较运算。
         时间复杂度O(n^2);空间复杂度O(n); 超时了
         2. 先让一个指针右移直到找到符合要求的值
-            然后右移指针，如果存在就减小最小值，否则右移左指针
+        然后右移指针，如果存在就减小最小值，否则右移左指针；创建新的变数
         时间复杂度O(m+n)
             
 */
@@ -121,8 +121,10 @@ public:
         
             return s.find(t)!=std::string::npos?t:"";
         }
+        //统计每个字符出现的次数
         int count[256] = { 0 };
         for (auto c : t) ++count[c];
+
         int len = 0, minLength = s.length();
         for (int l = 0, r = 0; r < s.length(); ++r) {
             //统计当前字符
@@ -131,12 +133,12 @@ public:
             if (count[s[r]] >= 0) ++len;
             //如数目等于t.length就执行一次拷贝
             while (len == t.length()) {
-                //检查是否小于最小值
+                //检查是否小于最小值；小于则直接进行计算拷贝
                 if (r - l + 1 <= minLength) {
                     minLength = r - l + 1;
                     result = s.substr(l, r - l + 1);
                 }
-                //准备开始移动左指针
+                //准备开始移动左指针；这里需要将count的统计值补回来
                 count[s[l]]++;
                 if (count[s[l]] > 0) --len;
                 //移动左指针

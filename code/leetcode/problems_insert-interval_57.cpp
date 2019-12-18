@@ -25,7 +25,7 @@ data-time 2019-12-04 13:16:56
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 
-主要思路：1 .遍历整个数组，查找输入值的存在重合区间的index-left和right.进行判断
+主要思路：1. 遍历整个数组，查找输入值的存在重合区间的index-left和right.进行判断
             对于左边的，left左边界小于它，右边界大于或者等于它。
             对于右边的，right左
             如果left=right.就不执行任何操作
@@ -70,7 +70,7 @@ public:
 		sort(intervals.begin(), intervals.end());
         vector<vector<int>> ans{intervals[0]};
         int n = intervals.size();
-        //遍历每个vector
+        //遍历intervals每个vector
 		for(int i = 0; i < n; i ++){
 			//获取尾部数组，大于当前的前一个，则存在重叠部分
 			if(ans.back()[1] >= intervals[i][0]){

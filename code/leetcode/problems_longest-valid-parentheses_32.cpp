@@ -139,10 +139,12 @@ public:
                     temp_vector[i]=(i>1?temp_vector[i-2]:0)+2;
                 }else
                 {
+                    //计算前一个的index起始值；即有效字符串的前一个字符
                     int k= i-temp_vector[i-1]-1;
                     //注意这里的k-1相当于多算了一下k值
                     if(k>=0&&s[k]=='(') temp_vector[i]=temp_vector[i-1]+(k>0?temp_vector[k-1]:0)+2;
                 }
+                //更新最长结果
                 if(max_result<temp_vector[i]) max_result=temp_vector[i];
             }
         }
