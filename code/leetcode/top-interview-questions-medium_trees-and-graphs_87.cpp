@@ -178,6 +178,7 @@ public:
         }else{
             root->left=nullptr;
         }
+        //计算右子树长度
         int r_tree_length=in_end-target_index;
         if(r_tree_length>0){
             root->right=getThreeNode(preorder,inorder,pre_end-r_tree_length+1,pre_end,in_end-r_tree_length+1,in_end);
