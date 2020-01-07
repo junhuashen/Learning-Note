@@ -253,29 +253,78 @@ int main(int argc, char const *argv[]) {
     return 0;
 }
 /*
-//优质解答1：思路完全相同，不过先判断了当前值
+//优质解答1：使用快慢指针的方法；
+时间复杂度O(n^2);空间复杂度O(n);
 
 class Solution {
 public:
-    bool isSameTree(TreeNode* p, TreeNode* q) {
-		if(p !=NULL && q != NULL){
-			if(p->val == q->val){
-				return isSameTree(p->left,q->left) && isSameTree(p->right,q->right);
-			}
-			else
-				return false;
-		}
-		else if(p == NULL && q == NULL){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
+    TreeNode* sortedListToBST(ListNode* head) {
+        if (!head)
+        {
+            return NULL;
+        }
+        //定义快慢指针和前驱指针
+        ListNode* pSlow = head;
+        ListNode* pFast = head;
+        ListNode* pPrev = NULL;
+        //快指针指向头部，慢指针指向中点，prev指针指向终点之前
+        while (pSlow && pFast && pFast->next)
+        {
+            pPrev = pSlow;
+            pSlow = pSlow->next;
+            pFast = pFast->next->next;
+        }
+        //创建节点
+        TreeNode* root = new TreeNode(pSlow->val);
+        //分割链表进行迭代
+        if (pPrev)
+        {
+            pPrev->next = NULL;
+            root->left = sortedListToBST(head);
+        }
+        //分割链表进行迭代
+        root->right = sortedListToBST(pSlow->next);
+
+        return root;
+    }
+};
+//优质解答2：思路相同代码更加简洁
+class Solution {
+public:
+    TreeNode* sortedListToBST(ListNode* head) {
+        return dfs(head); 
+    }
+
+    ListNode* midList(ListNode* head)//快慢指针找链表中位数
+    {
+        ListNode *pre,*p1=head,*p2=head;
+
+        while(p2 && p2->next){
+            pre = p1;
+            p1 = p1->next;
+            p2 = p2->next;
+            p2 = p2->next;
+        }
+        pre->next = NULL;//切断链表
+        return p1;
+    }
+
+    TreeNode* dfs(ListNode* head){
+        if(head == NULL)
+            return NULL;
+        if(head->next == NULL)
+            return new TreeNode(head->val);
+        ListNode* mid = midList(head);
+        TreeNode* root = new TreeNode(mid->val);
+        root->left = dfs(head);
+        root->right = dfs(mid->next);
+        return root;
+    }
+
 };
 
 //官方解析：
-https://leetcode-cn.com/problems/same-tree/solution/xiang-tong-de-shu-by-leetcode/
+https://leetcode-cn.com/problems/convert-sorted-list-to-binary-search-tree/solution/you-xu-lian-biao-zhuan-huan-er-cha-sou-suo-shu-by-/
 //优质解析：
-https://leetcode-cn.com/problems/same-tree/solution/xie-shu-suan-fa-de-tao-lu-kuang-jia-by-wei-lai-bu-/
+https://leetcode-cn.com/problems/convert-sorted-list-to-binary-search-tree/solution/kuai-man-zhi-zhen-di-gui-by-lazycece/
 */
