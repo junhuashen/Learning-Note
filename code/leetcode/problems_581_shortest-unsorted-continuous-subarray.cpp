@@ -328,6 +328,6 @@ static int n=[](){
 //官方解析：
 https://leetcode-cn.com/problems/shortest-unsorted-continuous-subarray/solution/zui-duan-wu-xu-lian-xu-zi-shu-zu-by-leetcode/
 //优质解析：
-https://leetcode-cn.com/problems/merge-two-binary-trees/solution/he-bing-er-cha-shu-by-zed-65536/
-https://leetcode-cn.com/problems/merge-two-binary-trees/solution/dong-hua-yan-shi-di-gui-die-dai-617he-bing-er-cha-/
+https://leetcode-cn.com/problems/shortest-unsorted-continuous-subarray/solution/zui-duan-wu-xu-lian-xu-zi-shu-zu-o1kong-jian-by-ze/
+https://leetcode-cn.com/problems/shortest-unsorted-continuous-subarray/solution/zong-jie-liao-san-chong-xiang-fa-by-xiaobaik/
 */
