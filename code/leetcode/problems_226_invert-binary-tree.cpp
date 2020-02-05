@@ -206,9 +206,11 @@ public:
             TreeNode* work_ptr=work_stack.top();
             work_stack.pop();
             if(work_ptr==nullptr) continue;
-            TreeNode* temp_sp_ptr=work_ptr->left;
+            /*TreeNode* temp_sp_ptr=work_ptr->left;
             work_ptr->right=work_ptr->left;
             work_ptr->left=temp_sp_ptr;
+            */
+           std::swap(work_ptr->right,work_ptr->left);
             if(work_ptr->right) work_stack.push(work_ptr->right);
             if(work_ptr->left) work_stack.push(work_ptr->left);
 

@@ -224,39 +224,10 @@ public:
     }
 };
 
-优质解答2：使用unorder_map进行对应的路径和合数目的记录
 
-class Solution {
-public:
-     int pathSum(TreeNode* root, int sum) {
-        unordered_map<int, int> mapSums;//关键字为路径和，值为路径数
-        return dfsSum(root, 0, sum, mapSums);
-    }
-    int dfsSum(TreeNode* root, int valueSum, const int &targetSum, unordered_map<int, int> &mapSums) {
-        if(root == NULL) return 0; 
-        int iRes = 0;
-        //记录路径的当前值
-        valueSum += root->val;
-        //查找是否存在对应剩余值的路径，
-        if(mapSums.find(valueSum - targetSum) != mapSums.end())
-            iRes +=  mapSums[valueSum - targetSum];//存在某节点到当前节点的路径和等于sum
-        //查找是否存在该值，如果存在则已有路径+1
-        if(mapSums.find(valueSum) != mapSums.end())
-            mapSums[valueSum]++;//已有该路径和则数量加1
-        else
-            mapSums[valueSum] = 1;//没有该路径和则初始化为1
-        //检查是否是目标值
-        if(valueSum == targetSum)
-            iRes +=  1;//根节点到当前节点的路径和等于sum
-        //对左右节点进行递归遍历
-        iRes += (dfsSum(root->left, valueSum, targetSum, mapSums) + dfsSum(root->right, valueSum, targetSum, mapSums));
-        mapSums[valueSum]--;//递归返回时要删除当前节点的路径
-        return iRes;
-    }   
-};
 
 //官方解析：
 https://leetcode-cn.com/problems/same-tree/solution/xiang-tong-de-shu-by-leetcode/
 //优质解析：
-https://leetcode-cn.com/problems/path-sum-iii/solution/lu-jing-zong-he-iii-cti-jie-hashfang-shi-onfu-za-d/
+https://leetcode-cn.com/problems/convert-bst-to-greater-tree/solution/ba-er-cha-shu-zhuan-huan-wei-lei-jia-shu-c-by-shao/
 */

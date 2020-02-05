@@ -229,7 +229,7 @@ public:
 
 
 //官方解析：
-https://leetcode-cn.com/problems/same-tree/solution/xiang-tong-de-shu-by-leetcode/
+https://leetcode-cn.com/problems/diameter-of-binary-tree/solution/er-cha-shu-de-zhi-jing-by-leetcode/
 //优质解析：
-https://leetcode-cn.com/problems/convert-bst-to-greater-tree/solution/ba-er-cha-shu-zhuan-huan-wei-lei-jia-shu-c-by-shao/
+https://leetcode-cn.com/problems/diameter-of-binary-tree/solution/er-cha-shu-de-zhi-jing-by-you-yu-de-yan-shen/
 */
