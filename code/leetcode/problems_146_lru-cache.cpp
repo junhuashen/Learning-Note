@@ -156,25 +156,127 @@ int main(int argc, char const *argv[]) {
     return 0;
 }
 /*
-//优质解答1：o(n)算法，应该是最快的。 堆的地址从低到高，LeetCode的链表内存是顺序申请的，如果有环，head->next一定小于或等于head，哈哈哈哈哈
-class Solution {
+//优质解答1:思路相同，使用了两个unorder_map分别存储真实值和访问次数，加快了速度
+时间复杂度O(1)空间复杂度O(3*n)
+class LRUCache {
 public:
-    ListNode *detectCycle(ListNode *head) {
-        while(head) {
-            if(!less<ListNode *>()(head, head->next)) {
-                return head->next;
-            }
-            head = head->next;
+    LRUCache(int capacity) {
+      capacity_ = capacity;
+    }
+    
+    int get(int key) {
+        //存在该元素
+      if (mp_.count(key)) {
+        que_.push(key);
+        num_[key]++;
+        return mp_[key];
+      }
+      else return -1;
+    }
+    
+    void put(int key, int value) {
+        //先将元素加入到队列中
+      que_.push(key);
+      //添加到值统计
+      mp_[key] = value;
+      //增加计数统计
+      num_[key] ++;
+      //大于将队列头部的元素
+      while (mp_.size() > capacity_) {
+          //获取队头关键值
+        int front = que_.front();
+        //取出队头元素
+        que_.pop();
+        //计数--
+        num_[front]--;
+        //如果计数为0
+        if (num_[front] == 0) {
+            //将计数和保存的值进行删除
+          num_.erase(front);
+          mp_.erase(front);
         }
-        return nullptr;
+      }
+    }
+
+private:
+queue<int> que_;
+unordered_map<int, int> mp_;
+unordered_map<int, int> num_;
+int capacity_;
+};
+优质解答2:思路相同，自定义了数据结构，加快了操作
+struct LRUnode {
+    LRUnode *next;
+    LRUnode *pre;
+    int key;
+    int value;
+    LRUnode(int k, int v, LRUnode* n = 0, LRUnode* p = 0):
+        key(k), value(v), next(n), pre(p) {}
+};
+class LRUCache {
+public:
+    LRUCache(int capacity) {
+        cap = capacity;
+        head->next = tail;
+        tail->pre = head;
+    }
+    
+    int get(int key) {
+        if(!key2node.count(key)) return -1;
+        LRUnode* node = key2node[key];
+        remove(node);
+        insert2head(node);
+        key2node[key] = node;
+        return node->value;
+    }
+    
+    void put(int key, int value) {
+        if (key2node.count(key)){
+            LRUnode* node = key2node[key];
+            node->value = value;
+            remove(node);
+            insert2head(node);
+            key2node[key] = node;
+        }
+        else{
+            LRUnode* node = new LRUnode(key, value);
+            insert2head(node);
+            key2node[key] = node;
+            if (++size > cap){
+                LRUnode* spnode = tail->pre;
+                key2node.erase(spnode->key);
+                remove(spnode);
+                //delete(spnode);
+            }
+        }
+    }
+protected:
+    int cap = 0;
+    int size = 0;
+    LRUnode *head = new LRUnode(-1, 0);
+    LRUnode *tail = new LRUnode(-1, 0);
+    unordered_map<int, LRUnode*> key2node;
+
+    void remove(LRUnode* node){
+        node->next->pre = node->pre;
+        node->pre->next = node->next;
+        node->next = nullptr;
+        node->next = nullptr;
+    }
+
+    void insert2head(LRUnode* node){
+        head->next->pre = node;
+        node->next = head->next;
+        head->next = node;
+        node->pre = head;
     }
 };
-
 // 官方题解：
-https://leetcode-cn.com/problems/linked-list-cycle-ii/solution/huan-xing-lian-biao-ii-by-leetcode/
+https://leetcode-cn.com/problems/lru-cache/solution/lru-huan-cun-ji-zhi-by-leetcode/
 //优质解析：
 
-https://leetcode-cn.com/problems/linked-list-cycle-ii/solution/shuang-zhi-zhen-qing-xi-ti-jie-zhen-zheng-cong-shu/
+https://leetcode-cn.com/problems/lru-cache/solution/lru-ce-lue-xiang-jie-he-shi-xian-by-labuladong/
+https://leetcode-cn.com/problems/lru-cache/solution/c-shi-yong-unordered_map-list-by-eric-345/
 // 
 
 */
