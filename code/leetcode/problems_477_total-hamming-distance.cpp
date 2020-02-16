@@ -89,7 +89,9 @@ int main(int argc, char const *argv[]) {
     return 0;
 }
 /*
-//优质解答：思路相投，就是考察了一下位运算。
-https://blog.csdn.net/u011236602/article/details/79888476
+官方题解：
 
+https://leetcode-cn.com/problems/total-hamming-distance/solution/yi-ming-ju-chi-zong-he-by-leetcode/
+优质解析：
+https://leetcode-cn.com/problems/total-hamming-distance/solution/wei-yun-suan-by-autuanliu/
 */
