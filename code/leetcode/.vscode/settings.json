@@ -66,6 +66,10 @@
         "condition_variable": "cpp",
         "future": "cpp",
         "mutex": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "xhash": "cpp",
+        "xstring": "cpp",
+        "xtree": "cpp",
+        "xutility": "cpp"
     }
 }
