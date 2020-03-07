@@ -4,28 +4,30 @@ data-time 2020-03-06 13:07:56
 
 题目描述:
 
-209. 长度最小的子数组
+152. 乘积最大子序列
 
-给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的连续子数组。如果不存在符合条件的连续子数组，返回 0。
+给定一个整数数组 nums ，找出一个序列中乘积最大的连续子序列（该序列至少包含一个数）。
 
-示例: 
+示例 1:
 
-输入: s = 7, nums = [2,3,1,2,4,3]
-输出: 2
-解释: 子数组 [4,3] 是该条件下的长度最小的连续子数组。
-进阶:
+输入: [2,3,-2,4]
+输出: 6
+解释: 子数组 [2,3] 有最大乘积 6。
+示例 2:
 
-如果你已经完成了O(n) 时间复杂度的解法, 请尝试 O(n log n) 时间复杂度的解法。
+输入: [-2,0,-1]
+输出: 0
+解释: 结果不能为 2, 因为 [-2,-1] 不是子数组。
 
 来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/minimum-size-subarray-sum
+链接：https://leetcode-cn.com/problems/maximum-product-subarray
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 
-主要思路:1. 使用一个双指针，和临时的最小值；设置滑动窗口
-从左到右，如果小于target就向右增加，大于left就增加，等于集检查最小值
-等于时，left和right都++
-        2. 使用优化，循环执行等待删除大于的数
+主要思路:1.使用动态规划，使用数组存储i-j的所有乘积的值，查找最大值
+            时间复杂度O(n^2)空间复杂度O(n^2)
+        2. 使用临时变量记录min和max保证正负号反号时的错误信息
+        时间复杂度O(n);空间复杂度O(1);
 
  */
 
@@ -36,6 +38,7 @@ data-time 2020-03-06 13:07:56
 #include <string>
 #include <stack>
 #include <sstream>
+#include <cstdint>
 #include <map>
 #include <unordered_map>
 #include <algorithm>
@@ -53,38 +56,21 @@ static auto static_lambda = []()
 //main function
 class Solution {
 public:
-    int minSubArrayLen(int s, vector<int>& nums) {
-            if (s<=0||nums.size()==0) return 0;
-            int i=0,j=0,sum=0,minL=INT_MAX;
-            for (;j<nums.size();j++)
-            {
-                sum+=nums[j];
-                while (sum>=s)
-                {
-                    minL=min(minL,j-i+1);
-                    sum-=nums[i++];
-                }
-            }
-            if (minL==INT_MAX) return 0;
-            return minL;
-    }
-    int minSubArrayLen1(int s, vector<int>& nums) {
-        if(nums.empty()) return 0;
-        int left=0,right=0;
-        int result=INT_MAX;
+    int maxProduct(vector<int>& nums) {
         int len=nums.size();
-        int temp_target=nums[left];
-        while(left<=right&&(right<nums.size())){
-            if(temp_target>=s){
-                result=min(result,right-left+1);
-                temp_target-=nums[left];
-                ++left;
-            }else if(temp_target<s){
-                right++;
-                temp_target+=(right>=len?0:nums[right]);
-            }
+        if(len<1) return 0;
+        if(len==1) return nums[0];
+        int result=INT_MIN;
+        int a=1,b=1;
+        for(int i=0;i<len;++i){
+            int aa=a*nums[i];
+            int bb=b*nums[i];
+            a=min(nums[i],min(aa,bb));
+            b=max(nums[i],max(aa,bb));
+            result=max(result,b);
         }
-        return result==INT_MAX?0:result;
+        
+        return result;
     }
 };
 int main(int argc, char const *argv[]) {
@@ -96,7 +82,7 @@ int main(int argc, char const *argv[]) {
     vector<string >temp={"eat","tea","tan","ate","nat","bat"
                         };
 	int time_point_1=clock();
-    auto result=my_solution.minSubArrayLen(0,vector_temp);
+    auto result=my_solution.maxProduct(vector_temp);
     int time_point_2=clock();
 	printf("\n \t Time :%d ms \n",time_point_2-time_point_1);
     return 0;
@@ -195,7 +181,9 @@ public:
 };
 
 //官方题解：
-https://leetcode-cn.com/problems/minimum-size-subarray-sum/solution/
+
+
 //优质解析：
-https://leetcode-cn.com/problems/minimum-size-subarray-sum/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by-43/gi
+https://leetcode-cn.com/problems/maximum-product-subarray/solution/hua-jie-suan-fa-152-cheng-ji-zui-da-zi-xu-lie-by-g/
+https://leetcode-cn.com/problems/maximum-product-subarray/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by--36/
 */
