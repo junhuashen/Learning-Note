@@ -19,7 +19,7 @@ data-time 2019-10-29 12:46:56
 
 
 原文链接:https://leetcode-cn.com/explore/interview/card/top-interview-questions-medium/51/dynamic-programming/106/
-
+https://leetcode-cn.com/problems/coin-change/
 
 主要思路：1.  使用辅助数组dp，dp[i]表示组成i的最少银币个数，dp[0]=0;
             确定dp[i]需要查找,它还需要的i-nums[j]对应的面值的最小值和当前值的最小值
