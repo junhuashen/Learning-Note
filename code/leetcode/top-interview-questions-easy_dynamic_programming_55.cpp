@@ -3,6 +3,8 @@ data-time 2019-10-05 14:19:56
 
 
 题目描述:
+121. 买卖股票的最佳时机
+
 买卖股票的最佳时机
 
 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
@@ -127,4 +129,11 @@ public:
 };
 
 }
+
+//官方题解:
+https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/solution/121-mai-mai-gu-piao-de-zui-jia-shi-ji-by-leetcode-/
+
+优质解析:
+https://labuladong.gitbook.io/algo/dong-tai-gui-hua-xi-lie/tuan-mie-gu-piao-wen-ti
+
 */
