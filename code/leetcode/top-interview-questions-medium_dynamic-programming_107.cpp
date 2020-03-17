@@ -148,11 +148,14 @@ public:
         vector<int> lis;
         
         for(int i = 0;i < nums.size();i++){
+            //查找对应的下边界
             auto it = std::lower_bound(lis.begin(),lis.end(),nums[i]);
+            //没有再范围内就将其添加上；注意这里每次都添加最小的在上面
             if(it == lis.end()){
                 lis.push_back(nums[i]);
+            }else {//将其更新为当前值
+                *it = nums[i];
             }
-            else *it = nums[i];
         }
         return lis.size();
     }
