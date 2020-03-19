@@ -8,12 +8,12 @@
             "name": "g++ build and debug active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/target/${fileBasenameNoExtension}",
+            "program": "${fileDirname}/target/${fileBasenameNoExtension}.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}/target/",
             "environment": [],
-            "externalConsole": false,
+            "externalConsole": true,
             "MIMode": "gdb",
             "setupCommands": [
                 {
@@ -23,7 +23,7 @@
                 }
             ],
             "preLaunchTask": "g++",
-            "miDebuggerPath": "/usr/bin/gdb"
+            "miDebuggerPath": "D:\\MinGW\\bin\\gdb.exe"
         }
     ]
 }
