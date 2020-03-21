@@ -24,6 +24,9 @@ data-time 2020-03-21 12:49:56
 输入: x = 2, y = 6, z = 5
 输出: False
 
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/water-and-jug-problem/
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处
 
 主要思路：
     存在如下的公式
@@ -95,7 +98,7 @@ int main(int argc, char const *argv[]) {
     return 0;
 }
 /*
-//优质解答：https://www.cnblogs.com/grandyang/p/5194599.html
+
 
 //优质解答1：使用状态机制来进行状态记录。
 并使用unordered_set来进行状态的存储。
