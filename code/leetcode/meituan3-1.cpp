@@ -67,13 +67,17 @@ int main(int argc,char* argv[]){
     Solution a;
     int m,n,s;
     cin>>n>>m>>s;
-    vector<vector<int>> mats(n,vector<int >(n,0));
+    long len=(n*n)/2+1;
+    vector<int> mats(len,0);
+    //vector<vector<int>> mats(n,vector<int >(n,0));
     vector<bool> isVisted(n,false);
     /* 获取矩阵 */
     for(int k=0;k<m;++k)
     {
         int i,j,val;
         cin>>i>>j>>val;
+        //计算i,j对应索引
+        long index=()+j;
         mats[i-1][j-1]=val;
         mats[j-1][i-1]=val;
     }
