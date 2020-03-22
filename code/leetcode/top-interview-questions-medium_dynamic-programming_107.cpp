@@ -20,7 +20,9 @@ Longest Increasing Subsequence
 原文链接:https://leetcode-cn.com/explore/interview/card/top-interview-questions-medium/51/dynamic-programming/107/
 
 
-主要思路：1.  使用一个数组来存储，当前index对应的最长上升子序列，第一个必定是1；第i个是前面小于它的k的值的最大值+1;
+主要思路：1.  使用一个数组来存储，当前index对应的最长上升子序列，
+            第一个必定是1；
+            第i个是前面小于它的k的值的最大值+1;
             时间复杂度O(n*(n-1)/2);空间复杂度O(n);
 */
 
@@ -98,7 +100,8 @@ int main(int argc, char const *argv[]) {
 }
 /*
 
-//优质解答1：使用数组，并且始终保持其长度不减小的情况下，左值最小，右值最大
+//优质解答1：使用数组，并且始终保持其长度不减小的情况下，左值最小，右值最大。
+使用单调栈的方式进行保存
 时间复杂度O(n*log(n)) 空间复杂度O(n)
 class Solution {
 public:

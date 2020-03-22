@@ -113,7 +113,7 @@ public:
                     char temp=board[i][j];
                     board[i][j]='1';
                     result=isExit(board,word,1,i,j);
-                     board[i][j]=temp;
+                    board[i][j]=temp;
                     if(result) return true;
                 }
             }

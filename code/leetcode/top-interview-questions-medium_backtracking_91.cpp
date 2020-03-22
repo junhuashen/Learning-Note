@@ -68,7 +68,7 @@ public:
         int max_size=1;
         //遍历字符串中的字符
         for(int i=0;i<digits.size();++i){
-            //获取字母
+            //获取数字对应的符串
             string temp=num_map[digits[i]-'0'-2];
             //提前记录长度防止错误
             int result_length=result.size();
