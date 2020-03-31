@@ -49,5 +49,10 @@ public:
 
 int main(int argc,char* argv[]){
     Solution a;
+    unsigned long res=0;
+    long n;
+    cin>>n;
+    res=n*(n-1);
+    cout<<res<<endl;
     return 0;
 }
