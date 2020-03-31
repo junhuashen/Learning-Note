@@ -143,7 +143,7 @@ int main(int argc,char* argv[]){
     
     /* A数目不够需要将T替换为A */
     int rep=abs(count_2[1]-count_1[1]+count_1[0]-count_2[0])/2;
-    std::cout<<(diff_T+diff_A-rep)/2+rep<<std::endl;;
+    std::cout<<(diff_T+diff_A-rep)/2+rep<<std::endl;
     
 
     return 0;
