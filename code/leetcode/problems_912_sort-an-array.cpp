@@ -64,7 +64,8 @@ public:
     vector<int> sortArray(vector<int>& nums) {
         /* 使用快速排序 */
         //quickSort(0,nums.size()-1,nums);
-        QuickSort(nums,0,nums.size()-1);
+        srand((unsigned)time(NULL));
+        QuickSort2(nums,0,(int)nums.size()-1);
         return nums;
     }
     void QuickSort(vector<int>& nums,int start,int end){
@@ -101,6 +102,33 @@ public:
         QuickSort(nums,left+1,end);
         return ;
     }
+    /* 执行交换 */
+    int partion(vector<int>& arr,int start,int end){
+        int key=arr[end];
+        int i=start-1;
+        for(int j=start;j<=end-1;++j){
+            if(arr[j]<=key){
+                i=i+1;
+                swap(arr[i],arr[j]);
+                
+            }
+        }
+        swap(arr[i+1],arr[end]);
+        return i+1;
+    }
+    int randomized_partition(vector<int>& arr,int start,int end)
+    {
+        int i=rand()%(end-start+1)+start;
+        swap(arr[i],arr[end]);
+        return partion(arr,start,end);
+    }
+    void QuickSort2(vector<int>& arr,int start,int end){
+        if(start<end){
+            int pos=randomized_partition(arr,start,end);
+            QuickSort2(arr,start,pos-1);
+            QuickSort2(arr,pos+1,end);
+        }
+    }
     //快速排序（从小到大）
 void quickSort(int left, int right, vector<int>& arr)
 {
@@ -128,7 +156,7 @@ void quickSort(int left, int right, vector<int>& arr)
 	quickSort(left, i - 1, arr);//递归左边
 	quickSort(i + 1, right, arr);//递归右边
 }
-
+    
 };
 
 int main(int argc, char const *argv[]) {
