@@ -7,8 +7,7 @@ data-time 2020-04-06 21:41:53
 另外小易拥有一次释放超能力的机会。
 这个超能力能让小易从柱子i跳到任意1=<j-i<=k满足的柱子而无视柱子高度的限制。
 现在小易想知道，小易是否能到达第根柱子。
-
-https://www.nowcoder.com/test/question/done?tid=32335143&qid=800539#summary
+https://www.nowcoder.com/test/question/done?tid=32335143&qid=800540#summary
 
 
 
