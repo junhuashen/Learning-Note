@@ -213,6 +213,28 @@ public:
     }
 };
 
+int main(int argc, char const *argv[]) {
+    Solution my_solution;
+    //input string
+   	//创建第一组数据
+    vector<int> vector_temp={3,9,20,NULL,NULL,15,7};
+    vector<int> vector_temp2={1,2,4};
+#define TreeNode Node
+    TreeNode* node_ptr=new TreeNode(NULL);
+    TreeNode* node_ptr2=new TreeNode(NULL);
+    FromArrayToTree(node_ptr,vector_temp);
+    //FromArrayToList(node_ptr2,vector_temp2);
+    PrintfTree(node_ptr);
+    int test_int=1; 
+	int time_point_1=clock();
+    auto result=my_solution.connect(node_ptr);
+    int time_point_2=clock();
+	printf("\n \t Time :%d ms \n",time_point_2-time_point_1);
+    DeleteTree(node_ptr);
+    //DeleteTree(node_ptr2);
+    return 0;
+}
+
 /*
 
 //优质解答1：使用全局变量记录最左指针进行层次的比较和分明。
