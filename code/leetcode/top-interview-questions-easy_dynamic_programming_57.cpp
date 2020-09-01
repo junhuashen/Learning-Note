@@ -78,8 +78,10 @@ public:
         vector<int> temp_max(nums.size());
         temp_max[0]=nums[0];
         temp_max[1]=nums[1];
+        // 在这里进行暴力破解
         for(int i=2;i<nums.size();++i){
             int temp_max2=0;
+            // 查找前面的最大值
             for(int j=0;j<i-1;++j){
                 temp_max2=max(temp_max2,temp_max[j]);
             }

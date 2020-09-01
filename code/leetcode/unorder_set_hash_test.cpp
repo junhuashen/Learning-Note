@@ -13,7 +13,6 @@ struct S {
 bool operator==(const S& lhs, const S& rhs) {
     return lhs.first_name == rhs.first_name && lhs.last_name == rhs.last_name;
 }
- 
 // 自定义哈希能是独立函数对象：
 struct MyHash
 {
@@ -96,3 +95,10 @@ int main()
     MyHashTest();
     return 0;
 }
+
+
+
+
+
+
+
