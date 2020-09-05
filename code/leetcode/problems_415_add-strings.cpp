@@ -40,6 +40,7 @@ num1 和num2 都不包含任何前导零
 #include <algorithm>
 #include <queue>
 using namespace std;
+
 //关闭流输出
 static auto static_lambda = []()
 {
@@ -84,31 +85,63 @@ int main(int argc, char const *argv[]) {
     return 0;
 }
 /*
-//优质解答：使用ostream进行优化
+//优质解答：思路相同，使用了
 class Solution {
 public:
-    string compressString(string S) {
-        static auto speedup = [](){ios::sync_with_stdio(false);cin.tie(nullptr);return nullptr;}();
-        if (S == "") return "";
-        char last = S[0];
-        int nCount = 1;
-        string str = "";
-        ostringstream ss;
-        for (int i = 1; i < S.size(); ++i){
-            if (S[i] == last){ ++nCount; continue; }
-            ss << last << nCount;
-            nCount = 1;
-            last = S[i];
+    string addStrings(string num1, string num2) {
+        int size1=num1.size();
+        int size2=num2.size();
+        int n= abs(size1-size2);
+        int tag=0;
+        string s(n,'0');
+        if(size1>=size2)
+        {
+            num2=s+num2;
+        } 
+        else
+        {
+            num1=s+num1;
         }
-        ss << last << nCount;
-        str = ss.str();
-        return str.size() < S.size() ? str : S;
+        for(int i=max(size1,size2)-1;i>=0;i--)
+        {
+            int x=(num1[i]-'0')+(num2[i]-'0');
+            if(tag==0)
+            {
+                if(x<10)
+                {
+                    num1[i]=x+'0';
+                }
+                else{
+                    num1[i]=x-10+'0';
+                    tag=1;
+                }
+            }
+            else{
+                if(x<9)
+                {
+                    num1[i]=x+1+'0';
+                    tag=0;
+                }
+                else{
+                    num1[i]=x-9+'0';
+                }
+            }
+        }
+        if(tag==0)
+        {
+            return num1;
+        }
+        else{
+
+            return "1"+num1;
+        }
+  
+
+
     }
 };
-
 //官方题解:
-https://leetcode-cn.com/problems/compress-string-lcci/solution/zi-fu-chuan-ya-suo-by-leetcode-solution/
+
 //优质解析:
 
-https://leetcode-cn.com/problems/compress-string-lcci/solution/shuang-zhi-zhen-fa-qu-lian-xu-zi-fu-cpython-by-net/
 */

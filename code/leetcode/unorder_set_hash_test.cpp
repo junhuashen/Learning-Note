@@ -6,10 +6,12 @@
 #include <string>
 #include <unordered_set>
 #include <unordered_map>
+
 struct S {
     std::string first_name;
     std::string last_name;
 };
+
 bool operator==(const S& lhs, const S& rhs) {
     return lhs.first_name == rhs.first_name && lhs.last_name == rhs.last_name;
 }
@@ -23,7 +25,8 @@ struct MyHash
         return h1 ^ (h2 << 1); // 或使用 boost::hash_combine （见讨论）
     }
 };
- 
+
+
 // std::hash 的自定义特化能注入 namespace std
 namespace std
 {
@@ -44,7 +47,7 @@ void HashTest(){
     std::size_t str_hash = std::hash<std::string>{}(str);
     std::cout << "hash(" << str << ") = " << str_hash << '\n';
  
-    S obj = { "Hubert", "Farnsworth"};
+    S obj = {"Hubert","Farnsworth"};
     // 使用独立的函数对象
     std::cout << "hash(" <<obj.first_name << ',' 
                << obj.last_name << ") = "
