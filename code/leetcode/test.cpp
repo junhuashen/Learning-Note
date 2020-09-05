@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 #include <stdio.h>
 #include <string.h>
@@ -18,7 +17,6 @@ int main()
         printf("%s\n",test1);
         return 0;
 }
-=======
 
 #include <iostream> 
 
@@ -61,4 +59,3 @@ s2=s1;
 s1.show(),s2.show();
 
 return 0;} 
->>>>>>> 9cc0efb50b5677712ed34161721b8a86881a6053

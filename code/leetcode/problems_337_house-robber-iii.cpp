@@ -190,6 +190,7 @@ public:
             res1+=(robSub(root->right->left)+robSub(root->right->right));
         }
         res1+=root->val;
+        // 不偷取该节点的值
         int res2=0;
         res2=robSub(root->left)+robSub(root->right);
 
