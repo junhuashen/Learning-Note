@@ -1,2 +1,11 @@
 #set target
 /code/leetcode/target/*
+/code/bishi/target/*
+#set book
+/计算机图书
+
+#slam
+/SLAM
+
+#NCNN
+/NCNN

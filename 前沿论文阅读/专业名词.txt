@@ -1,0 +1,3 @@
+转置卷积（transposed Convolutions）又名反卷积（deconvolution）或是分数步长卷积（fractially straced convolutions）
+可分离卷积（separable convolution）
+深度可分离卷积结构（depthwise separable convolution）

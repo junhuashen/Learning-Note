@@ -1,0 +1,24 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        // {
+        //     "type": "java",
+        //     "name": "CodeLens (Launch) - Frist",
+        //     "request": "launch",
+        //     "mainClass": "Frist",
+        //     "projectName": "price_4afbafab"
+        // },
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "console": "externalTerminal",
+            "mainClass": "${file}"
+        }
+    ]
+}

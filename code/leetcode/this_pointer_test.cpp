@@ -27,7 +27,9 @@ int main(int argc, char const *argv[]) {
 	// my_test.function1();
 	// cout<<&my_test<<endl;
 	// cout<<my_test.get_this()<<endl;
-
+	char* arr2 = "123";
+	char* arr1 = "123";
+	cout<<&arr1<<""<<&arr2<<endl;
 	Test* my_test2=nullptr;
 	cout<<(*my_test2).get_this()<<endl;
 	//(*my_test2).print_data();//报错不存在

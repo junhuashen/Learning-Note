@@ -1,0 +1,709 @@
+人工智能 Artificial Intelligence
+认知科学与神经科学Cognitive Science and Neuroscience
+图像处理Image Processing
+计算机图形学Computer graphics
+模式识别Pattern Recognized
+图像表示Image Representation
+立体视觉与三维重建Stereo Vision and 3D Reconstruction
+物体（目标）识别Object Recognition
+运动检测与跟踪Motion Detection and Tracking
+边缘edge
+边缘检测detection
+区域region
+图像分割segmentation
+轮廓与剪影contour and silhouette
+纹理texture
+纹理特征提取feature extraction
+颜色color
+局部特征local features or blob
+尺度scale
+摄像机标定Camera Calibration
+立体匹配stereo matching
+图像配准Image Registration
+特征匹配features matching
+物体识别Object Recognition
+人工标注Ground-truth
+自动标注Automatic Annotation
+运动检测与跟踪Motion Detection and Tracking
+背景剪除Background Subtraction
+背景模型与更新background modeling and update
+运动跟踪Motion Tracking
+多目标跟踪multi-target tracking
+颜色空间color space
+色调Hue
+色饱和度Saturation
+明度Value
+颜色不变性Color Constancy（人类视觉具有颜色不变性）
+照明illumination
+反射模型Reflectance Model
+明暗分析Shading Analysis
+成像几何学与成像物理学Imaging Geometry and Physics
+全像摄像机Omnidirectional Camera
+激光扫描仪Laser Scanner
+透视投影Perspective projection
+正交投影Orthopedic projection
+表面方向半球Hemisphere of Directions
+立体角solid angle
+透视缩小效应foreshortening
+辐射度radiance
+辐照度irradiance
+亮度intensity
+漫反射表面、Lambertian（朗伯）表面diffuse surface
+镜面Specular Surfaces
+漫反射率diffuse reflectance
+明暗模型Shading Models
+环境光照ambient illumination
+互反射interreflection
+反射图Reflectance Map
+纹理分析Texture Analysis
+元素elements
+基元primitives
+纹理分类texture classification
+从纹理中恢复图像shape from texture
+纹理合成synthetic
+图形绘制graph rendering
+图像压缩image compression
+统计方法statistical methods
+结构方法structural methods
+基于模型的方法model based methods
+分形fractal
+自相关性函数autocorrelation function
+熵entropy
+能量energy
+对比度contrast
+均匀度homogeneity
+相关性correlation
+上下文约束contextual constraints
+Gibbs随机场吉布斯随机场
+边缘检测、跟踪、连接Detection、Tracking、Linking
+LoG边缘检测算法（墨西哥草帽算子）LoG=Laplacian of Gaussian
+霍夫变化Hough Transform
+链码chain code
+B-样条B-spline
+有理B-样条Rational B-spline
+非均匀有理B-样条Non-Uniform Rational B-Spline
+控制点control points
+节点knot points
+基函数basis function
+控制点权值weights
+曲线拟合curve fitting
+内插interpolation
+逼近approximation
+回归Regression
+主动轮廓Active Contour Model or Snake
+图像二值化Image thresholding
+连通成分connected component
+数学形态学mathematical morphology
+结构元structuring elements
+膨胀Dilation
+腐蚀Erosion
+开运算opening
+闭运算closing
+聚类clustering
+分裂合并方法split-and-merge
+区域邻接图region adjacency graphs
+四叉树quad tree
+区域生长Region Growing
+过分割over-segmentation
+分水岭watered
+金字塔pyramid
+亚采样sub-sampling
+尺度空间Scale Space
+局部特征Local Features
+背景混淆clutter
+遮挡occlusion
+角点corners
+强纹理区域strongly textured areas
+二阶矩阵Second moment matrix
+视觉词袋bag-of-visual-words
+类内差异intra-class variability
+类间相似性inter-class similarity
+生成学习Generative learning
+判别学习discriminative learning
+人脸检测Face detection
+弱分类器weak learners
+集成分类器ensemble classifier
+被动测距传感passive sensing
+多视点Multiple Views
+稠密深度图dense depth
+稀疏深度图sparse depth
+视差disparity
+外极epipolar
+外极几何Epipolor Geometry
+校正Rectification
+归一化相关NCC Normalized Cross Correlation
+平方差的和SSD Sum of Squared Differences
+绝对值差的和SAD Sum of Absolute Difference
+俯仰角pitch
+偏航角yaw
+扭转角twist
+高斯混合模型Gaussian Mixture Model
+运动场motion field
+光流optical flow
+贝叶斯跟踪Bayesian tracking
+粒子滤波Particle Filters
+颜色直方图color histogram
+尺度不变特征转换SIFT scale invariant feature transform
+孔径问题Aperture problem
+A
+
+Aberration 像差
+Accessory 附件
+Accessory Shoes 附件插座、热靴
+Achromatic 消色差的
+Active 主动的、有源的
+Acutance 锐度
+Acute-matte 磨砂毛玻璃
+Adapter 适配器
+Advance system 输片系统
+AE Lock(AEL) 自动曝光锁定
+AF(Autofocus) 自动聚焦
+AF Illuminator AF照明器
+AF spotbeam projector AF照明器
+Alkaline 碱性
+Ambient light 环境光
+Amplification factor 放大倍率
+Angle finder 弯角取景器
+Angle of view 视角
+Anti-Red-eye 防红眼
+Aperture 光圈
+Aperture priority 光圈优先
+APO(APOchromat) 复消色差
+APZ(Advanced Program zoom) 高级程序变焦
+Arc 弧形
+ASA(American Standards Association) 美国标准协会
+Astigmatism 像散
+Auto bracket 自动包围
+Auto composition 自动构图
+Auto exposure 自动曝光
+Auto exposure bracketing 自动包围曝光
+Auto film advance 自动进片
+Auto flash 自动闪光
+Auto loading 自动装片
+Auto multi-program 自动多程序
+Auto rewind 自动退片
+Auto wind 自动卷片
+Auto zoom 自动变焦
+Automatic exposure(AE) 自动曝光
+Automation 自动化
+Auxiliary 辅助
+B
+
+Back 机背
+Back light 逆光、背光
+Back light compensation 逆光补偿
+Background 背景
+Balance contrast 反差平衡
+Bar code system 条形码系统
+Barrel distortion 桶形畸变
+BAse-Stored Image Sensor (BASIS) 基存储影像传感器
+Battery check 电池检测
+Battery holder 电池手柄
+Bayonet 卡口
+Bellows 皮腔
+Blue filter 蓝色滤光镜
+Body-integral 机身一体化
+Bridge camera 桥梁相机
+Brightness control 亮度控制
+Built in 内置
+Bulb B 门
+Button 按钮
+C
+
+Cable release 快门线
+Camera 照相机
+Camera shake 相机抖动
+Cap 盖子
+Caption 贺辞、祝辞、字幕
+Card 卡
+Cartridges 暗盒
+Case 机套
+CCD(Charge Coupled Device) 电荷耦合器件
+CdS cell 硫化镉元件
+Center spot 中空滤光镜
+Center weighted averaging 中央重点加权平均
+Chromatic Aberration 色差
+Circle of confusion 弥散圆
+Close-up 近摄
+Coated 镀膜
+Compact camera 袖珍相机
+Composition 构图
+Compound lens 复合透镜
+Computer 计算机
+Contact 触点
+Continuous advance 连续进片
+Continuous autofocus 连续自动聚焦
+Contrast 反差、对比
+Convetor 转换器
+Coreless 无线圈
+Correction 校正
+Coupler 耦合器
+Coverage 覆盖范围
+CPU(Central Processing Unit) 中央处理器
+Creative expansion card 艺术创作软件卡
+Cross 交叉
+Curtain 帘幕
+Customized function 用户自选功能
+D
+
+Data back 数据机背
+Data panel 数据面板
+Dedicated flash 专用闪光灯
+Definition 清晰度
+Delay 延迟、延时
+Depth of field 景深
+Depth of field preview 景深预测
+Detection 检测
+Diaphragm 光阑
+Diffuse 柔光
+Diffusers 柔光镜
+DIN (Deutsche Industrische Normen) 德国工业标准
+Diopter 屈光度
+Dispersion 色散
+Display 显示
+Distortion 畸变
+Double exposure 双重曝光
+Double ring zoom 双环式变焦镜头
+Dreams filter 梦幻滤光镜
+Drive mode 驱动方式
+Duration of flash 闪光持续时间
+DX-code DX编码
+E
+
+ED(Extra low Dispersion) 超低色散
+Electro selective pattern(ESP) 电子选择模式
+EOS(Electronic Optical System) 电子光学系统
+Ergonomic 人体工程学
+EV(Exposure value) 曝光值
+Evaluative metering 综合评价测光
+Expert 专家、专业
+Exposure 曝光
+Exposure adjustment 曝光调整
+Exposure compensation 曝光补偿
+Exposure memory 曝光记忆
+Exposure mode 曝光方式
+Exposure value(EV) 曝光值
+Extension tube 近摄接圈
+Extension ring 近摄接圈
+External metering 外测光
+Extra wide angle lens 超广角镜头
+Eye-level fixed 眼平固定
+Eye-start 眼启动
+Eyepiece 目镜
+Eyesight correction lenses 视力校正镜
+F
+
+Field curvature 像场弯曲
+Fill in 填充(式)
+Film 胶卷(片)
+Film speed 胶卷感光度
+Film transport 输片、过片
+Filter 滤光镜
+Finder 取景器
+First curtain 前帘、第一帘幕
+Fish eye lens 鱼眼镜头
+Flare 耀斑、眩光
+Flash 闪光灯、闪光
+Flash range 闪光范围
+Flash ready 闪光灯充电完毕
+Flexible program 柔性程序
+Focal length 焦距
+Focal plane 焦点平面
+Focus 焦点
+Focus area 聚焦区域
+Focus hold 焦点锁定
+Focus lock 焦点锁定
+Focus prediction 焦点预测
+Focus priority 焦点优先
+Focus screen 聚焦屏
+Focus tracking 焦点跟踪
+Focusing 聚焦、对焦、调焦
+Focusing stages 聚焦级数
+Fog filter 雾化滤光镜
+Foreground 前景
+Frame 张数、帧
+Freeze 冻结、凝固
+Fresnel lens 菲涅尔透镜、环状透镜
+Frontground 前景
+Fuzzy logic 模糊逻辑
+G
+
+Glare 眩光
+GN(Guide Number) 闪光指数
+GPD(Gallium Photo Diode) 稼光电二极管
+Graduated 渐变
+H
+
+Half frame 半幅
+Halfway 半程
+Hand grip 手柄
+High eye point 远视点、高眼点
+High key 高调
+Highlight 高光、高亮
+Highlight control 高光控制
+High speed 高速
+Honeycomb metering 蜂巢式测光
+Horizontal 水平
+Hot shoe 热靴、附件插座
+Hybrid camera 混合相机
+Hyper manual 超手动
+Hyper program 超程序
+Hyperfocal 超焦距
+I
+
+IC(Integrated Circuit) 集成电路
+Illumination angle 照明角度
+Illuminator 照明器
+Image control 影像控制
+Image size lock 影像放大倍率锁定
+Infinity 无限远、无穷远
+Infra-red(IR) 红外线
+Instant return 瞬回式
+Integrated 集成
+Intelligence 智能化
+Intelligent power zoom 智能化电动变焦
+Interactive function 交互式功能
+Interchangeable 可更换
+Internal focusing 内调焦
+Interval shooting 间隔拍摄
+ISO(International Standard Association) 国际标准化组织
+J
+
+JIS(Japanese Industrial Standards)
+日本工业标准
+L
+
+Landscape 风景
+Latitude 宽容度
+LCD data panel LCD数据面板
+LCD(Liquid Crystal Display) 液晶显示
+LED(Light Emitting Diode) 发光二极管
+Lens 镜头、透镜
+Lens cap 镜头盖
+Lens hood 镜头遮光罩
+Lens release 镜头释放钮
+Lithium battery 锂电池
+Lock 闭锁、锁定
+Low key 低调
+Low light 低亮度、低光
+LSI(Large Scale Integrated) 大规模集成
+M
+
+Macro 微距、巨像
+Magnification 放大倍率
+Main switch 主开关
+Manual 手动
+Manual exposure 手动曝光
+Manual focusing 手动聚焦
+Matrix metering 矩阵式测光
+Maximum 最大
+Metered manual 测光手动
+Metering 测光
+Micro prism 微棱
+Minimum 最小
+Mirage 倒影镜
+Mirror 反光镜
+Mirror box 反光镜箱
+Mirror lens 折反射镜头
+Module 模块
+Monitor 监视、监视器
+Monopod 独脚架
+Motor 电动机、马达
+Mount 卡口
+MTF (Modulation Transfer Function 调制传递函数
+Multi beam 多束
+Multi control 多重控制
+Multi-dimensional 多维
+Multi-exposure 多重曝光
+Multi-image 多重影
+Multi-mode 多模式
+Multi-pattern 多区、多分区、多模式
+Multi-program 多程序
+Multi sensor 多传感器、多感光元件
+Multi spot metering 多点测光
+Multi task 多任务
+N
+
+Negative 负片
+Neutral 中性
+Neutral density filter 中灰密度滤光镜
+Ni-Cd battery 镍铬(可充电)电池
+O
+
+Off camera 离机
+Off center 偏离中心
+OTF(Off The Film) 偏离胶卷平面
+One ring zoom 单环式变焦镜头
+One touch 单环式
+Orange filter 橙色滤光镜
+Over exposure 曝光过度
+P
+
+Panning 摇拍
+Panorama 全景
+Parallel 平行
+Parallax 平行视差
+Partial metering 局部测光
+Passive 被动的、无源的
+Pastels filter 水粉滤光镜
+PC(Perspective Control) 透视控制
+Pentaprism 五棱镜
+Perspective 透视的
+Phase detection 相位检测
+Photography 摄影
+Pincushion distortion 枕形畸变
+Plane of focus 焦点平面
+Point of view 视点
+Polarizing 偏振、偏光
+Polarizer 偏振镜
+Portrait 人像、肖像
+Power 电源、功率、电动
+Power focus 电动聚焦
+Power zoom 电动变焦
+Predictive 预测
+Predictive focus control 预测焦点控制
+Preflash 预闪
+Professional 专业的
+Program 程序
+Program back 程序机背
+Program flash 程序闪光
+Program reset 程序复位
+Program shift 程序偏移
+Programmed Image Control (PIC) 程序化影像控制
+Q
+
+Quartz data back 石英数据机背
+R
+
+Rainbows filter 彩虹滤光镜
+Range finder 测距取景器
+Release priority 释放优先
+Rear curtain 后帘
+Reciprocity failure 倒易律失效
+Reciprocity Law 倒易律
+Recompose 重新构图
+Red eye 红眼
+Red eye reduction 红眼减少
+Reflector 反射器、反光板
+Reflex 反光
+Remote control terminal 快门线插孔
+Remote cord 遥控线、快门线
+Resolution 分辨率
+Reversal films 反转胶片
+Rewind 退卷
+Ring flash 环形闪光灯
+ROM(Read Only Memory) 只读存储器
+Rotating zoom 旋转式变焦镜头
+RTF(Retractable TTL Flash) 可收缩TTL闪光灯
+S
+
+Second curtain 后帘、第二帘幕
+Secondary Imaged Registration(SIR) 辅助影像重合
+Segment 段、区
+Selection 选择
+Self-timer 自拍机
+Sensitivity 灵敏度
+Sensitivity range 灵敏度范围
+Sensor 传感器
+Separator lens 分离镜片
+Sepia filter 褐色滤光镜
+Sequence zoom shooting 顺序变焦拍摄
+Sequential shoot 顺序拍摄
+Servo autofocus 伺服自动聚焦
+Setting 设置
+Shadow 阴影、暗位
+Shadow control 阴影控制
+Sharpness 清晰度
+Shift 偏移、移动
+Shutter 快门
+Shutter curtain 快门帘幕
+Shutter priority 快门优先
+Shutter release 快门释放
+Shutter speed 快门速度
+Shutter speed priority 快门速度优先
+Silhouette 剪影
+Single frame advance 单张进片
+Single shot autofocus 单次自动聚焦
+Skylight filter 天光滤光镜
+Slide film 幻灯胶片
+Slow speed synchronization 慢速同步
+SLD(Super Lower Dispersion) 超低色散
+SLR(Single Lens Reflex) 单镜头反光照相机
+SMC(Super Multi Coated) 超级多层镀膜
+Soft focus 柔焦、柔光
+SP(Super Performance) 超级性能
+SPC(Silicon Photo Cell) 硅光电池
+SPD(Silicon Photo Dioxide) 硅光电二极管
+Speedlight 闪光灯、闪光管
+Split image 裂像
+Sport 体育、运动
+Spot metering 点测光
+Standard 标准
+Standard lens 标准镜头
+Starburst 星光镜
+Stop 档
+Synchronization 同步
+T
+
+Tele converter 增距镜、望远变换器
+Telephoto lens 长焦距镜头
+Trailing-shutter curtain 后帘同步
+Trap focus 陷阱聚焦
+Tripod 三脚架
+TS(Tilt and Shift) 倾斜及偏移
+TTL flash TTL闪光
+TTL flash metering TTL闪光测光
+TTL(Through The Lens) 通过镜头、镜后
+Two touch 双环
+U
+
+UD(Ultra-low Dispersion) 超低色散
+Ultra wide 超阔、超广
+Ultrasonic 超声波
+UV(Ultra-Violet) 紫外线
+Under exposure 曝光不足
+V
+
+Vari-colour 变色
+Var-program 变程序
+Variable speed 变速
+Vertical 垂直
+Vertical traverse 纵走式
+View finder 取景器
+W
+
+Warm tone 暖色调
+Wide angle lens 广角镜头
+Wide view 广角预视、宽区预视
+Wildlife 野生动物
+Wireless remote 无线遥控
+World time 世界时间
+X
+
+X-sync X-同步
+Z
+
+Zoom 变焦
+Zoom lens 变焦镜头
+Zoom clip 变焦剪裁
+Zoom effect 变焦效果
+Other
+
+TTL 镜后测光
+NTTL 非镜后测光
+UM 无机内测光，手动 测光
+MM 机内测光，但需手动设定
+AP 光圈优先
+SP 快门优先
+PR 程序暴光
+ANCILLARY DEVICES 辅助产品
+BACKPLANES 底板
+CABLES AND CONNECTORS 连线及连接器
+ENCLOSURES 围圈
+FACTORY AUTOMATION 工厂自动化
+POWER SUPPLIES 电源
+APPLICATION-SPECIFIC SOFTWARE 应用软件
+INDUSTRIAL-INSPECTION SOFTWARE 工业检测软件
+MEDICAL-IMAGING SOFTWARE 医药图象软件
+SCIENTIFIC-ANALYSIS SOFTWARE 科学分析软件
+SEMICONDUCTOR-INSPECTION SOFTWARE 半导体检测软件
+CAMERAS 相机
+AREA-ARRAY CAMERAS 面阵相机
+CAMERA LINK CAMERAS CAMERA-LINK相机
+CCD CAMERAS-COLOR ccd彩色相机
+CCD CAMERAS COOLED ccoled型ccd相机
+CHARGE-INJECTION-DEVICE CAMERAS 充电相机
+CMOS CAMERAS cmos相机
+DIGITAL-OUTPUT CAMERAS 数码相机
+FIREWIRE(1394) CAMERAS 1394接口相机
+HIGH-SPEED VIDEO CAMERAS 高速摄象机
+INFRARED CAMERAS 红外相机
+LINESCAN CAMERAS 行扫描相机
+LOW-LIGHT-LEVEL CAMERAS 暗光相机
+MULTISPECTRAL CAMERAS 多光谱相机
+SMART CAMERAS 微型相机
+TIME-DELAY-AND-INTEGRATION CAMERAS 时间延迟集成相机
+USB CAMERAS usb接口相机
+VIDEO CAMERAS 摄象机
+DIGITIZERS 数字转换器
+MEASUREMENT DIGITIZERS 数字测量器
+MOTION-CAPTURE DIGITIZERS 数字运动捕捉器
+DISPLAYS 显示器
+CATHODE-RAY TUBES(CRTs) 阴极摄像管
+INDUSTRIAL DISPLAYS 工业用型显示器
+LIQUID-CRYSTAL DISPLAYS 液晶显示器
+ILLUMINATION SYSTEMS 光源系统
+BACKLIGHTING DEVICES 背光源
+FIBEROPTIC ILLUMINATION SYSTEMS 光纤照明系统
+FLUORESCENT ILLUMINATION SYSTEMS荧光照明系统
+INFRARED LIGHTING 红外照明
+LED LIGHTING led照明
+STRUCTURED LIGHTING 结构化照明
+ULTRAVIOLET ILLUMINATION SYSTEMS 紫外照明系统
+WHITE-LIGHT ILLUMINATION SYSTEMS 白光照明系统
+XENON ILLUMINATION SYSTEMS 氙气照明系统
+IMAGE-PROCESSING SYSTEMS 图象处理系统
+AUTOMATION/ROBOTICS 自动化/机器人技术
+DIGITAL IMAGING SYSTEMS 数字图象系统
+DOCUMENT-IMAGING SYSTEMS 数据图象系统
+GUIDANCE/TRACKING SYSTEMS 制导/跟踪系统
+INFRARED IMAGING SYSTEMS 红外图象系统
+INSPECTION/NONDESTRUCTIVE TESTING SYSTEMS 检测/非破坏性 测试系统
+INSTRUMENTATION SYSTEMS 测试设备系统
+INTELLIGENT TRANSPORTATION SYSTEMS 智能交通系统
+MEDICAL DIAGNOSTICS SYSTEMS 医疗诊断系统
+METROLOGY/MEASUREMENT/GAUGING SYSTEMS 测绘系统
+MICROSCOPY SYSTEMS 微观系统
+MOTION-ANALYSIS SYSTEMS 运动分析系统
+OPTICAL-CHARACTER-RECOGNITION/OPTICAL-CHARACTER-VERIFICATION SYSTEMS 光学文字识别系统
+PROCESS-CONTROL SYSTEMS 处理控制系统
+QUALITY-ASSURANCE SYSTEMS 高保真系统
+REMOTE SENSING SYSTEMS 遥感系统
+WEB-SCANNING SYSTEMS 网状扫描系统
+IMAGE-PROCESSING TOOLKITS 图象处理工具包
+COMPILERS 编译器
+DATA-ACQUISITION TOOLKITS 数据采集工具套件
+DEVELOPMENT TOOLS 开发工具
+DIGITAL-SIGNAL-PROCESSOR(DSP) DEVELOPMENT TOOLKITS 数字信号处理开发工具套件
+REAL-TIME OPERATING SYSTEMS(RTOSs) 实时操作系统
+WINDOWS 窗口
+IMAGE SOURCES 图象资源
+FLASHLAMPS 闪光灯
+FLUORESCENT SOURCES 荧光源
+LASERS 激光器
+LIGHT-EMITTING DIODES(LEDs) 发光二极管
+STROBE ILLUMINATION 闪光照明
+TUNGSTEN LAMPS 钨灯
+ULTRAVIOLET LAMPS 紫外灯
+WHITE-LIGHT SOURCES 白光灯
+XENON LAMPS 氙气灯
+X-RAY SOURCES x射线源
+IMAGE-STORAGE DEVICES 图象存储器
+HARD DRIVES 硬盘设备
+OPTICAL STORAGE DEVICES 光存储设备
+RAID STORAGE DEVICES RAID存储设备（ 廉价磁盘冗余阵列设备）
+INTEGRATED CIRCUITS 综合电路
+ASICS 专用集成电路
+ANALOG-TO-DIGITAL CONVERTERS 模数转换器
+COMMUNICATIONS CONTROLLERS 通信控制器
+DIGITAL-SIGNAL PROCESSORS 数字信号处理器
+DIGITAL-TO-ANALOG CONVERTERS 数模转换器
+DISPLAY CONROLLERS 显示器控制器
+FIELD-PROGRAMMABLE GATE 现场可编程门阵列
+ARRAYS 阵列
+GRAPHICS-DISPLAY CONTROLLERS 图形显示控制器
+IMAGE-PROCESSING ICs 图象处理芯片
+MIXED-SIGNAL ICs 混合信号芯片
+VIDEO-PROCESSING ICs 视频处理芯片
+LENSES 镜头
+CAMERA LENSES 相机镜头
+ENLARGING LENSES 放大镜
+HIGH-RESOLUTION LENSES 高分辨率镜头
+IMAGE-SCANNING LENSES 图象扫描镜头
+PROJECTION LENSES 聚光透镜
+TELECENTRIC LENSES 望远镜
+VIDEO LENSES 摄象机镜头
+MONITORS 显示器
+CATHODE-RAY-TUBE(CRT) MONITORS, COLOR crt彩色监视器
+CATHODE-RAY-TUBE(CRT) MONITORS, MONOCHROME 单色crt监视器
+LIQUID-CRYSTAL-DISPLAY(LED) MONITORS lcd监视器
