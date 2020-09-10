@@ -72,12 +72,15 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "queue": "cpp",
-        "charconv":"cpp",
+        "charconv": "cpp",
         "csetjmp": "cpp",
         "cuchar": "cpp",
         "regex": "cpp",
         "scoped_allocator": "cpp",
         "shared_mutex": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "any": "cpp",
+        "bit": "cpp",
+        "variant": "cpp"
     }
 }

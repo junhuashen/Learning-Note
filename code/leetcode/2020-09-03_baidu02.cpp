@@ -74,6 +74,7 @@ int main(int argc,char* argv[]){
         // for(auto temp: origin_data_n) {
         //     cout<<temp.first<<","<<temp.second<<endl;
         // }
+        // 为了第二个，需要再次排序
         sort(origin_data_m.begin(),origin_data_m.end(),[](pair<int,int>& a,pair<int,int>& b){
             return a.first<b.first;
         });
