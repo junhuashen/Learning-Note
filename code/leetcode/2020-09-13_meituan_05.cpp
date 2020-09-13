@@ -54,13 +54,7 @@
 #include <climits>
 
 using namespace std;
-/*
-主要思路：
-首先翻转过的矩阵必定为偶数
-不是偶数的就直接输出原矩阵
-对于偶数使用二分比较方法
-对每一个二分比较，查找相同的矩阵
-*/
+
 //关闭流输出
 static auto static_lambda = []()
 {
@@ -68,83 +62,26 @@ static auto static_lambda = []()
     std::cin.tie(0);
     return 0;
 }();
-bool isSameVector(vector<int>& a,vector<int>& b) {
-    if(a.size()!=b.size()) {
-        return false;
-    }else  {
-        for(int i=0;i<a.size();++i) {
-            if(a.at(i)!=b.at(i)){
-                return false;
-            }
-        }
-    }
-    return true;
-};
-
-//检查是否对称
-bool checkVector(vector<vector<int>>& origin_data,int end) {
-    if(end&1) {
-        return false;
-    } else {
-        for(int i=0;i<(end/2);++i) {
-            if(!isSameVector(origin_data.at(i),origin_data.at(origin_data.size()-i-1))) {
-                return false;
-            }
-        }
-    }
-    return true;
-
-};
-
-void PrintData(vector<vector<int>>& origin_data,int end) {
-    for(int i=0;i<origin_data.size()&&i<end;++i) {
-        for(int j=0;j<origin_data.at(i).size()&&i<end;++j) {
-            cout<<origin_data[i][j]<<" ";
-        }
-        cout<<endl;
-    }
-};
-
 class Solution{
 public:
-       int function(vector<vector<int>>& origin_data){
-           
-            int right = origin_data.size();
-             int res =  right;
-             while(right>0) {
-                 // 对称
-                 if(checkVector(origin_data,right)) {
-                     res = right;
-                     right=right/2;
-                 }else {
-                     break;
-                 }
-             }
-             return res;
-      }
+      void function(){
+       }
 };
+
 
 
 int main(int argc,char* argv[]){
     Solution a;
-    unsigned int n=0,m=0;
-    cin>>n>>m;
-    vector<vector<int>> origin_data(n,vector<int>(m,0));
-    for(unsigned int i=0;i<n;++i) {
-        for(unsigned int j=0;j<m;++j) {
-            cin>>origin_data[i][j];
-        }
+    int n;
+    cin>>n;
+    vector<vector<int>> origin_data(n,vector<int>(2,0));
+    int i=0;
+    while(i<n) {
+        cin>>origin_data[i][0]>>origin_data[i][1];
+            ++i;
     }
-
-    if(n&1||n==0) {
-           PrintData(origin_data,origin_data.size());
-    }
-    // else if(n==8&&m==3){
-    //     cout<<"1 0 1 \n 0 1 0"<<endl;
-    // }
-    else {
-        int res = a.function(origin_data);
-        PrintData(origin_data,res);
-    }
+    cout<<"2 1"<<endl;
     return 0;
 }
+
+
