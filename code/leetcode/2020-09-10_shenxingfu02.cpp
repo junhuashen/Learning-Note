@@ -25,7 +25,8 @@ struct Node{
     Node(int a=0, int b=0):x(a), y(b){};
 };
 class Solution{
-    public:
+public:
+    // 存在节点和值
     unordered_map<string, int> m;
     long long int res;
     Node E,W;
@@ -62,9 +63,11 @@ class Solution{
         }
         return;
     };
+    // 创建hash值
     string getKey(Node x){
         return to_string(x.x) + "_" + to_string(x.y);
     };
+    // 创建has值
     string getKey(int a, int b){
         return to_string(a) + "_" + to_string(b);
     }

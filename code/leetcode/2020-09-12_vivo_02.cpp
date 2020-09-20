@@ -115,9 +115,11 @@ int main(){
     for (int i = 0; i < origin_string.size(); ++i){
         // 获取边界长度
         string new_string = origin_string.substr(0, i) + origin_string.substr(i + 1, origin_string.size() - i - 1);
-        // 获取对端长度
+        // 获取对端长度,消除奇数和偶数的影响
         int size = new_string.size() / 2;
+        // 分成两半
         string first = new_string.substr(0, size);
+        // 分成两半
         string second = new_string.substr(new_string.size() - size, size);
         reverse(second.begin(), second.end());
         if(first == second){

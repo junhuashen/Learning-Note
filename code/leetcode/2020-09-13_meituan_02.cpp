@@ -82,6 +82,7 @@ static auto static_lambda = []()
     return 0;
 }();
 struct Node{
+    // 值
     vector<int> values;
     int k, m, start, index, len;
     vector<pair<int, int>> res;
@@ -89,9 +90,11 @@ struct Node{
 class Solution{
 public:
         void GetRes(Node &n){
+            // 是否超出边界
             if(n.index >= n.len) {
                 return ;
             }
+            // 
             if(n.values[n.index] < n.k) {
                 n.start +=1;
                 n.index = n.start;
@@ -136,5 +139,4 @@ int main(int argc,char* argv[]){
     return 0;
 }
 
-/*   */
 

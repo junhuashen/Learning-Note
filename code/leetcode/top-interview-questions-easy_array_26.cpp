@@ -94,7 +94,6 @@ int main(int argc, char const *argv[]) {
 }
 /*
 //优质解答：一样的思路不过将变量都预定义好了，估计会快一点
-//基本优质解答都在上面了，思路是一样的,但是代码有所区别，这个是leetcode的锅
 class Solution {
 public:
     vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
