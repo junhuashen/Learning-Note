@@ -46,7 +46,6 @@ using namespace std;
 
 
 
-
 //关闭流输出
 static auto static_lambda = []()
 {
