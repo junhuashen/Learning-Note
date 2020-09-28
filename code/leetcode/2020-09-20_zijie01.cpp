@@ -104,3 +104,5 @@ int main(int argc,char* argv[]){
     cout<<origin_data.substr(0,len)<<endl;
     return 0;
 }
+
+
