@@ -6,16 +6,16 @@
         {
             "type": "shell",
             "label": "g++",
-            "command": "D:\\MinGW\\bin\\g++.exe",
+            "command": "/usr/bin/g++",
             "args": [
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/target/${fileBasenameNoExtension}.exe",
+                "${fileDirname}/target/${fileBasenameNoExtension}",
                 "-std=c++11"
             ],
             "options": {
-                "cwd": "D:\\MinGW\\bin"
+                "cwd": "/usr/bin/"
             },
             "problemMatcher": [
                 "$gcc"
