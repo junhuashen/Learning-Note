@@ -8,9 +8,9 @@ Fizz Buzz
 
 写一个程序，输出从 1 到 n 数字的字符串表示。
 
-1. 如果 n 是3的倍数，输出“Fizz”；
+1. 如果 n 是3的倍数，输出“Fizz”;
 
-2. 如果 n 是5的倍数，输出“Buzz”；
+2. 如果 n 是5的倍数，输出“Buzz”;
 
 3.如果 n 同时是3和5的倍数，输出 “FizzBuzz”。
 
@@ -92,14 +92,7 @@ public:
     }
 };
 
-/**
- * Your MinStack object will be instantiated and called as such:
- * MinStack* obj = new MinStack();
- * obj->push(x);
- * obj->pop();
- * int param_3 = obj->top();
- * int param_4 = obj->getMin();
- */
+
 int main(int argc, char const *argv[]) {
     //input string
    	//创建第一组数据

@@ -79,6 +79,7 @@ public:
             }
             //将其更新为最远可以到达距离
             nums[i]=nums[i]+i;
+            // 当存在可以到达时，即可返回true
             if(nums[i]>=nums.size()-1) return true;
         }
         return false;
@@ -122,7 +123,7 @@ public:
 };
 
 //优质解答2：和我的思路基本相同
-时间复杂度O(n*(n-1)/2) 空间复杂度O(0);
+时间复杂度O(n*(n-1)/2) 空间复杂度O(n);
 class Solution {
 public:
     bool canJump(vector<int>& nums) {

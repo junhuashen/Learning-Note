@@ -98,7 +98,7 @@ int main(int argc, char const *argv[]) {
 /*
 //优质解答：https://www.cnblogs.com/grandyang/p/5194599.html
 
-//优质解答2：思路相同，代码更加易懂
+//优质解答2：思路相同，代码更加易懂；这里使用保存的是第一小和第二小的值
 class Solution {
 public:
     bool increasingTriplet(vector<int>& nums) {

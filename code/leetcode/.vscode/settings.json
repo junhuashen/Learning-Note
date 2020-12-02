@@ -66,6 +66,21 @@
         "condition_variable": "cpp",
         "future": "cpp",
         "mutex": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "xhash": "cpp",
+        "xstring": "cpp",
+        "xtree": "cpp",
+        "xutility": "cpp",
+        "queue": "cpp",
+        "charconv": "cpp",
+        "csetjmp": "cpp",
+        "cuchar": "cpp",
+        "regex": "cpp",
+        "scoped_allocator": "cpp",
+        "shared_mutex": "cpp",
+        "valarray": "cpp",
+        "any": "cpp",
+        "bit": "cpp",
+        "variant": "cpp"
     }
 }

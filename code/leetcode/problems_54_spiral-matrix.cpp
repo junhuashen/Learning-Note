@@ -119,6 +119,11 @@ public:
         //如果上下左右都不行就跳出
         if((start_y+1<matrix[0].size()&&is_checked[start_x][start_y+1])||
             (start_x+1<matrix.size()&&is_checked[start_x+1][start_y])||
+
+
+
+
+
             (start_y-1<matrix[0].size()&&start_y-1>=0&&is_checked[start_x][start_y-1])||
             (start_x-1<matrix.size()&&start_x-1>=0&&is_checked[start_x-1][start_y])){
              getMat(start_x,start_y,matrix,is_checked,result);
@@ -156,6 +161,7 @@ int main(int argc, char const *argv[]) {
 	printf("\n \t Time :%d ms \n",time_point_2-time_point_1);
     return 0;
 }
+
 /*
 //优质解答：https://www.cnblogs.com/grandyang/p/5194599.html
 

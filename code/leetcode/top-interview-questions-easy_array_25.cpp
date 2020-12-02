@@ -68,26 +68,4 @@ int main(int argc, char const *argv[]) {
 	printf("\n \t Time :%d ms \n",time_point_2-time_point_1);
     return 0;
 }
-/*
-//优质解答：先排序再查找去重。注意这里关闭了stdio的同步
-//基本优质解答都在上面了，思路是一样的,但是代码有所区别，这个是leetcode的锅
-class Solution {
-public:
-    bool containsDuplicate(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
-        for (size_t i=1; i<nums.size(); ++i) {
-            if (nums[i] == nums[i-1]) {
-                return true;
-            }
-        }
-        return false;
-    }
-};
 
-static const auto kSpeedUp = []() {
-std::ios::sync_with_stdio(false);
-std::cin.tie(nullptr);
-return nullptr;
-}();
-
-*/

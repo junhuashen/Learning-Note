@@ -158,6 +158,7 @@ public:
         return dummy->next;
     }
 };
+
 //优质解答2：和上述思路一样，不过代码更加简洁
 class Solution {
 public:

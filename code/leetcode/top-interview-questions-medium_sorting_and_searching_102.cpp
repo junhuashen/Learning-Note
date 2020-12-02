@@ -31,7 +31,7 @@ data-time 2019-10-27 14:10:56
             nums[mid+1]<mus[mid]就找到了对应值，>则left=mid+1;right=mid-1;
             找到mid之后，分别二分查找左右两边的值。
             时间复杂度O(2*log(n));空间复杂度O(0);
-        2.  直接使用find函数。
+         2. 直接使用find函数。
             时间复杂度O(n);
         
 */

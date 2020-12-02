@@ -203,7 +203,7 @@ public:
         slow = slow->next;
         ListNode *phead  = reverse(slow);
         while(phead){
-            if(phead->val!=head->val)return false;
+            if(phead->val!=head->val) return false;
             phead = phead->next;
             head = head->next;
         }

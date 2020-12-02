@@ -224,6 +224,7 @@ public:
     		int temp=l1_last->val+l2_last->val+excess_results;
 			excess_results=temp/10;
 			temp%=10;
+			//对于首个的检查
 			if(result_node==NULL){
 				result_node=new ListNode(temp);
 				work_ptr=result_node;

@@ -15,7 +15,7 @@
                 "-std=c++11"
             ],
             "options": {
-                "cwd": "/usr/bin"
+                "cwd": "/usr/bin/"
             },
             "problemMatcher": [
                 "$gcc"

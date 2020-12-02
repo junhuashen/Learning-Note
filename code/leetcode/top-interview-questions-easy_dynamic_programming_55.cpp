@@ -3,6 +3,8 @@ data-time 2019-10-05 14:19:56
 
 
 题目描述:
+121. 买卖股票的最佳时机
+
 买卖股票的最佳时机
 
 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
@@ -27,7 +29,8 @@ data-time 2019-10-05 14:19:56
 
 /*
 
-主要思路：1.使用动态规划的思想第i次交易的最大利润，必定是第i-1次最大利润+当前可能的最大利润。只要知道上一次的最后位置，进行搜索最后一次的值。第一次查找所有中最小值。
+主要思路：1.使用动态规划的思想第i次交易的最大利润，必定是第i-1次最大利润+当前可能的最大利润。
+            只要知道上一次的最后位置，进行搜索最后一次的值。第一次查找所有中最小值。
         时间复杂度为O(n),空间复杂度为O(n)
         2. 直接查找顺序差最大的值。
         时间复杂度为O(n^2),空间复杂度为O(1);
@@ -126,4 +129,11 @@ public:
 };
 
 }
+
+//官方题解:
+https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/solution/121-mai-mai-gu-piao-de-zui-jia-shi-ji-by-leetcode-/
+
+优质解析:
+https://labuladong.gitbook.io/algo/dong-tai-gui-hua-xi-lie/tuan-mie-gu-piao-wen-ti
+
 */

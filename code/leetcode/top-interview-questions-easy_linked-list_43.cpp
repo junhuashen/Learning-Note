@@ -94,7 +94,6 @@ public:
             work_ptr_next->next=work_ptr;
             work_ptr=work_ptr_next;
             work_ptr_next=temp;
-            
         }
         head->next=NULL;
         return work_ptr;

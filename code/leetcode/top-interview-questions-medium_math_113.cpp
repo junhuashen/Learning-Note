@@ -95,7 +95,10 @@ int main(int argc, char const *argv[]) {
     return 0;
 }
 /*
-//优质解答1：直接返回n能被5整除剩下的次数
+//优质解答1：
+因为每隔 5 个数，出现一个 5，每隔 25 个数，出现 2 个 5，每隔 125 个数，出现 3 个 5... 以此类推。
+
+直接返回n能被5整除剩下的次数
 时间复杂度O(log5(n))
 class Solution {
 public:

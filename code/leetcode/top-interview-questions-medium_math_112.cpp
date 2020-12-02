@@ -15,10 +15,10 @@ data-time 2019-11-1 13:23:56
 输入: 19
 输出: true
 解释: 
-12 + 92 = 82
-82 + 22 = 68
-62 + 82 = 100
-12 + 02 + 02 = 1
+1^2 + 9^2 = 82
+8^2 + 2^2 = 68
+6^2 + 8^2 = 100
+1^2 + 0^2 + 0^2 = 1
 
 来源：力扣（LeetCode）
 链接：https://leetcode-cn.com/explore/interview/card/top-interview-questions-medium/53/math/112/

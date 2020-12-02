@@ -6,7 +6,8 @@ data-time 2019-10-19 12:35:56
 
 岛屿数量
 
-给定一个由 '1'（陆地）和 '0'（水）组成的的二维网格，计算岛屿的数量。一个岛被水包围，并且它是通过水平方向或垂直方向上相邻的陆地连接而成的。你可以假设网格的四个边均被水包围。
+给定一个由 '1'（陆地）和 '0'（水）组成的的二维网格，计算岛屿的数量。一个岛被水包围，
+并且它是通过水平方向或垂直方向上相邻的陆地连接而成的。你可以假设网格的四个边均被水包围。
 
 示例 1:
 
@@ -36,6 +37,7 @@ data-time 2019-10-19 12:35:56
 */
 
 #include <iostream>
+#include <stdio.h>
 #include <vector>
 #include <math.h>
 #include <time.h>
@@ -163,36 +165,48 @@ static auto static_lambda = []()
     return 0;
 }();
 //main function
+const int maxn=1000050;
 class Solution {
 public:
-    int length,height;
-    void checkGrid(vector<vector<char>>& grid,int i,int j){
-        if(i>=length||j>=height) return ;
-        if(grid[i][j]=='1'){
-            grid[i][j]='0';
-        }else{
-            return ;
+//DFS，模板题
+    vector<int>ans [maxn];//定义一个二维数组，也可以下面这种定义方法：
+    //vector<vector<int>>ans(numCourses,vector<int>());
+    //vector<int>vis(maxn);//表示的是是否访问过,初始化-1，表示没有访问过
+    bool dfs(int x,vector<int>& vis){
+        vis[x]=0;//表示当前这个节点已近访问过了。
+        bool ret=true;
+        // for(int i=0;i<ans[x].size();i++){
+        //     if(vis[ans[x][i]]==0)return false;
+        //     if(vis[ans[x][i]]==-1)ret=ret&&dfs(ans[x][i]);
+        // }
+        for(auto v:ans[x]){
+            if(vis[v]==0)return false;
+            if(vis[v]==-1)ret=ret&&dfs(v,vis);
         }
-        //重置上下左右
-        if(i>0) checkGrid(grid,i-1,j);
-        if(j>0) checkGrid(grid,i,j-1);
-        if(i<length-1) checkGrid(grid,i+1,j);
-        if(j<height-1) checkGrid(grid,i,j+1);
+        vis[x]=-1;//表示以这个点出发的所有能够遍历的点已经遍历完了。。这个点出发不存在环啦。。。
+        return ret;
     }
-    int numIslands(vector<vector<char>>& grid) {
-        length=grid.size();
-        height= grid[0].size();
-        if(grid.size()<1) return 0;
-        int result=0;
-        for(int i=0;i<grid.size(); i++){
-            for(int j=0;j<grid[0].size();j++){
-                if(grid[i][j]=='1'){
-                    ++result;
-                    checkGrid(grid,i,j);
-                }
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        //vector<int>ans[numCourses];//定义一个二维数组，也可以下面这种定义方法：
+        //vector<vector<int>>ans(numCourses,vector<int>());
+        vector<int>vis(numCourses,-1);//表示的是是否访问过,初始化-1，表示没有访问过
+        // for(int i=0;i<numCourses;i++){
+        //     vis[i]=-1;
+        //     ans[i].clear();
+        // }
+        // for(int i=0;i<prerequisites.size();i++){
+        //     ans[prerequisites[i][0]].push_back(prerequisites[i][1]);
+        // }
+        for(auto v:prerequisites){
+            ans[v[1]].push_back(v[0]);
+        }
+        bool ret=true;
+        for(int i=0;i<numCourses;i++){
+            if(vis[i]==-1){
+                ret=ret&&dfs(i,vis);
             }
         }
-        return result;
+        return ret;
     }
 };
 
@@ -200,179 +214,109 @@ int main(int argc, char const *argv[]) {
     Solution my_solution;
     //input string
    	//创建第一组数据
-    vector<vector<char > > grid={
-        {'1','1','1','1','1'},
-        {'1','1','1','1','1'},
-        {'1','1','1','1','1'},
-        {'1','1','1','1','1'}
+    vector<vector<int > > grid={
+        {1,0},
+        {0,1}
     };
     int test_int=1; 
 	int time_point_1=clock();
-    auto result=my_solution.numIslands(grid);
+    auto result=my_solution.canFinish(2,grid);
     int time_point_2=clock();
 	printf("\n \t Time :%d ms \n",time_point_2-time_point_1);
     return 0;
 }
 /*
-//优质解答1：使用广度优先遍历；将值存储在栈中，再对栈进行循环遍历。
-时间复杂度O(m*n);空间复杂度O(min(m,n))
-
-https://leetcode-cn.com/problems/number-of-islands/solution/dao-yu-shu-liang-by-leetcode/
+//优质解答2：使用栈做DFS遍历操作
 
 class Solution {
 public:
-    int numIslands(vector<vector<char>>& grid) {
-        if(grid.empty())
-            return 0;
-        int row=grid.size();
-        int column=grid[0].size();
-        int result=0;
-        int m,n;
-        
-        queue<pair<int,int>> island;
-        for(int i=0;i<row;i++){
-            for(int j=0;j<column;j++){
-                if(grid[i][j]=='1'){
-                    result++;
-                    grid[i][j]='0';
-                    island.push(pair(i,j));
-                    while(!island.empty()){
-                        pair<int,int> neighbor=island.front();
-                        island.pop();
-                        m=neighbor.first;
-                        n=neighbor.second;
-                        // grid[m][n]='0';
-                        if(m-1>=0&&grid[m-1][n]=='1'){
-                            island.push(pair(m-1,n));
-                            grid[m-1][n]='0';
-                        }
-                            
-                        if(n-1>=0 &&grid[m][n-1]=='1'){
-                            island.push(pair(m,n-1));
-                            grid[m][n-1]='0';
-                        }
-                            
-                        if(m+1<row&&grid[m+1][n]=='1'){
-                            island.push(pair(m+1,n));
-                            grid[m+1][n]='0';
-                        }
-                            
-                        if(n+1<column&&grid[m][n+1]=='1'){
-                            island.push(pair(m,n+1));
-                            grid[m][n+1]='0';
-                        }
-                            
-                        
-                    }
-                }
+    Solution 1: DFS
+    bool canFinish1(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> graph(numCourses,vector<int>());
+        vector<int> visited(numCourses, false);
+
+        for (auto a:prerequisites)
+            graph[a[1]].push_back(a[0]);
+
+        for (int i=0;i<numCourses;++i){
+            if (!dfs(graph,visited,i)) return false;
+        }
+        return true;
+    }
+
+    bool dfs1(vector<vector<int>>& graph,vector<int>& visited, int index){
+        if (visited[index]==1) return false;
+        if (visited[index]==-1) return true;
+        visited[index] = 1;
+        for (auto a:graph[index]){
+            if (!dfs(graph,visited,a)) return false;
+        }
+        visited[index] = -1;
+        return true;
+    }
+    
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) 
+    {
+	    vector<int> inDegree(numCourses, 0);
+	    vector<vector<int>> lst(numCourses, vector<int>());
+	    for (auto v : prerequisites)
+	    {
+		    inDegree[v[0]]++;	
+		    lst[v[1]].push_back(v[0]);	
+	    }
+
+	    queue<int> que;
+	    for (auto i = 0; i < inDegree.size(); i++)
+	    {
+		    if (inDegree[i] == 0) que.push(i);	
+	    }
+
+	    while (!que.empty())
+	    {
+		    auto q = que.front();
+		    que.pop();
+            numCourses--;
+
+		    for (auto l : lst[q])
+		    {
+			    if (--inDegree[l] == 0) que.push(l);
+		    }
+	    }
+
+	    return numCourses == 0;
+    }
+    
+};
+
+优质解答2 ：思路相同
+
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        int size = prerequisites.size();
+        vector<vector<int>> v(numCourses,vector<int>());
+        vector<int> rudu(numCourses, 0);
+        for(int i = 0; i < size; ++i) {
+            v[prerequisites[i][1]].push_back(prerequisites[i][0]);
+            rudu[prerequisites[i][0]]++;
+        }
+        queue<int> q;
+        for(int i = 0; i < numCourses; ++i) if(rudu[i] == 0) q.push(i);
+        int count = 0;
+        while(!q.empty()) {
+            int cur = q.front();
+            ++count;
+            q.pop();
+            for(int i = 0; i < v[cur].size(); ++i) {
+                rudu[v[cur][i]]--;
+                if(rudu[v[cur][i]] == 0) q.push(v[cur][i]);
             }
         }
-        return result;
+        return count == numCourses;
     }
 };
-优质解答2 ：使用查并集；遍历二维网格，将竖直或水平相邻的陆地联结。最终，返回并查集数据结构中相连部分的数量。
-
-class Solution {
-public:
-//构造查并集节点
-struct node
-{
-	struct node* parent;
-	int rank;
-};
-
-struct node UJ[100000];
-//查找节点
-struct node* findRoot(struct node* x)
-{
-	if (x->parent != x)
-		x->parent = findRoot(x->parent);
-
-	return x->parent;
-}
-
-void unionSet(struct node* x, struct node* y)
-{
-	struct node* xRoot = findRoot(x);
-	struct node* yRoot = findRoot(y);
-
-	if (xRoot != yRoot)
-	{
-		if (xRoot->rank < yRoot->rank)
-			xRoot->parent = yRoot;
-		else
-		{
-			yRoot->parent = xRoot;
-			if (xRoot->rank == yRoot->rank)
-				xRoot->rank++;
-		}
-	}
-}
-
-int numIslands(vector<vector<char>>& grid) {
-	int row = grid.size();
-	if (row == 0)
-		return 0;
-
-	int col = grid[0].size();
-	int total = row * col;
-
-	int r, c, i = 0;
-    //先遍历整个矩阵，设置非‘0’的parent地址
-	for (r = 0; r < row; r++)
-	{
-		for (c = 0; c < col; c++)
-		{
-			if (grid[r][c] == '0')
-				UJ[i].parent = 0;
-			else
-			{
-				UJ[i].parent = &UJ[i];
-				UJ[i].rank = 0;
-			}
-
-			i++;
-		}
-	}
-
-	int index;
-	i = 0;
-	for (r = 0; r < row; r++)
-	{
-		for (c = 0; c < col; c++)
-		{
-			if (grid[r][c] == '1')
-			{
-				//up
-				if (r > 0 && grid[r - 1][c] == '1')
-				{
-					index = (r - 1)*col + c;
-                    //这里将UJ+index的parent设置为i；
-					unionSet(UJ + i, UJ + index);
-				}
-
-				//left
-				if (c > 0 && grid[r][c - 1] == '1')
-				{
-					index = i - 1;
-					unionSet(UJ+i, UJ + index);
-				}
-			}
-
-			//
-			i++;
-		}
-	}
-
-	int cnt = 0;
-    //查找查并集中的数目
-	for (i = 0; i < total; i++)
-	{
-		if (UJ[i].parent == &UJ[i])
-			cnt++;
-	}
-
-	return cnt;
-}
-};
+//官方题解：
+//优质解析
+https://leetcode-cn.com/problems/course-schedule/solution/course-schedule-tuo-bu-pai-xu-bfsdfsliang-chong-fa/
+https://leetcode-cn.com/problems/course-schedule/solution/ctuo-bu-pai-xu-dfs-by-zb121/
 */
