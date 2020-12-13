@@ -6,7 +6,8 @@
                 "${workspaceFolder}/**"
             ],
             "defines": [],
-            "compilerPath": "D:\\MinGW\\bin\\g++.exe",
+            "compilerPath": "g++",
+            //"compilerPath": "D:\\MinGW\\bin\\g++.exe",
             "cStandard": "c11",
             "cppStandard": "c++11",
             "intelliSenseMode": "clang-x64"
