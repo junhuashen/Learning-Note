@@ -49,4 +49,5 @@ public:
     m_queue.pop();
     return true;
   }
+
 };
