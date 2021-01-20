@@ -20,7 +20,7 @@ G
 
 using namespace std;
 
-G
+
 //关闭流输出
 static auto static_lambda = []()
 {
